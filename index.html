@@ -34,69 +34,52 @@
 
   <style>
     /* ========= @n8n/chat THEME — your schema with your original colors ========= */
-    :root {
-      /* Keep your site palette (blue/green on dark) */
-      --chat--color--primary: #38bdf8;                /* was #e74266 in sample; KEEP your blue */
-      --chat--color--primary-shade-50: #2fade3;
-      --chat--color--primary--shade-100: #2298c7;
+   :root {
+	/* Luma colors applied to n8n variables */
+	--chat--color--primary: #38bdf8; /* main blue */
+	--chat--color--primary-shade-50: #2fade3;
+	--chat--color--primary--shade-100: #2298c7;
 
-      --chat--color--secondary: #22c55e;              /* KEEP your green */
-      --chat--color-secondary-shade-50: #1da851;
+	--chat--color--secondary: #22c55e; /* green accent */
+	--chat--color-secondary-shade-50: #1da851;
 
-      --chat--color-white: #ffffff;
-      --chat--color-light: #e5e7eb;                   /* matches your UI */
-      --chat--color-light-shade-50: #94a3b8;
-      --chat--color-light-shade-100: #64748b;
+	--chat--color-white: #ffffff;
+	--chat--color-light: #e5e7eb;
+	--chat--color-light-shade-50: #94a3b8;
+	--chat--color-light-shade-100: #64748b;
 
-      --chat--color-medium: #cbd5e1;
-      --chat--color-dark: #0f172a;                    /* dark background */
-      --chat--color-disabled: #777980;
-      --chat--color-typing: #94a3b8;
+	--chat--color-medium: #cbd5e1;
+	--chat--color-dark: #0f172a; /* dark mode background */
+	--chat--color-disabled: #777980;
+	--chat--color-typing: #94a3b8;
 
-      --chat--spacing: 1rem;
-      --chat--border-radius: 0.75rem;
-      --chat--transition-duration: 0.15s;
+	/* Chat frame */
+	--chat--window--width: 400px;
+	--chat--window--height: 600px;
 
-      --chat--window--width: 400px;
-      --chat--window--height: 600px;
+	/* Background + surfaces */
+	--chat--background: #0f172a;  /* popup background */
+	--chat--surface: #0b1220;     /* chat content bg */
 
-      --chat--header-height: auto;
-      --chat--header--padding: var(--chat--spacing);
-      --chat--header--background: var(--chat--color-dark);
-      --chat--header--color: var(--chat--color-light);
-      --chat--header--border-top: none;
-      --chat--header--border-bottom: none;
+	/* Header */
+	--chat--header--background: var(--chat--color-dark);
+	--chat--header--color: var(--chat--color-light);
 
-      --chat--heading--font-size: 1.25em;
-      --chat--subtitle--font-size: 0.9em;
-      --chat--subtitle--line-height: 1.8;
+	/* Bubbles */
+	--chat--message--bot--background: #111827;
+	--chat--message--bot--color: #e5e7eb;
+	--chat--message--user--background: #38bdf8;
+	--chat--message--user--color: #04121d;
 
-      --chat--textarea--height: 50px;
+	/* Launcher button */
+	--chat--toggle--background: #38bdf8;
+	--chat--toggle--hover--background: #2fade3;
+	--chat--toggle--active--background: #2298c7;
+	--chat--toggle--color: #04121d;
 
-      --chat--message--font-size: 1rem;
-      --chat--message--padding: var(--chat--spacing);
-      --chat--message--border-radius: var(--chat--border-radius);
-      --chat--message-line-height: 1.8;
+	--chat--toggle--size: 64px;
+}
 
-      /* Dark bot bubble + light text fits your theme */
-      --chat--message--bot--background: #111827;
-      --chat--message--bot--color: #e5e7eb;
-      --chat--message--bot--border: 1px solid #1e293b;
-
-      /* User bubble in blue */
-      --chat--message--user--background: #38bdf8;
-      --chat--message--user--color: #04121d;
-      --chat--message--user--border: 1px solid #0ea5e9;
-
-      --chat--message--pre--background: rgba(255,255,255,0.05);
-
-      /* Launcher (toggle) */
-      --chat--toggle--background: var(--chat--color--primary);
-      --chat--toggle--hover--background: var(--chat--color--primary-shade-50);
-      --chat--toggle--active--background: var(--chat--color--primary--shade-100);
-      --chat--toggle--color: var(--chat--color-dark);
-      --chat--toggle--size: 64px;
-    }
 
     /* ========= Your site styles ========= */
     :root{
