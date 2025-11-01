@@ -34,7 +34,8 @@
 
   <style>
     /* ========= THEME FOR @n8n/chat (as requested) ========= */
-    :root {
+   :root {
+  /* Brand colors */
   --chat--color--primary: #38bdf8;
   --chat--color--primary-shade-50: #2fade3;
   --chat--color--primary--shade-100: #2298c7;
@@ -48,49 +49,57 @@
   --chat--color-light-shade-100: #64748b;
 
   --chat--color-medium: #cbd5e1;
-  --chat--color-dark: #0f172a;
+  --chat--color-dark: #0f172a; /* Background */
   --chat--color-disabled: #777980;
   --chat--color-typing: #94a3b8;
+
+  /* Layout */
+  --chat--window--width: 400px;
+  --chat--window--height: 600px;
 
   --chat--spacing: 1rem;
   --chat--border-radius: 0.75rem;
   --chat--transition-duration: 0.15s;
 
-  --chat--window--width: 400px;
-  --chat--window--height: 600px;
-
-  --chat--header-height: auto;
   --chat--header--padding: var(--chat--spacing);
-  --chat--header--background: #111827;
+  --chat--header--background: #111827; /* Dark header */
   --chat--header--color: #e5e7eb;
-  --chat--heading--font-size: 1.5em;
+
+  --chat--heading--font-size: 1.25em;
   --chat--subtitle--font-size: 0.9em;
   --chat--subtitle--line-height: 1.6;
 
   --chat--textarea--height: 50px;
 
+  /* BACKGROUND */
+  --chat--background: #0f172a; /* Main chat window background */
+  --chat--surface: #0b1220; /* Message container background */
+
+  /* Messages */
   --chat--message--font-size: 1rem;
   --chat--message--padding: var(--chat--spacing);
   --chat--message-line-height: 1.8;
   --chat--message--border-radius: 0.75rem;
 
-  --chat--message--bot--background: #0b1220;
+  /* BOT BUBBLE (dark bubble, light text) */
+  --chat--message--bot--background: #111827;
   --chat--message--bot--color: #e5e7eb;
-  --chat--message--bot--border: 1px solid #334155;
+  --chat--message--bot--border: 1px solid #1e293b;
 
+  /* USER BUBBLE (blue bubble, dark text) */
   --chat--message--user--background: #38bdf8;
   --chat--message--user--color: #04121d;
   --chat--message--user--border: 1px solid #0ea5e9;
 
   --chat--message--pre--background: rgba(255,255,255,0.05);
 
+  /* Launcher button */
   --chat--toggle--background: #38bdf8;
   --chat--toggle--hover--background: #2fade3;
   --chat--toggle--active--background: #2298c7;
   --chat--toggle--color: #04121d;
   --chat--toggle--size: 64px;
 }
-
 
     /* ========= Your site styles (same sections as before) ========= */
     :root{
@@ -343,7 +352,7 @@
     <div class="container" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
       <div>
         © <span id="y"></span> Luma Tickets. All rights reserved.
-        <span style="opacity:.7">Operated by SevenApes.</span>
+        <span style="opacity:.7">Operated by Luma.</span>
       </div>
       <div class="links">
         <a href="#compliance">Privacy</a>
