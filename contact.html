@@ -1,67 +1,61 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact — Luma Tickets</title>
-  <meta name="theme-color" content="#0f172a" />
-  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-  <style>
-    :root{ --bg:#0f172a; --ink:#e5e7eb }
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui}
-    /* Optional sticky header; remove this block if you want chat truly edge-to-edge */
-    header{position:sticky;top:0;z-index:2;background:rgba(2,8,23,.8);backdrop-filter:blur(10px);border-bottom:1px solid rgba(148,163,184,.2)}
-    .container{max-width:1200px;margin:auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
-    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:white;font-weight:800}
-    nav a{color:#e5e7eb;padding:8px 10px;border-radius:10px;text-decoration:none}
-    nav a[aria-current="page"]{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
-    /* Fullscreen chat mount (fills viewport under header) */
-    #chat-full { position: fixed; inset: 62px 0 0 0; }
-    /* If you remove the header entirely, change to: #chat-full{position:fixed; inset:0;} */
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RSVP — Luma TSVP Assistant</title>
+<meta name="theme-color" content="#0f172a" />
+
+<style>
+:root{ --bg:#0f172a; --ink:#e5e7eb }
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui}
+#chat-root{position:fixed;inset:0;background:#0f172a}
+n8nchatui-inpage{display:block;width:100%;height:100%}
+</style>
 </head>
+
 <body>
-  <header>
-    <div class="container">
-      <div style="display:flex;align-items:center;gap:12px">
-        <div class="logo">LT</div><strong>Luma Tickets</strong>
-      </div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="features.html">Features</a>
-        <a href="how-it-works.html">How it Works</a>
-        <a href="analytics.html">Analytics</a>
-        <a aria-current="page" href="contact.html">Contact</a>
-        <a href="privacy.html">Privacy</a>
-      </nav>
-    </div>
-  </header>
+<div id="chat-root">
+<n8nchatui-inpage></n8nchatui-inpage>
+</div>
 
-  <!-- Fullscreen embedded chat -->
-  <div id="chat-full" role="main" aria-label="Luma TSVP Assistant"></div>
+<script type="module">
+import Chatbot from "https://cdn.n8nchatui.com/v1/embed.js";
 
-  <script type="module">
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+Chatbot.initFull({
+  n8nChatUrl: "https://automation.evu.business/webhook/d2c83952-b78c-426c-af63-f4559400c536/chat",
 
-    // IMPORTANT: there is NO other createChat call on this page or any toggle code
-    createChat({
-      webhookUrl: 'https://automation.evu.business/webhook/d2c83952-b78c-426c-af63-f4559400c536/chat',
-      target: '#chat-full',          // Mount INTO this container
-      mode: 'embedded',              // Embedded = uses your container → full screen
-      loadPreviousSession: true,
-      defaultLanguage: 'en',
-      initialMessages: [
-        "Welcome — I'm Luma RSVP.",
-        "I collect event requirements (date, venue, estimated guests, and ticket types). I don’t accept guest lists or generate QR codes here."
+  theme: {
+    button: {},
+    chatWindow: {
+      height: 0, width: 0,
+      backgroundColor: "#0b1220",
+      title: "Luma TSVP",
+      welcomeMessage: "Welcome — I’m Luma TSVP. I collect event requirements (date, venue, guests, ticket types).",
+      starterPrompts: [
+        "Event date, city, and guest count",
+        "Ticket tiers (Gold/Silver?)",
+        "Tell me about your event"
       ],
-      i18n: {
-        en: {
-          title: 'Luma RSVP',
-          subtitle: 'Event registration intake • Ticket types • Requirements',
-          inputPlaceholder: 'Example: 15 Nov • Cairo • 400 guests • Gold/Silver ticket types'
-        }
+      botMessage: {
+        backgroundColor:"#111827",
+        textColor:"#e5e7eb",
+        showAvatar:true,
+        avatarSrc:"https://www.svgrepo.com/show/334455/bot.svg"
+      },
+      userMessage: {
+        backgroundColor:"#38bdf8",
+        textColor:"#04121d"
+      },
+      textInput: {
+        placeholder:"Example: 15 Nov — Cairo — 400 guests — Gold/Silver",
+        backgroundColor:"#0b1220",
+        textColor:"#e5e7eb",
+        sendButtonColor:"#22c55e"
       }
-    });
-  </script>
+    }
+  }
+});
+</script>
 </body>
 </html>
