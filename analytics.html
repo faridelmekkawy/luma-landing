@@ -1,166 +1,111 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Analytics — Luma Tickets</title>
-  <meta name="theme-color" content="#0f172a" />
-  <style>
-    :root{
-      --bg:#0f172a; --panel:#0b1220; --ink:#e5e7eb; --muted:#94a3b8;
-      --accent:#38bdf8; --accent2:#22c55e; --radius:18px;
-      --shadow:0 24px 60px rgba(2,8,23,.55);
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
-    a{text-decoration:none;color:var(--ink)}
-    .container{max-width:1180px;margin:auto;padding:28px}
-
-    /* Header / Nav (same as other pages) */
-    header{position:sticky;top:0;background:rgba(2,8,23,.75);backdrop-filter:blur(10px);border-bottom:1px solid rgba(148,163,184,.18);z-index:10}
-    .nav{display:flex;justify-content:space-between;align-items:center}
-    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:#fff;font-weight:800}
-    nav a{padding:10px 14px;border-radius:10px}
-    nav a[aria-current="page"], nav a:hover{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
-    .btn{padding:12px 16px;border-radius:14px;font-weight:600;display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(148,163,184,.35)}
-    .btn.primary{background:var(--accent);color:#04121d;border-color:transparent;box-shadow:0 6px 18px rgba(56,189,248,.35)}
-
-    /* Cards / layout */
-    .section-title{margin:22px 0 6px;font-size:28px}
-    .lead{color:var(--muted);margin:0 0 18px}
-    .grid{display:grid;gap:22px}
-    .grid-4{grid-template-columns:repeat(4,1fr)}
-    .grid-2{grid-template-columns:repeat(2,1fr)}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
-    .kpi{display:flex;flex-direction:column;gap:6px}
-    .kpi .label{color:var(--muted);font-size:13px}
-    .kpi .value{font-size:28px;font-weight:700}
-    .muted{color:var(--muted)}
-    .split{display:flex;justify-content:space-between;align-items:center;gap:12px}
-
-    /* Progress */
-    .bar{height:10px;border-radius:999px;background:rgba(148,163,184,.16);overflow:hidden}
-    .bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#53d0ff)}
-
-    /* Mini line chart (inline SVG wrapper) */
-    .mini{display:block;width:100%;height:60px;margin-top:10px}
-
-    /* Table */
-    table{width:100%;border-collapse:collapse;border-spacing:0}
-    th,td{text-align:left;padding:10px 12px;border-bottom:1px dashed rgba(148,163,184,.2)}
-    th{color:var(--muted);font-weight:600}
-
-    /* Responsive */
-    @media (max-width:1020px){
-      .grid-4{grid-template-columns:1fr 1fr}
-      .grid-2{grid-template-columns:1fr}
-    }
-    @media (max-width:640px){
-      .grid-4{grid-template-columns:1fr}
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Analytics — Luma Tickets</title>
+<meta name="theme-color" content="#0f172a" />
+<style>
+:root{
+  --bg:#0f172a; --panel:#0b1220; --ink:#e5e7eb; --muted:#94a3b8;
+  --accent:#38bdf8; --accent2:#22c55e; --radius:18px; --shadow:0 24px 60px rgba(2,8,23,.55);
+  --mobile-pad:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+a{text-decoration:none;color:var(--ink)}
+.container{max-width:1180px;margin:auto;padding:28px}
+header{position:sticky;top:0;background:rgba(2,8,23,.75);backdrop-filter:blur(10px);border-bottom:1px solid rgba(148,163,184,.18);z-index:10}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:#fff;font-weight:800}
+nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+nav a{padding:10px 14px;border-radius:10px}
+nav a[aria-current="page"], nav a:hover{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
+.btn{padding:12px 16px;border-radius:14px;font-weight:600;display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(148,163,184,.35)}
+.btn.primary{background:var(--accent);color:#04121d;border-color:transparent;box-shadow:0 6px 18px rgba(56,189,248,.35)}
+.section-title{margin:22px 0 6px;font-size:28px}
+.lead{color:var(--muted);margin:0 0 18px}
+.grid{display:grid;gap:22px}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.kpi{display:flex;flex-direction:column;gap:6px}
+.kpi .label{color:var(--muted);font-size:13px}
+.kpi .value{font-size:28px;font-weight:700}
+.muted{color:var(--muted)}
+.split{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.bar{height:10px;border-radius:999px;background:rgba(148,163,184,.16);overflow:hidden}
+.bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#53d0ff)}
+table{width:100%;border-collapse:collapse;border-spacing:0}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px dashed rgba(148,163,184,.2)}
+th{color:var(--muted);font-weight:600}
+footer{border-top:1px solid rgba(148,163,184,.2);padding:26px;color:var(--muted);padding-bottom:calc(26px + env(safe-area-inset-bottom))}
+@media (max-width:1020px){.grid-4{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}}
+@media (max-width:640px){.container{max-width:100%;padding:var(--mobile-pad)}.grid-4{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <div style="display:flex;gap:12px;align-items:center">
-        <div class="logo">LT</div><strong>Luma Tickets</strong>
-      </div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="features.html">Features</a>
-        <a href="how-it-works.html">How it Works</a>
-        <a aria-current="page" href="analytics.html">Analytics</a>
-        <a class="btn primary" href="rsvp.html">RSVP (Chat)</a>
-      </nav>
+<header>
+  <div class="container nav">
+    <div style="display:flex;gap:12px;align-items:center">
+      <div class="logo">LT</div><strong>Luma Tickets</strong>
     </div>
-  </header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="how-it-works.html">How it Works</a>
+      <a aria-current="page" href="analytics.html">Analytics</a>
+      <a class="btn primary" href="rsvp.html">RSVP (Chat)</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </div>
+</header>
 
-  <main class="container" style="padding:42px 0 28px">
-    <h1 class="section-title">Example Analytics Snapshot</h1>
-    <p class="lead">A demo of what organizers see during the event — updated live in production.</p>
+<main class="container" style="padding:42px 0 28px">
+  <h1 class="section-title">Example Analytics Snapshot</h1>
+  <p class="lead">A demo of what organizers see during the event — updated live in production.</p>
 
-    <!-- KPIs -->
-    <section class="grid grid-4">
-      <div class="card kpi">
-        <span class="label">Invited</span>
-        <span class="value">1,200</span>
-        <span class="muted">Guest list size</span>
-      </div>
-      <div class="card kpi">
-        <span class="label">RSVPs</span>
-        <span class="value">860</span>
-        <div class="bar" title="RSVP rate 71.7%"><span style="width:71.7%"></span></div>
-        <span class="muted">71.7% RSVP rate</span>
-      </div>
-      <div class="card kpi">
-        <span class="label">Checked-In</span>
-        <span class="value">742</span>
-        <div class="bar" title="Check-in vs RSVP 86.3%"><span style="width:86.3%"></span></div>
-        <span class="muted">86.3% of RSVPs</span>
-      </div>
-      <div class="card kpi">
-        <span class="label">Conversion</span>
-        <span class="value">61.8%</span>
-        <span class="muted">Invite → Entry</span>
-      </div>
-    </section>
+  <section class="grid grid-4">
+    <div class="card kpi"><span class="label">Invited</span><span class="value">1,200</span><span class="muted">Guest list size</span></div>
+    <div class="card kpi"><span class="label">RSVPs</span><span class="value">860</span><div class="bar"><span style="width:71.7%"></span></div><span class="muted">71.7% RSVP rate</span></div>
+    <div class="card kpi"><span class="label">Checked-In</span><span class="value">742</span><div class="bar"><span style="width:86.3%"></span></div><span class="muted">86.3% of RSVPs</span></div>
+    <div class="card kpi"><span class="label">Conversion</span><span class="value">61.8%</span><span class="muted">Invite → Entry</span></div>
+  </section>
 
-    <!-- Trends -->
-    <section style="margin-top:22px" class="grid grid-2">
-      <div class="card">
-        <div class="split">
-          <h3 style="margin:0">Arrivals per 15 min</h3>
-          <span class="muted">Peak: 8:30 PM</span>
-        </div>
-        <!-- mini line chart (placeholder path) -->
-        <svg class="mini" viewBox="0 0 300 60" preserveAspectRatio="none" aria-hidden="true">
-          <polyline fill="none" stroke="#38bdf8" stroke-width="3"
-            points="0,50 20,48 40,45 60,40 80,35 100,32 120,28 140,22 160,16 180,12 200,18 220,26 240,34 260,42 280,48 300,50"/>
-        </svg>
-        <p class="muted" style="margin:8px 0 0">Early arrivals steady, peak at showtime, tapering after 9:30 PM.</p>
+  <section style="margin-top:22px" class="grid grid-2">
+    <div class="card">
+      <div class="split"><h3 style="margin:0">Arrivals per 15 min</h3><span class="muted">Peak: 8:30 PM</span></div>
+      <svg viewBox="0 0 300 60" preserveAspectRatio="none" aria-hidden="true" style="display:block;width:100%;height:60px;margin-top:10px">
+        <polyline fill="none" stroke="#38bdf8" stroke-width="3"
+          points="0,50 20,48 40,45 60,40 80,35 100,32 120,28 140,22 160,16 180,12 200,18 220,26 240,34 260,42 280,48 300,50"/>
+      </svg>
+      <p class="muted" style="margin:8px 0 0">Early arrivals steady, peak at showtime, tapering after 9:30 PM.</p>
+    </div>
+    <div class="card">
+      <div class="split"><h3 style="margin:0">Capacity & Flow</h3><span class="muted">Real-time</span></div>
+      <div style="margin-top:10px">
+        <div class="split"><span class="muted">Venue Capacity</span><strong>1,000</strong></div>
+        <div class="split"><span class="muted">Current Inside</span><strong>705</strong></div>
+        <div class="bar" style="margin-top:8px"><span style="width:70.5%"></span></div>
       </div>
+      <p class="muted" style="margin:10px 0 0">Auto-updates from scanners at each gate.</p>
+    </div>
+  </section>
 
-      <div class="card">
-        <div class="split">
-          <h3 style="margin:0">Capacity & Flow</h3>
-          <span class="muted">Real-time</span>
-        </div>
-        <div style="margin-top:10px">
-          <div class="split"><span class="muted">Venue Capacity</span><strong>1,000</strong></div>
-          <div class="split"><span class="muted">Current Inside</span><strong>705</strong></div>
-          <div class="bar" title="70.5% inside" style="margin-top:8px"><span style="width:70.5%"></span></div>
-        </div>
-        <p class="muted" style="margin:10px 0 0">Auto-updates from scanners at each gate.</p>
-      </div>
-    </section>
+  <section style="margin-top:22px" class="card">
+    <div class="split" style="margin-bottom:8px"><h3 style="margin:0">Tier Breakdown (Example)</h3><span class="muted">Gold vs Silver</span></div>
+    <table role="table" aria-label="Tier breakdown example">
+      <thead><tr><th>Tier</th><th>Invited</th><th>RSVP</th><th>Checked-In</th><th>Conversion</th></tr></thead>
+      <tbody>
+        <tr><td>Gold</td><td>300</td><td>260</td><td>242</td><td>80.7%</td></tr>
+        <tr><td>Silver</td><td>900</td><td>600</td><td>500</td><td>55.6%</td></tr>
+      </tbody>
+    </table>
+  </section>
 
-    <!-- Breakdown -->
-    <section style="margin-top:22px" class="card">
-      <div class="split" style="margin-bottom:8px">
-        <h3 style="margin:0">Tier Breakdown (Example)</h3>
-        <span class="muted">Gold vs Silver</span>
-      </div>
-      <table role="table" aria-label="Tier breakdown example">
-        <thead>
-          <tr><th>Tier</th><th>Invited</th><th>RSVP</th><th>Checked-In</th><th>Conversion</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Gold</td><td>300</td><td>260</td><td>242</td><td>80.7%</td></tr>
-          <tr><td>Silver</td><td>900</td><td>600</td><td>500</td><td>55.6%</td></tr>
-        </tbody>
-      </table>
-      <p class="muted" style="margin:10px 0 0">Conversion = Checked-In ÷ Invited. Values here are for illustration only.</p>
-    </section>
+  <section style="margin-top:22px"><a class="btn primary" href="rsvp.html">Start RSVP in Chat</a></section>
+</main>
 
-    <!-- CTA -->
-    <section style="margin-top:22px">
-      <a class="btn primary" href="rsvp.html">Start RSVP in Chat</a>
-    </section>
-  </main>
-
-  <footer class="container" style="border-top:1px solid rgba(148,163,184,.2);padding:26px;color:var(--muted)">
-    © <script>document.write(new Date().getFullYear())</script> Luma Tickets
-  </footer>
+<footer class="container">© <script>document.write(new Date().getFullYear())</script> Luma Tickets</footer>
 </body>
 </html>
