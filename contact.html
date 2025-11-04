@@ -9,13 +9,15 @@
   <style>
     :root{ --bg:#0f172a; --ink:#e5e7eb }
     html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui}
+    /* Optional sticky header; remove this block if you want chat truly edge-to-edge */
     header{position:sticky;top:0;z-index:2;background:rgba(2,8,23,.8);backdrop-filter:blur(10px);border-bottom:1px solid rgba(148,163,184,.2)}
     .container{max-width:1200px;margin:auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
     .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:white;font-weight:800}
     nav a{color:#e5e7eb;padding:8px 10px;border-radius:10px;text-decoration:none}
     nav a[aria-current="page"]{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
-    /* Fullscreen chat mount */
-    #chat-full{position:fixed; inset:62px 0 0 0;} /* below header */
+    /* Fullscreen chat mount (fills viewport under header) */
+    #chat-full { position: fixed; inset: 62px 0 0 0; }
+    /* If you remove the header entirely, change to: #chat-full{position:fixed; inset:0;} */
   </style>
 </head>
 <body>
@@ -41,10 +43,11 @@
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
+    // IMPORTANT: there is NO other createChat call on this page or any toggle code
     createChat({
       webhookUrl: 'https://automation.evu.business/webhook/d2c83952-b78c-426c-af63-f4559400c536/chat',
-      target: '#chat-full',
-      mode: 'embedded',                  // FULLSCREEN via container
+      target: '#chat-full',          // Mount INTO this container
+      mode: 'embedded',              // Embedded = uses your container → full screen
       loadPreviousSession: true,
       defaultLanguage: 'en',
       initialMessages: [
