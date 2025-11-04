@@ -4,15 +4,20 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Luma Tickets — Digital Invitations & QR Check-In</title>
-  <meta name="description" content="Luma Tickets delivers smart digital invitations, secure QR tickets, and seamless guest check-in for premium events." />
-  <meta name="theme-color" content="#0f172a" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f172a'/><text x='50' y='58' font-size='56' text-anchor='middle' fill='white'>L</text></svg>">
+  <meta name="description" content="Luma Tickets delivers bespoke digital invitations, secure QR ticketing, and concierge-grade guest entry experiences." />
+  <meta name="theme-color" content="#0b0f1a" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230b0f1a'/><text x='50' y='58' font-size='56' text-anchor='middle' fill='white'>L</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Luma Tickets — Digital Invitations & QR Check-In" />
-  <meta property="og:description" content="Smart invitations, QR tickets, and seamless entry for events." />
+  <meta property="og:title" content="Luma Tickets — Concierge-Grade Event Entry" />
+  <meta property="og:description" content="Bespoke invitations and flawless check-ins for premium events." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://dummyimage.com/1200x630/0f172a/ffffff&text=Luma+Tickets" />
+  <meta property="og:image" content="https://dummyimage.com/1200x630/0b0f1a/ffffff&text=Luma+Tickets" />
   <meta property="og:url" content="https://your-domain.example/luma-tickets" />
 
   <!-- Structured Data -->
@@ -23,105 +28,160 @@
     "name": "Luma Tickets",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web",
-    "description": "Digital invitations, QR ticketing, and guest check-in for events.",
+    "description": "Digital invitations, QR ticketing, and guest check-in for premium events.",
     "brand": {"@type":"Brand","name":"Luma Tickets"},
     "publisher": {"@type":"Organization","name":"SevenApes"}
   }
   </script>
 
-  <!-- n8n chat base styles -->
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
   <style>
-    /* ========= @n8n/chat THEME — brand colors ========= */
-   :root {
-	/* Luma colors applied to n8n variables */
-	--chat--color--primary: #38bdf8; /* main blue */
-	--chat--color--primary-shade-50: #2fade3;
-	--chat--color--primary--shade-100: #2298c7;
-
-	--chat--color--secondary: #22c55e; /* green accent */
-	--chat--color-secondary-shade-50: #1da851;
-
-	--chat--color-white: #ffffff;
-	--chat--color-light: #e5e7eb;
-	--chat--color-light-shade-50: #94a3b8;
-	--chat--color-light-shade-100: #64748b;
-
-	--chat--color-medium: #cbd5e1;
-	--chat--color-dark: #0f172a; /* dark mode background */
-	--chat--color-disabled: #777980;
-	--chat--color-typing: #94a3b8;
-
-	/* Chat frame */
-	--chat--window--width: 400px;
-	--chat--window--height: 600px;
-
-	/* Background + surfaces */
-	--chat--background: #0f172a;  /* popup background */
-	--chat--surface: #0b1220;     /* chat content bg */
-
-	/* Header */
-	--chat--header--background: var(--chat--color-dark);
-	--chat--header--color: var(--chat--color-light);
-
-	/* Bubbles */
-	--chat--message--bot--background: #111827;
-	--chat--message--bot--color: #e5e7eb;
-	--chat--message--user--background: #38bdf8;
-	--chat--message--user--color: #04121d;
-
-	/* Launcher button */
-	--chat--toggle--background: #38bdf8;
-	--chat--toggle--hover--background: #2fade3;
-	--chat--toggle--active--background: #2298c7;
-	--chat--toggle--color: #04121d;
-
-	--chat--toggle--size: 64px;
-}
-
-    /* ========= Site styles ========= */
     :root{
-      --bg:#0f172a; --panel:#111827; --muted:#94a3b8; --ink:#e5e7eb; --pure:#ffffff;
-      --accent:#38bdf8; --accent-2:#22c55e; --warn:#f59e0b;
-      --radius:18px; --shadow:0 20px 40px rgba(2,8,23,.35); --max:1200px;
+      /* Luxury palette */
+      --bg:#0b0f1a;
+      --panel:#0e1422;
+      --ink:#e6e8ef;
+      --muted:#99a0b3;
+      --pure:#ffffff;
+
+      --accent:#38bdf8;
+      --accent-2:#22c55e;
+      --lux:#e5c267;
+      --lux-2:#d4af37;
+
+      --radius:18px;
+      --max:1200px;
+      --shadow:0 30px 80px rgba(0,0,0,.55);
+      --blur:12px;
     }
+
     *{box-sizing:border-box}
-    html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.65 'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+    h1,h2,h3,.display{font-family:'Fraunces', serif; letter-spacing:.2px}
+
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
     .container{max-width:var(--max);margin-inline:auto;padding:28px}
-    .grid{display:grid;gap:24px}
+
+    /* Luxury backdrop */
+    body::before{
+      content:''; position:fixed; inset:-10%;
+      background:
+        radial-gradient(1200px 600px at 70% -10%, rgba(56,189,248,.25), transparent 55%),
+        radial-gradient(900px 500px at 10% 10%, rgba(212,175,55,.18), transparent 60%),
+        radial-gradient(1000px 800px at 50% 120%, rgba(88,28,135,.10), transparent 60%);
+      pointer-events:none; z-index:-2; filter:saturate(110%);
+    }
+    body::after{
+      content:''; position:fixed; inset:0;
+      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><defs><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="2" stitchTiles="stitch"/></filter></defs><rect width="100%" height="100%" filter="url(%23n)" opacity="0.03"/></svg>');
+      background-size:160px 160px; opacity:.5; pointer-events:none; z-index:-3;
+    }
 
     /* Header */
-    header{position:sticky;top:0;backdrop-filter:saturate(120%) blur(8px);background:linear-gradient(180deg, rgba(2,8,23,.9), rgba(2,8,23,.65));border-bottom:1px solid rgba(148,163,184,.2);z-index:10}
+    header{position:sticky;top:0;backdrop-filter:saturate(120%) blur(10px);
+      background:linear-gradient(180deg, rgba(8,12,22,.85), rgba(8,12,22,.45));
+      border-bottom:1px solid rgba(229,194,103,.18); z-index:20}
     .nav{display:flex;align-items:center;justify-content:space-between}
     .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:white;font-weight:800;box-shadow:var(--shadow)}
-    .brand h1{font-size:20px;margin:0;color:var(--pure);letter-spacing:.2px}
-    .nav a.btn{padding:10px 16px;border-radius:12px;background:var(--accent);color:#0b1220;font-weight:700;box-shadow:var(--shadow)}
+    .logo{width:44px;height:44px;border-radius:14px;
+      background:linear-gradient(140deg,var(--lux),var(--lux-2) 55%, #8b6f20);
+      color:#0b0f1a; font-weight:800; display:grid;place-items:center;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.25), var(--shadow)}
+    .brand h1{font-size:22px;margin:0;color:var(--pure)}
+    .links a{padding:10px 12px;border-radius:10px;color:var(--ink);opacity:.9}
+    .links a[aria-current="page"]{background:rgba(229,194,103,.08);border:1px solid rgba(229,194,103,.25)}
 
-    /* Sections */
-    .hero{padding:64px 0 24px}
-    .hero-wrap{display:grid;grid-template-columns:1fr;gap:28px;align-items:center}
-    .hero h2{font-size:40px;line-height:1.15;margin:0 0 12px;color:var(--pure)}
-    .hero p{color:var(--muted);margin:0 0 20px}
-    .cta{display:flex;gap:12px;flex-wrap:wrap}
+    /* Cards */
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid rgba(229,194,103,.22); border-radius:var(--radius);
+      backdrop-filter: blur(var(--blur)); box-shadow: var(--shadow)}
+
+    /* Buttons */
     .btn{padding:14px 18px;border-radius:14px;font-weight:700;border:1px solid transparent;display:inline-flex;gap:10px;align-items:center;cursor:pointer}
-    .btn.primary{background:var(--accent);color:#04121d}
-    .btn.secondary{background:transparent;border-color:rgba(148,163,184,.35);color:var(--ink)}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.2);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .btn.primary{background:linear-gradient(180deg,var(--lux),var(--lux-2)); color:#1a1304; text-shadow:0 1px 0 rgba(255,255,255,.35)}
+    .btn.secondary{background:transparent;border-color:rgba(229,194,103,.35);color:var(--ink)}
 
-    footer{border-top:1px solid rgba(148,163,184,.2);padding:28px 0;color:var(--muted)}
-    .links{display:flex;flex-wrap:wrap;gap:16px}
+    /* Hero */
+    .hero{padding:84px 0 36px}
+    .hero h2{font-size:54px;line-height:1.05;margin:0 0 16px;color:var(--pure)}
+    .hero .eyebrow{color:var(--lux); text-transform:uppercase; letter-spacing:.22em; font-size:12px}
+    .hero p{color:var(--muted);max-width:760px}
 
-    section>h2{font-size:28px;color:var(--pure);margin:0 0 6px}
+    .grid{display:grid;gap:24px}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-4{grid-template-columns:repeat(4,1fr)}
+
+    section>h2{font-size:34px;margin:0 0 10px;color:var(--pure)}
     section>p.lead{margin:0 0 18px;color:var(--muted)}
+    .feature{padding:22px}
+    .badge{display:inline-block;padding:6px 10px;border-radius:999px;
+      background:rgba(229,194,103,.14); border:1px solid rgba(229,194,103,.35);
+      font-size:12px; color:var(--lux)}
+    .divider{height:1px;background:linear-gradient(90deg, transparent, rgba(229,194,103,.35), transparent); margin:28px 0}
+    footer{border-top:1px solid rgba(229,194,103,.22);padding:28px 0;color:var(--muted)}
 
     /* Forms */
     form{display:grid;gap:12px}
-    input,textarea{width:100%;padding:12px 14px;border-radius:12px;color:var(--pure);background:#0b1220;border:1px solid rgba(148,163,184,.25)}
-    input::placeholder,textarea::placeholder{color:#6b7280}
+    input,textarea{width:100%;padding:12px 14px;border-radius:12px;color:var(--pure);
+      background:rgba(13,18,32,.65); border:1px solid rgba(229,194,103,.22)}
+    input::placeholder,textarea::placeholder{color:#8892a6}
+    .note{font-size:12px;color:#97a0b7}
+    .spotline{border-left:3px solid var(--lux); padding-left:12px}
+
+    /* Event pass mockup */
+    .pass{position:relative; width:340px; height:540px; border-radius:22px;
+      background:linear-gradient(165deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      border:1px solid rgba(229,194,103,.28);
+      box-shadow: var(--shadow); backdrop-filter: blur(14px); overflow:hidden}
+    .pass .band{position:absolute; inset:0; background:
+      radial-gradient(500px 220px at -20% -10%, rgba(229,194,103,.25), transparent),
+      radial-gradient(600px 280px at 120% 20%, rgba(56,189,248,.25), transparent)}
+    .pass .chip{position:absolute; top:22px; right:22px; width:48px; height:32px;
+      background:linear-gradient(180deg,#f1e1a7,#d4bd6a); border-radius:6px; box-shadow: inset 0 0 0 2px rgba(0,0,0,.15)}
+    .pass .logo{position:absolute; top:22px; left:22px; font-weight:800; color:#0b0f1a; background:linear-gradient(140deg,var(--lux),var(--lux-2)); -webkit-background-clip:text; background-clip:text; color:transparent; font-size:24px}
+    .pass .event{position:absolute; top:78px; left:22px; right:22px; color:var(--pure); font-family:'Fraunces', serif; font-size:22px}
+    .pass .meta{position:absolute; top:122px; left:22px; right:22px; color:var(--muted); font-size:13px}
+    .pass .qr{position:absolute; bottom:110px; left:50%; transform:translateX(-50%); width:160px; height:160px; background:var(--pure); display:grid; place-items:center; border-radius:10px}
+    .pass .qr svg{width:120px; height:120px}
+    .pass .name{position:absolute; bottom:70px; left:22px; right:22px; color:var(--pure); font-weight:700}
+    .pass .tier{position:absolute; bottom:22px; left:22px; right:22px; color:#1a1304; background:linear-gradient(180deg,var(--lux),var(--lux-2)); padding:10px 12px; border-radius:12px; font-weight:800; text-align:center}
+
+    /* Chat theme overrides */
+    :root{
+      --chat--color--primary: var(--lux);
+      --chat--color--primary-shade-50: #d6b650;
+      --chat--color--primary--shade-100: #b9962e;
+      --chat--color--secondary: var(--accent);
+      --chat--color-secondary-shade-50: #2fade3;
+      --chat--color-white: #ffffff;
+      --chat--color-light: #e6e8ef;
+      --chat--color-light-shade-50: #aab1c2;
+      --chat--color-light-shade-100: #7b8193;
+      --chat--color-medium: #cbd5e1;
+      --chat--color-dark: #0b0f1a;
+      --chat--background: #0b0f1a;
+      --chat--surface: #0e1422;
+      --chat--message--bot--background: #0f1628;
+      --chat--message--bot--color: #e6e8ef;
+      --chat--message--user--background: var(--lux);
+      --chat--message--user--color: #1a1304;
+      --chat--toggle--background: var(--lux);
+      --chat--toggle--hover--background: #d6b650;
+      --chat--toggle--active--background: #b9962e;
+      --chat--toggle--color: #1a1304;
+      --chat--toggle--size: 64px;
+    }
+
+    @media (max-width: 1040px){
+      .grid-2{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .grid-4{grid-template-columns:1fr}
+      .hero h2{font-size:40px}
+      .pass{margin-top:18px}
+    }
   </style>
 </head>
 
@@ -133,34 +193,33 @@
         <h1>Luma Tickets</h1>
       </div>
       <nav class="links">
-        <a href="index.html">Home</a>
-        <a href="features.html">Features</a>
-        <a href="how-it-works.html">How It Works</a>
-        <a href="analytics.html" style="opacity:.9;text-decoration:underline">Analytics</a>
-        <a href="contact.html">Contact</a>
-        <a href="privacy.html">Privacy</a>
+        <a href="index.html">Home</a> <a href="features.html">Features</a> <a href="how-it-works.html">How It Works</a> <a href="analytics.html" aria-current="page">Analytics</a> <a href="contact.html">Contact</a> <a href="privacy.html">Privacy</a>
       </nav>
     </div>
   </header>
 
 <main>
-  <section class="analytics">
+  <section class="hero" style="padding:48px 0 18px">
     <div class="container">
-      <h2>Smart Data for Smart Hosts</h2>
-      <p class="lead">See the full story of your event, from entry times to guest engagement.</p>
-      <div class="grid" style="grid-template-columns:1fr 1fr">
-        <div class="card" style="padding:20px">
+      <h2 class="display">Analytics & Insights</h2>
+      <p class="lead">See what matters — as it happens.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="grid grid-2">
+        <div class="card" style="padding:22px">
           <h3>Live KPIs</h3>
-          <p>Track arrivals, dwell times, and live capacity as they happen.</p>
+          <p>Arrivals, dwell times, live capacity — precision at a glance.</p>
         </div>
-        <div class="card" style="padding:20px">
+        <div class="card" style="padding:22px">
           <h3>Exports</h3>
-          <p>One-click export to CSV/Sheets with customizable fields.</p>
+          <p>One-click export to CSV/Sheets with exactly the fields you need.</p>
         </div>
       </div>
-      <div style="margin-top:20px">
-        <a class="btn primary" href="contact.html">See Analytics in Action</a>
-      </div>
+      <div class="divider"></div>
+      <a class="btn primary" href="contact.html">See Analytics in Action</a>
     </div>
   </section>
 </main>
@@ -168,7 +227,7 @@
     <div class="container" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
       <div>
         © <span id="y"></span> Luma Tickets. All rights reserved.
-        <span style="opacity:.7">Operated by Luma.</span>
+        <span style="opacity:.65">Operated by Luma.</span>
       </div>
       <div class="links">
         <a href="index.html">Home</a>
@@ -182,39 +241,31 @@
     <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
   </footer>
 
-  <!-- OPTIONAL mount target (ignored in window mode, harmless to keep): -->
   <div id="n8n-chat" aria-hidden="true"></div>
-
-  <!-- n8n chat init -->
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-
     createChat({
       webhookUrl: 'https://automation.evu.business/webhook/d2c83952-b78c-426c-af63-f4559400c536/chat',
-      webhookConfig: {
-        method: 'POST',
-        headers: {}
-      },
+      webhookConfig: { method: 'POST', headers: {} },
       target: '#n8n-chat',
       mode: 'window',
       chatInputKey: 'chatInput',
       chatSessionKey: 'sessionId',
       loadPreviousSession: true,
       metadata: {},
-
       showWelcomeScreen: false,
       defaultLanguage: 'en',
       initialMessages: [
-        "Hi! I'm Luma RSVP — your event registration assistant.",
-        "Ask me to register guests, generate QR tickets, or set up tiers."
+        "Welcome — I'm Luma RSVP.",
+        "I collect event requirements (dates, venue, guest estimate, ticket types) to start your setup. I don't accept guest lists or generate QR codes here."
       ],
       i18n: {
         en: {
           title: 'Luma RSVP',
-          subtitle: 'Register guests • Create invites • Check-in with QR',
+          subtitle: 'Event registration intake • Ticket types • Requirements',
           footer: '',
-          getStarted: 'Start Event Setup',
-          inputPlaceholder: 'Type: add guest, send invite via WhatsApp or email…'
+          getStarted: 'Start Registration',
+          inputPlaceholder: 'Example: 15 Nov • Cairo • 400 guests • Gold/Silver ticket types'
         }
       },
       enableStreaming: false
