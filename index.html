@@ -2,26 +2,28 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Luma Tickets — Premium Event RSVP & Check-In</title>
 <meta name="description" content="Premium digital invitations and onsite QR check-in for luxury events." />
 <meta name="theme-color" content="#0f172a" />
-
 <style>
 :root{
---bg:#0f172a; --panel:#0b1220; --ink:#e5e7eb; --muted:#94a3b8;
---accent:#38bdf8; --accent2:#22c55e; --radius:18px; --shadow:0 24px 60px rgba(2,8,23,.55);
+  --bg:#0f172a; --panel:#0b1220; --ink:#e5e7eb; --muted:#94a3b8;
+  --accent:#38bdf8; --accent2:#22c55e; --radius:18px; --shadow:0 24px 60px rgba(2,8,23,.55);
+  --mobile-pad:16px;
 }
-html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui}
-a{text-decoration:none}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+a{text-decoration:none;color:var(--ink)}
 .container{max-width:1180px;margin:auto;padding:28px}
 header{position:sticky;top:0;background:rgba(2,8,23,.75);backdrop-filter:blur(10px);border-bottom:1px solid rgba(148,163,184,.18);z-index:10}
-.nav{display:flex;justify-content:space-between;align-items:center}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:#fff;font-weight:800}
-nav a{color:var(--ink);padding:10px 14px;border-radius:10px}
+nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+nav a{padding:10px 14px;border-radius:10px}
 nav a.active, nav a:hover{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
-.btn{padding:12px 16px;border-radius:14px;font-weight:600;display:inline-flex;gap:8px;align-items:center}
-.btn.primary{background:var(--accent);color:#04121d;box-shadow:0 6px 18px rgba(56,189,248,.35)}
+.btn{padding:12px 16px;border-radius:14px;font-weight:600;display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(148,163,184,.35)}
+.btn.primary{background:var(--accent);color:#04121d;border-color:transparent;box-shadow:0 6px 18px rgba(56,189,248,.35)}
 .hero{padding:100px 0 50px}
 .hero h1{font-size:46px;margin:0 0 12px;color:#fff}
 .hero p{color:var(--muted);max-width:700px}
@@ -29,46 +31,55 @@ nav a.active, nav a:hover{background:rgba(56,189,248,.12);border:1px solid rgba(
 section h2{margin:40px 0 12px;font-size:28px}
 .grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
 .badge{font-size:12px;padding:6px 10px;border-radius:30px;background:rgba(148,163,184,.12);border:1px solid rgba(148,163,184,.25)}
-footer{border-top:1px solid rgba(148,163,184,.2);padding:26px;color:var(--muted)}
+footer{border-top:1px solid rgba(148,163,184,.2);padding:26px;color:var(--muted);padding-bottom:calc(26px + env(safe-area-inset-bottom))}
+@media (max-width:880px){
+  .container{max-width:100%;padding:var(--mobile-pad)}
+  header .container.nav{flex-wrap:wrap}
+  nav{gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .hero{padding:56px 0 24px}
+  .hero h1{font-size:28px}
+  section h2{font-size:22px}
+  .card{padding:16px;border-radius:14px}
+}
 </style>
 </head>
-
 <body>
 <header>
-<div class="container nav">
-<div style="display:flex;gap:12px;align-items:center">
-<div class="logo">LT</div><strong>Luma Tickets</strong>
-</div>
-<nav>
-<a class="active" href="index.html">Home</a>
-<a href="features.html">Features</a>
-<a href="how-it-works.html">How it Works</a>
-<a href="analytics.html">Analytics</a>
-<a class="btn primary" href="rsvp.html">RSVP (Chat)</a>
-</nav>
-</div>
+  <div class="container nav">
+    <div style="display:flex;gap:12px;align-items:center">
+      <div class="logo">LT</div><strong>Luma Tickets</strong>
+    </div>
+    <nav>
+      <a class="active" href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="how-it-works.html">How it Works</a>
+      <a href="analytics.html">Analytics</a>
+      <a class="btn primary" href="rsvp.html">RSVP (Chat)</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </div>
 </header>
 
 <main>
-<section class="hero container">
-<div class="card">
-<h1>Premium Digital RSVP & Guest Check-In</h1>
-<p>Concierge-level event access. Smart RSVPs, VIP tier handling, seamless entry, and elegant real-time dashboards.</p>
-<div style="margin-top:14px;display:flex;gap:10px">
-<a class="btn primary" href="rsvp.html">Start RSVP in Chat</a>
-<a class="btn" href="features.html" style="border:1px solid rgba(148,163,184,.35)">Explore Features</a>
-</div>
-</div>
-</section>
+  <section class="hero container">
+    <div class="card">
+      <h1>Premium Digital RSVP & Guest Check-In</h1>
+      <p>Concierge-level event access. Smart RSVPs, VIP tier handling, seamless entry, and elegant real-time dashboards.</p>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn primary" href="rsvp.html">Start RSVP in Chat</a>
+        <a class="btn" href="features.html">Explore Features</a>
+      </div>
+    </div>
+  </section>
 
-<section class="container">
-<h2>Highlights</h2>
-<div class="grid">
-<div class="card"><span class="badge">Invites</span><h3>Luxury Digital Invites</h3><p>Your brand, elegant motion, VIP aesthetics.</p></div>
-<div class="card"><span class="badge">Access</span><h3>Secure QR Check-in</h3><p>Unique encrypted QR per guest.</p></div>
-<div class="card"><span class="badge">Control</span><h3>Tiered Access</h3><p>Gold/Silver entry logic, +1 rules.</p></div>
-</div>
-</section>
+  <section class="container">
+    <h2>Highlights</h2>
+    <div class="grid">
+      <div class="card"><span class="badge">Invites</span><h3>Luxury Digital Invites</h3><p>Your brand, elegant motion, VIP aesthetics.</p></div>
+      <div class="card"><span class="badge">Access</span><h3>Secure QR Check-in</h3><p>Unique encrypted QR per guest.</p></div>
+      <div class="card"><span class="badge">Control</span><h3>Tiered Access</h3><p>Gold/Silver entry logic, +1 rules.</p></div>
+    </div>
+  </section>
 </main>
 
 <footer>© <script>document.write(new Date().getFullYear())</script> Luma Tickets</footer>
