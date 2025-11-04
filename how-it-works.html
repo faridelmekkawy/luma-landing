@@ -1,57 +1,20 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>How It Works — Luma Tickets</title>
-  <meta name="theme-color" content="#0f172a" />
-  <style>
-    :root{ --bg:#0f172a; --panel:#0b1220; --muted:#94a3b8; --ink:#e5e7eb; --pure:#ffffff; --accent:#38bdf8; --accent-2:#22c55e; --radius:18px; --max:1200px; --shadow:0 24px 60px rgba(2,8,23,.5); --blur:12px }
-    *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui}
-    .container{max-width:var(--max);margin:auto;padding:28px}
-    header{position:sticky;top:0;backdrop-filter:saturate(120%) blur(8px);background:linear-gradient(180deg, rgba(2,8,23,.9), rgba(2,8,23,.65));border-bottom:1px solid rgba(148,163,184,.2)}
-    .nav{display:flex;justify-content:space-between;align-items:center}
-    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:white;font-weight:800}
-    nav a{color:var(--ink);padding:10px 12px;border-radius:10px}
-    nav a[aria-current="page"]{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
-    .grid{display:grid;gap:24px} .grid-4{grid-template-columns:repeat(4,1fr)}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.22);border-radius:var(--radius);backdrop-filter:blur(12px);box-shadow:var(--shadow);padding:22px}
-    h1,h2,h3{margin:0 0 8px;color:var(--pure)} .lead{color:var(--muted)} .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(148,163,184,.12);border:1px solid rgba(148,163,184,.25);font-size:12px;color:var(--ink)}
-    @media (max-width:980px){.grid-4{grid-template-columns:1fr}}
-  </style>
-</head>
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How It Works — Luma Tickets</title>
+<style>/* same styling */</style></head>
 <body>
-<header>
-  <div class="container nav">
-    <div style="display:flex;align-items:center;gap:12px"><div class="logo">LT</div><strong>Luma Tickets</strong></div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="features.html">Features</a>
-      <a aria-current="page" href="how-it-works.html">How it Works</a>
-      <a href="analytics.html">Analytics</a>
-      <a href="contact.html">Contact</a>
-      <a href="privacy.html">Privacy</a>
-    </nav>
-  </div>
-</header>
+<header> …nav… </header>
 
-<main>
-  <section class="container" style="padding:48px 0 18px">
-    <h1>How It Works</h1>
-    <p class="lead">From invitation to check-in—simple, secure, and fast.</p>
-  </section>
+<div class="container" style="padding:60px 0 28px">
+<h1>How It Works</h1>
+<div class="grid">
+<div class="card"><strong>1.</strong> Upload guest data & tiers</div>
+<div class="card"><strong>2.</strong> Guests receive invite</div>
+<div class="card"><strong>3.</strong> Scan and validate onsite</div>
+<div class="card"><strong>4.</strong> Live dashboard</div>
+</div>
+<a class="btn primary" href="rsvp.html" style="margin-top:22px;display:inline-block">Start RSVP in Chat</a>
+</div>
 
-  <section class="container">
-    <div class="grid grid-4">
-      <div class="card"><span class="badge">1</span><h3>Create Guest List</h3><p>Upload CSV/Sheets, set tiers and +1s, then generate digital tickets.</p></div>
-      <div class="card"><span class="badge">2</span><h3>Send Invitations</h3><p>Deliver invites with embedded QR via WhatsApp or email.</p></div>
-      <div class="card"><span class="badge">3</span><h3>Scan at Entry</h3><p>Validate on any modern smartphone — no special hardware.</p></div>
-      <div class="card"><span class="badge">4</span><h3>Track in Real Time</h3><p>Monitor arrivals, capacities, and late guests; export logs.</p></div>
-    </div>
-    <div style="margin-top:20px"><a href="contact.html" style="color:var(--accent)">Start in Chat →</a></div>
-  </section>
-</main>
-
-<footer class="container" style="border-top:1px solid rgba(148,163,184,.2);padding:28px 0;color:var(--muted)">© <script>document.write(new Date().getFullYear())</script> Luma Tickets — All rights reserved.</footer>
-</body>
-</html>
+<footer>© <script>document.write(new Date().getFullYear())</script> Luma Tickets</footer>
+</body></html>
