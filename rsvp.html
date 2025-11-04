@@ -1,64 +1,129 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RSVP — Luma TSVP Assistant</title>
-  <meta name="theme-color" content="#0f172a" />
-  <style>
-    :root{ --bg:#0f172a; --ink:#e5e7eb }
-    html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
-    /* If you want a header, add it; otherwise chat fills screen */
-    #chat-root{position:fixed;inset:0;background:#0f172a}
-    n8nchatui-inpage{display:block;width:100%;height:100%}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>RSVP — Luma TSVP</title>
+<meta name="theme-color" content="#0f172a" />
+<style>
+:root{
+  --bg:#0f172a; --panel:#0b1220; --ink:#e5e7eb; --muted:#94a3b8;
+  --accent:#38bdf8; --accent2:#22c55e; --radius:18px; --shadow:0 24px 60px rgba(2,8,23,.45);
+  --mobile-pad:16px;
+  --header-h:80px; --footer-h:70px; /* defaults, will be measured */
+}
+*{ box-sizing:border-box }
+html,body {margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+header{
+  position:sticky;top:0;z-index:10;
+  background:rgba(2,8,23,.75);backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(148,163,184,.18);
+}
+.container{max-width:1180px;margin:auto;padding:24px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:white;font-weight:800}
+nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--ink);padding:10px 14px;border-radius:10px}
+nav a:hover, nav a[aria-current="page"]{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
+.btn.primary{
+  background:var(--accent);color:#04121d;border-radius:14px;
+  padding:12px 16px;font-weight:600;box-shadow:0 6px 18px rgba(56,189,248,.35)
+}
+
+/* Chat area respects header & footer */
+.page-wrap{ flex:1; display:flex; flex-direction:column; min-height:0 }
+.chat-container{
+  flex:1; min-height:320px;
+  height: calc(100dvh - var(--header-h) - var(--footer-h));
+  border-top:1px solid rgba(148,163,184,.18);
+  background: var(--bg);
+}
+@supports not (height:100dvh){
+  .chat-container{ height: calc(100vh - var(--header-h) - var(--footer-h)); }
+}
+n8nchatui-inpage{ width:100%; height:100%; display:block }
+
+footer{
+  border-top:1px solid rgba(148,163,184,.2);
+  padding:26px; color:var(--muted);
+  text-align:center; padding-bottom:calc(26px + env(safe-area-inset-bottom))
+}
+
+/* Mobile tweaks */
+@media (max-width:880px){
+  .container{max-width:100%;padding:var(--mobile-pad)}
+  header .container.nav{flex-wrap:wrap}
+  nav{gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
 </head>
 <body>
-  <div id="chat-root">
+
+<header>
+  <div class="container nav">
+    <div style="display:flex;gap:12px;align-items:center">
+      <div class="logo">LT</div><strong>Luma Tickets</strong>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="how-it-works.html">How it Works</a>
+      <a href="analytics.html">Analytics</a>
+      <a aria-current="page" href="rsvp.html" class="btn primary">RSVP</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <div id="chat" class="chat-container">
     <n8nchatui-inpage></n8nchatui-inpage>
   </div>
+</div>
 
-  <script type="module">
-    import Chatbot from "https://cdn.n8nchatui.com/v1/embed.js";
-    Chatbot.initFull({
-      n8nChatUrl: "https://automation.evu.business/webhook/d2c83952-b78c-426c-af63-f4559400c536/chat",
-      theme: {
-        button: {},
-        chatWindow: {
-          height: 0, width: 0,
-          backgroundColor: "#0b1220",
-          title: "Luma TSVP",
-          welcomeMessage: "Welcome — I’m Luma TSVP. I collect event requirements (date, venue, guests, ticket types).",
-          errorMessage: "Connection error — please try again.",
-          starterPrompts: [
-            "Event date, city, and guest count",
-            "Ticket tiers (Gold/Silver?)",
-            "Tell me about your event"
-          ],
-          botMessage: {
-            backgroundColor:"#111827",
-            textColor:"#e5e7eb",
-            showAvatar:true,
-            avatarSrc:"https://www.svgrepo.com/show/334455/bot.svg"
-          },
-          userMessage: {
-            backgroundColor:"#38bdf8",
-            textColor:"#04121d",
-            showAvatar:false
-          },
-          textInput: {
-            placeholder:"Example: 15 Nov — Cairo — 400 guests — Gold/Silver",
-            backgroundColor:"#0b1220",
-            textColor:"#e5e7eb",
-            sendButtonColor:"#22c55e",
-            maxChars:500,
-            autoFocus:true,
-            borderRadius:10,
-            sendButtonBorderRadius:40
-          }
+<footer>
+  © <script>document.write(new Date().getFullYear())</script> Luma Tickets
+</footer>
+
+<!-- Chat init -->
+<script type="module">
+  // measure header/footer so chat fits perfectly on mobile
+  const setHeights = () => {
+    const h = document.querySelector('header');
+    const f = document.querySelector('footer');
+    document.documentElement.style.setProperty('--header-h', ((h?.offsetHeight)||0) + 'px');
+    document.documentElement.style.setProperty('--footer-h', ((f?.offsetHeight)||0) + 'px');
+  };
+  window.addEventListener('load', setHeights);
+  window.addEventListener('resize', setHeights);
+
+  import Chatbot from "https://cdn.n8nchatui.com/v1/embed.js";
+  Chatbot.initFull({
+    n8nChatUrl: "https://automation.evu.business/webhook/d2c83952-b78c-426c-af63-f4559400c536/chat",
+    theme: {
+      button:{},
+      chatWindow:{
+        height:0,width:0,
+        backgroundColor:"#0b1220",
+        title:"Luma TSVP",
+        welcomeMessage:"Welcome — I help collect event details for RSVPs & ticket tiers.",
+        errorMessage:"Connection error — please try again.",
+        starterPrompts:[
+          "Event date, city, guest count",
+          "Ticket tiers (Gold / Silver?)",
+          "Tell me about your event"
+        ],
+        botMessage:{ backgroundColor:"#111827", textColor:"#e5e7eb", showAvatar:true, avatarSrc:"https://www.svgrepo.com/show/334455/bot.svg" },
+        userMessage:{ backgroundColor:"#38bdf8", textColor:"#04121d", showAvatar:false },
+        textInput:{
+          placeholder:"Example: 15 Nov — Cairo — 400 guests — Gold/Silver",
+          backgroundColor:"#0b1220", textColor:"#e5e7eb",
+          sendButtonColor:"#22c55e", autoFocus:true, maxChars:500,
+          borderRadius:10, sendButtonBorderRadius:40
         }
       }
-    });
-  </script>
+    }
+  });
+</script>
 </body>
 </html>
