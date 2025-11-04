@@ -33,7 +33,7 @@
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
   <style>
-    /* ========= @n8n/chat THEME — your schema with your original colors ========= */
+    /* ========= @n8n/chat THEME — brand colors ========= */
    :root {
 	/* Luma colors applied to n8n variables */
 	--chat--color--primary: #38bdf8; /* main blue */
@@ -80,8 +80,7 @@
 	--chat--toggle--size: 64px;
 }
 
-
-    /* ========= Your site styles ========= */
+    /* ========= Site styles ========= */
     :root{
       --bg:#0f172a; --panel:#111827; --muted:#94a3b8; --ink:#e5e7eb; --pure:#ffffff;
       --accent:#38bdf8; --accent-2:#22c55e; --warn:#f59e0b;
@@ -102,9 +101,9 @@
     .brand h1{font-size:20px;margin:0;color:var(--pure);letter-spacing:.2px}
     .nav a.btn{padding:10px 16px;border-radius:12px;background:var(--accent);color:#0b1220;font-weight:700;box-shadow:var(--shadow)}
 
-    /* Hero */
+    /* Sections */
     .hero{padding:64px 0 24px}
-    .hero-wrap{display:grid;grid-template-columns:1fr;gap:28px;align-items:center} /* one column after removing mock */
+    .hero-wrap{display:grid;grid-template-columns:1fr;gap:28px;align-items:center}
     .hero h2{font-size:40px;line-height:1.15;margin:0 0 12px;color:var(--pure)}
     .hero p{color:var(--muted);margin:0 0 20px}
     .cta{display:flex;gap:12px;flex-wrap:wrap}
@@ -113,40 +112,9 @@
     .btn.secondary{background:transparent;border-color:rgba(148,163,184,.35);color:var(--ink)}
     .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.2);border-radius:var(--radius);box-shadow:var(--shadow)}
 
-    /* Features */
-    .features{padding:48px 0}
-    .features .grid{grid-template-columns:repeat(3,1fr)}
-    .feature{padding:20px}
-    .feature h3{margin:8px 0 6px;color:var(--pure)}
-    .feature p{margin:0;color:var(--muted)}
-
-    /* How it works */
-    .how{padding:16px 0 48px}
-    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-    .step{padding:20px}
-    .step .num{width:36px;height:36px;border-radius:10px;background:rgba(56,189,248,.15);border:1px solid rgba(56,189,248,.35);display:grid;place-items:center;font-weight:800;color:var(--pure)}
-    .step h4{margin:12px 0 8px;color:var(--pure)}
-    .step p{margin:0;color:var(--muted)}
-
-    /* Use cases */
-    .use{padding:12px 0 48px}
-    .use .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-    .use .item{padding:20px}
-    .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(148,163,184,.12);border:1px solid rgba(148,163,184,.25);font-size:12px;color:var(--ink)}
-
-    /* Compliance */
-    .compliance{padding:24px 0 48px}
-    .compliance .list{display:grid;gap:10px}
-    .compliance li{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.35);padding:12px 14px;border-radius:12px;color:#bbf7d0}
-
-    /* CTA panel */
-    .cta-panel{margin:24px 0 60px;padding:24px;border-radius:20px;display:grid;gap:12px;background:linear-gradient(135deg, rgba(56,189,248,.16), rgba(34,197,94,.16));border:1px solid rgba(148,163,184,.25)}
-
-    /* Footer */
     footer{border-top:1px solid rgba(148,163,184,.2);padding:28px 0;color:var(--muted)}
     .links{display:flex;flex-wrap:wrap;gap:16px}
 
-    /* Sections with headings */
     section>h2{font-size:28px;color:var(--pure);margin:0 0 6px}
     section>p.lead{margin:0 0 18px;color:var(--muted)}
 
@@ -154,15 +122,9 @@
     form{display:grid;gap:12px}
     input,textarea{width:100%;padding:12px 14px;border-radius:12px;color:var(--pure);background:#0b1220;border:1px solid rgba(148,163,184,.25)}
     input::placeholder,textarea::placeholder{color:#6b7280}
-
-    /* Responsive */
-    @media (max-width: 980px){
-      .features .grid{grid-template-columns:1fr}
-      .steps{grid-template-columns:1fr}
-      .use .grid{grid-template-columns:1fr}
-    }
   </style>
 </head>
+
 <body>
   <header>
     <div class="container nav">
@@ -171,154 +133,35 @@
         <h1>Luma Tickets</h1>
       </div>
       <nav class="links">
-        <a href="#features">Features</a>
-        <a href="#how">How it Works</a>
-        <a href="#compliance">Compliance</a>
+        <a href="index.html" style="opacity:.9;text-decoration:underline">Home</a>
+        <a href="features.html">Features</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <!-- Hero -->
-    <section class="hero">
-      <div class="container hero-wrap">
-        <div class="card" style="padding:24px">
-          <h2>Digital Invitations & Secure QR Check-In for Premium Events</h2>
-          <p>Send personalized invitations, issue QR tickets, and welcome guests with fast, reliable on-site scanning. Real-time attendance tracking and seamless guest management—start to finish.</p>
-
-          <div class="cta">
-            <!-- No JS open(); guide users to the toggle -->
-            <span class="btn primary" aria-disabled="true" role="button" tabindex="0">
-              Open the chat bubble (bottom-right) to get started
-            </span>
-            <a class="btn secondary" href="#features">Explore Features</a>
-          </div>
-
-          <ul style="margin:16px 0 0;color:var(--muted);display:grid;gap:6px">
-            <li>✅ Secure, unique QR codes per guest</li>
-            <li>✅ VIP tiers, +1 handling, and dynamic guest notes</li>
-            <li>✅ Real-time dashboard for arrivals & capacity</li>
-          </ul>
+<main>
+  <section class="hero">
+    <div class="container hero-wrap">
+      <div class="card" style="padding:24px">
+        <h2>Effortless Invitations. Instant Check-Ins. Smart Event Control.</h2>
+        <p>Manage your guest list, send branded digital invitations, and check them in with a single scan — no hardware, no hassle, just your phone.</p>
+        <div class="cta">
+          <a class="btn primary" href="contact.html">Get a Demo</a>
+          <a class="btn secondary" href="features.html">Explore Features</a>
         </div>
-        <!-- NOTE: Removed the entire “Instant QR Validation” mock block per request -->
-      </div>
-    </section>
-
-    <!-- Features -->
-    <section id="features" class="features">
-      <div class="container">
-        <h2>Features</h2>
-        <p class="lead">Everything you need to deliver a smooth, branded guest journey.</p>
-        <div class="grid">
-          <div class="card feature">
-            <div class="badge">Invitations</div>
-            <h3>Personalized Digital Invites</h3>
-            <p>Send branded invites via WhatsApp, email, or SMS with guest names, tiers, and interactive RSVP buttons.</p>
-          </div>
-          <div class="card feature">
-            <div class="badge">QR Tickets</div>
-            <h3>Secure QR-Based Access</h3>
-            <p>Each guest receives a unique QR code linked to their token. Prevents duplication and enables fast entry.</p>
-          </div>
-          <div class="card feature">
-            <div class="badge">Check-In</div>
-            <h3>Fast On-Site Scanning</h3>
-            <p>iOS/Android/web scanner UI with real-time validation, party size handling, and welcome screen animation.</p>
-          </div>
-          <div class="card feature">
-            <div class="badge">Dashboard</div>
-            <h3>Live Attendance</h3>
-            <p>Monitor arrivals, scan counts, and guest flow. Export reports to CSV/Sheets in one click.</p>
-          </div>
-          <div class="card feature">
-            <div class="badge">Roles & Tiers</div>
-            <h3>VIP & Plus-Ones</h3>
-            <p>Support for Gold/Silver tiers, main guests, and +1/+2 with per-guest notes and flags.</p>
-          </div>
-          <div class="card feature">
-            <div class="badge">Branding</div>
-            <h3>White-Label Ready</h3>
-            <p>Use your logo, colors, and event identity across invitations, tickets, and on-site screens.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- How it works -->
-    <section id="how" class="how">
-      <div class="container">
-        <h2>How It Works</h2>
-        <p class="lead">From invitation to check-in—simple, secure, and fast.</p>
-        <div class="steps">
-          <div class="card step">
-            <div class="num">1</div>
-            <h4>Create Guest List</h4>
-            <p>Import from Sheets/CSV, set tiers and +1s, and generate tokens.</p>
-          </div>
-          <div class="card step">
-            <div class="num">2</div>
-            <h4>Send Invitations</h4>
-            <p>Distribute digital invites with embedded QR tickets or RSVP and auto-ticketing.</p>
-          </div>
-          <div class="card step">
-            <div class="num">3</div>
-            <h4>Scan at Entry</h4>
-            <p>Use the web or mobile scanner; validate instantly and welcome guests.</p>
-          </div>
-          <div class="card step">
-            <div class="num">4</div>
-            <h4>Track in Real-Time</h4>
-            <p>See arrivals, capacities, and late guests; export attendance logs.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Use cases -->
-    <section class="use">
-      <div class="container">
-        <h2>Use Cases</h2>
-        <p class="lead">Private launches, corporate functions, clubs, and premium experiences.</p>
-        <div class="grid">
-          <div class="card item">
-            <span class="badge">Corporate</span>
-            <h3>Executive Events</h3>
-            <p>Board meetings, product launches, partner nights with VIP flows.</p>
-          </div>
-          <div class="card item">
-            <span class="badge">Private</span>
-            <h3>Invitational Only</h3>
-            <p>Curated guest lists with personalized entry experience.</p>
-          </div>
-          <div class="card item">
-            <span class="badge">Clubs</span>
-            <h3>Member Nights</h3>
-            <p>Tiered access, +1 rules, and seamless repeat-guest handling.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Compliance & Policies -->
-    <section id="compliance" class="compliance">
-      <div class="container">
-        <h2>Compliance & Policies</h2>
-        <p class="lead">Luma Tickets follows best practices for data privacy and platform policies.</p>
-        <ul class="list">
-          <li>We collect only essential guest data (name, contact, ticket token) to operate events.</li>
-          <li>Data is used strictly for invitation, ticketing, and check-in, and is not sold to third parties.</li>
-          <li>Guests can request data deletion after the event via our support contact.</li>
+        <ul style="margin:16px 0 0;color:var(--muted);display:grid;gap:6px">
+          <li>✅ Secure, unique QR codes per guest</li>
+          <li>✅ VIP tiers, +1 handling, and dynamic guest notes</li>
+          <li>✅ Real-time dashboard for arrivals & capacity</li>
         </ul>
-        <div class="card" style="padding:20px;margin-top:16px">
-          <h3 style="margin:0 0 6px;color:var(--pure)">Privacy Policy</h3>
-          <p style="margin:0;color:var(--muted)">We process personal data to deliver invitations, tickets, and check-in services. We retain minimal data for audit and support purposes. To request removal, contact support.</p>
-          <h3 style="margin:16px 0 6px;color:var(--pure)">Terms of Service</h3>
-          <p style="margin:0;color:var(--muted)">By using Luma Tickets, event organizers agree to comply with applicable laws and platform policies. Luma Tickets is provided “as-is” without warranty; availability and features may vary by region and event requirements.</p>
-        </div>
       </div>
-    </section>
-  </main>
-
+    </div>
+  </section>
+</main>
   <footer>
     <div class="container" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
       <div>
@@ -326,8 +169,12 @@
         <span style="opacity:.7">Operated by Luma.</span>
       </div>
       <div class="links">
-        <a href="#compliance">Privacy</a>
-        <a href="#compliance">Terms</a>
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
       </div>
     </div>
     <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
@@ -336,7 +183,7 @@
   <!-- OPTIONAL mount target (ignored in window mode, harmless to keep): -->
   <div id="n8n-chat" aria-hidden="true"></div>
 
-  <!-- n8n chat init using YOUR provided API (no custom open()) -->
+  <!-- n8n chat init -->
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
@@ -347,28 +194,30 @@
         headers: {}
       },
       target: '#n8n-chat',
-      mode: 'window',                      // floating window with its own toggle
+      mode: 'window',
       chatInputKey: 'chatInput',
       chatSessionKey: 'sessionId',
       loadPreviousSession: true,
       metadata: {},
+
       showWelcomeScreen: false,
       defaultLanguage: 'en',
       initialMessages: [
-        'Hi there! 👋',
-        'My name is Luma. How can I assist you today?'
+        "Hi! I'm Luma RSVP — your event registration assistant.",
+        "Ask me to register guests, generate QR tickets, or set up tiers."
       ],
       i18n: {
         en: {
-          title: 'Hi there! 👋',
-          subtitle: "Start a chat. We’re here to help you 24/7.",
+          title: 'Luma RSVP',
+          subtitle: 'Register guests • Create invites • Check-in with QR',
           footer: '',
-          getStarted: 'New Conversation',
-          inputPlaceholder: 'Type your question..'
+          getStarted: 'Start Event Setup',
+          inputPlaceholder: 'Type: add guest, send invite via WhatsApp or email…'
         }
       },
       enableStreaming: false
     });
   </script>
+
 </body>
 </html>
