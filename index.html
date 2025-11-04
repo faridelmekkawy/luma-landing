@@ -8,27 +8,6 @@
   <meta name="theme-color" content="#0f172a" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f172a'/><text x='50' y='58' font-size='56' text-anchor='middle' fill='white'>L</text></svg>">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Luma Tickets — Digital Invitations & QR Check-In" />
-  <meta property="og:description" content="Smart invitations, QR tickets, and seamless entry for events." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://dummyimage.com/1200x630/0f172a/ffffff&text=Luma+Tickets" />
-  <meta property="og:url" content="https://your-domain.example/luma-tickets" />
-
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Luma Tickets",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Web",
-    "description": "Digital invitations, QR ticketing, and guest check-in for events.",
-    "brand": {"@type":"Brand","name":"Luma Tickets"},
-    "publisher": {"@type":"Organization","name":"SevenApes"}
-  }
-  </script>
-
   <style>
     :root{
       --bg:#0f172a; --panel:#0b1220; --muted:#94a3b8; --ink:#e5e7eb; --pure:#ffffff;
@@ -51,35 +30,23 @@
     .links a[aria-current="page"]{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
 
     .card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.22);border-radius:var(--radius);backdrop-filter:blur(var(--blur));box-shadow:var(--shadow)}
-    .btn{padding:14px 18px;border-radius:14px;font-weight:700;border:1px solid transparent;display:inline-flex;gap:10px;align-items:center;cursor:pointer}
-    .btn.primary{background:var(--accent);color:#04121d}
+    .btn{padding:14px 18px;border-radius:14px;font-weight:700;border:1px solid transparent;display:inline-flex;gap:10px;align-items:center;cursor:pointer;transition:transform .06s ease, box-shadow .2s ease}
+    .btn:active{transform:translateY(1px)}
+    .btn.primary{background:var(--accent);color:#04121d;box-shadow:0 10px 24px rgba(56,189,248,.32)}
+    .btn.primary:hover{box-shadow:0 12px 28px rgba(56,189,248,.42)}
     .btn.secondary{background:transparent;border-color:rgba(148,163,184,.35);color:var(--ink)}
+    .btn.ghost{background:transparent;border-color:transparent;color:var(--muted);text-decoration:underline}
 
     .hero{padding:84px 0 36px}
     .hero h2{font-size:44px;line-height:1.1;margin:0 0 16px;color:var(--pure)}
     .hero p{color:var(--muted);max-width:760px}
-
-    /* Event pass (no logo, no gold rectangle, John Doe) */
-    .pass{position:relative;width:340px;height:540px;border-radius:22px;
-      background:linear-gradient(165deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border:1px solid rgba(56,189,248,.28);box-shadow:var(--shadow);backdrop-filter:blur(14px);overflow:hidden}
-    .pass .band{position:absolute;inset:0;background:
-      radial-gradient(500px 220px at -20% -10%, rgba(56,189,248,.25), transparent),
-      radial-gradient(600px 280px at 120% 20%, rgba(34,197,94,.22), transparent)}
-    .pass .chip{position:absolute;top:22px;right:22px;width:48px;height:32px;
-      background:linear-gradient(180deg,#a7c7f1,#6bb2df);border-radius:6px;box-shadow: inset 0 0 0 2px rgba(0,0,0,.15)}
-    .pass .event{position:absolute;top:78px;left:22px;right:22px;color:var(--pure);font-weight:800;font-size:22px}
-    .pass .meta{position:absolute;top:120px;left:22px;right:22px;color:var(--muted);font-size:13px}
-    .pass .qr{position:absolute;bottom:110px;left:50%;transform:translateX(-50%);width:160px;height:160px;background:var(--pure);display:grid;place-items:center;border-radius:10px}
-    .pass .qr svg{width:120px;height:120px}
-    .pass .name{position:absolute;bottom:28px;left:22px;right:22px;color:var(--pure);font-weight:800;font-size:16px;text-align:center}
 
     section>h2{font-size:28px;color:var(--pure);margin:0 0 6px}
     section>p.lead{margin:0 0 18px;color:var(--muted)}
     .feature{padding:20px}
     .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(148,163,184,.12);border:1px solid rgba(148,163,184,.25);font-size:12px;color:var(--ink)}
     footer{border-top:1px solid rgba(148,163,184,.2);padding:28px 0;color:var(--muted)}
-    @media (max-width:1040px){.grid-2{grid-template-columns:1fr}.hero h2{font-size:36px}.pass{margin-top:16px}}
+    @media (max-width:1040px){.grid-2{grid-template-columns:1fr}.hero h2{font-size:36px}}
   </style>
 </head>
 <body>
@@ -94,65 +61,29 @@
         <a href="features.html">Features</a>
         <a href="how-it-works.html">How it Works</a>
         <a href="analytics.html">Analytics</a>
-        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn primary">Start in Chat</a>
         <a href="privacy.html">Privacy</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <!-- Hero -->
+    <!-- Hero (invitation example removed) -->
     <section class="hero">
       <div class="container">
-        <div class="grid grid-2" style="align-items:center">
-          <div class="card" style="padding:32px">
-            <h2>Digital Invitations & Secure QR Check-In for Premium Events</h2>
-            <p>Send personalized invitations, issue QR tickets, and welcome guests with fast, reliable on-site scanning. Real-time attendance tracking and seamless guest management—start to finish.</p>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px">
-              <a class="btn primary" href="contact.html">Start in Chat</a>
-              <a class="btn secondary" href="features.html">Explore Features</a>
-            </div>
-            <ul style="margin:16px 0 0;color:var(--muted);display:grid;gap:6px">
-              <li>✅ Secure, unique QR codes per guest</li>
-              <li>✅ VIP tiers, +1 handling, and dynamic guest notes</li>
-              <li>✅ Real-time dashboard for arrivals & capacity</li>
-            </ul>
+        <div class="card" style="padding:32px">
+          <h2>Digital Invitations & Secure QR Check-In for Premium Events</h2>
+          <p>Send personalized invitations, issue QR tickets, and welcome guests with fast, reliable on-site scanning. Real-time attendance tracking and seamless guest management—start to finish.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px">
+            <a class="btn primary" href="contact.html">Start in Chat</a>
+            <a class="btn secondary" href="features.html">Explore Features</a>
+            <a class="btn ghost" href="how-it-works.html">How it Works</a>
           </div>
-
-          <!-- Event pass mockup (no logo, no gold rectangle) -->
-          <div class="pass" aria-label="Event pass mockup">
-            <div class="band"></div>
-            <div class="chip"></div>
-            <div class="event">Members Night — ZED Park</div>
-            <div class="meta">Date: 15 Nov · Cairo — Entry Gate A</div>
-            <div class="qr">
-              <svg viewBox="0 0 100 100" aria-hidden="true">
-                <rect width="100" height="100" fill="#0b1220"/>
-                <rect x="8" y="8" width="24" height="24" fill="#0ea5e9"/>
-                <rect x="68" y="8" width="24" height="24" fill="#22c55e"/>
-                <rect x="8" y="68" width="24" height="24" fill="#22c55e"/>
-                <rect x="36" y="36" width="12" height="12" fill="#e5e7eb"/>
-                <rect x="52" y="36" width="8" height="8" fill="#e5e7eb"/>
-                <rect x="36" y="52" width="8" height="8" fill="#e5e7eb"/>
-                <rect x="52" y="52" width="12" height="12" fill="#e5e7eb"/>
-              </svg>
-            </div>
-            <div class="name">John Doe</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- How It Works (mini) -->
-    <section>
-      <div class="container">
-        <h2>How It Works</h2>
-        <p class="lead">From invitation to check-in—simple, secure, and fast.</p>
-        <div class="grid grid-4">
-          <div class="card feature"><span class="badge">1</span><h3>Create List</h3><p>Upload CSV/Sheets, set tiers & +1s, generate tickets.</p></div>
-          <div class="card feature"><span class="badge">2</span><h3>Send Invites</h3><p>Deliver via WhatsApp or email with embedded QR.</p></div>
-          <div class="card feature"><span class="badge">3</span><h3>Scan Entry</h3><p>Validate on any smartphone—no hardware.</p></div>
-          <div class="card feature"><span class="badge">4</span><h3>Track Live</h3><p>Arrivals, capacity, exports—in real time.</p></div>
+          <ul style="margin:16px 0 0;color:var(--muted);display:grid;gap:6px">
+            <li>✅ Secure, unique QR codes per guest</li>
+            <li>✅ VIP tiers, +1 handling, and dynamic guest notes</li>
+            <li>✅ Real-time dashboard for arrivals & capacity</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -169,22 +100,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Analytics preview -->
-    <section>
-      <div class="container">
-        <div class="card" style="padding:22px">
-          <h2>Analytics & Insights</h2>
-          <p class="lead">See the full story of your event as it happens.</p>
-          <div class="grid grid-2">
-            <div class="card" style="padding:18px"><h3>Live KPIs</h3><p>Arrivals, dwell, capacity—precision at a glance.</p></div>
-            <div class="card" style="padding:18px"><h3>Exports</h3><p>CSV/Sheets with exactly the fields you need.</p></div>
-          </div>
-          <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(148,163,184,.35),transparent);margin:22px 0"></div>
-          <a class="btn primary" href="analytics.html">See More</a>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer>
@@ -192,7 +107,7 @@
       <div>© <span id="y"></span> Luma Tickets. All rights reserved.</div>
       <div class="links">
         <a href="privacy.html">Privacy</a>
-        <a href="contact.html">Contact</a>
+        <a class="btn secondary" href="contact.html">Start in Chat</a>
       </div>
     </div>
     <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
