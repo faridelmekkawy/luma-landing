@@ -1,17 +1,66 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Privacy — Luma Tickets</title>
-<style>/* same */</style></head>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy & Terms — Luma Tickets</title>
+  <meta name="theme-color" content="#0f172a" />
+  <style>
+    :root{
+      --bg:#0f172a; --panel:#0b1220; --ink:#e5e7eb; --muted:#94a3b8;
+      --accent:#38bdf8; --accent2:#22c55e; --radius:18px; --shadow:0 24px 60px rgba(2,8,23,.55);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+    a{text-decoration:none;color:var(--ink)}
+    .container{max-width:1180px;margin:auto;padding:28px}
+
+    header{position:sticky;top:0;background:rgba(2,8,23,.75);backdrop-filter:blur(10px);border-bottom:1px solid rgba(148,163,184,.18);z-index:10}
+    .nav{display:flex;justify-content:space-between;align-items:center}
+    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:#fff;font-weight:800}
+    nav a{padding:10px 14px;border-radius:10px}
+    nav a[aria-current="page"], nav a:hover{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
+    .btn{padding:12px 16px;border-radius:14px;font-weight:600;display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(148,163,184,.35)}
+    .btn.primary{background:var(--accent);color:#04121d;border-color:transparent;box-shadow:0 6px 18px rgba(56,189,248,.35)}
+
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+    .section-title{margin:32px 0 8px;font-size:32px}
+    .lead{color:var(--muted);margin:0 0 18px}
+  </style>
+</head>
 <body>
-<header> …nav… </header>
+  <header>
+    <div class="container nav">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="logo">LT</div><strong>Luma Tickets</strong>
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="how-it-works.html">How it Works</a>
+        <a href="analytics.html">Analytics</a>
+        <a class="btn primary" href="rsvp.html">RSVP (Chat)</a>
+        <a aria-current="page" href="privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </header>
 
-<div class="container" style="padding:60px 0 28px">
-<h1>Privacy & Terms</h1>
-<div class="card">
-<p>Data is only used for RSVP & check-in. We do not sell or share guest data.</p>
-</div>
-<a class="btn primary" href="rsvp.html" style="margin-top:22px;display:inline-block">Ask Questions in Chat</a>
-</div>
+  <main class="container" style="padding:42px 0 28px">
+    <h1 class="section-title">Privacy & Terms</h1>
+    <p class="lead">Minimal data, maximum discretion.</p>
 
-<footer>© <script>document.write(new Date().getFullYear())</script> Luma Tickets</footer>
-</body></html>
+    <section class="card">
+      <h3>Privacy Policy</h3>
+      <p>We process essential data to deliver invitations, ticketing, and check-in. We do not sell personal data. Guests may request data removal after the event.</p>
+      <h3 style="margin-top:16px">Terms of Service</h3>
+      <p>Organizers agree to follow applicable laws and platform policies. Service is provided “as-is”; availability may vary by region and requirements.</p>
+    </section>
+
+    <div style="margin-top:22px"><a class="btn primary" href="rsvp.html">Questions? Start in Chat</a></div>
+  </main>
+
+  <footer class="container" style="border-top:1px solid rgba(148,163,184,.2);padding:26px;color:var(--muted)">
+    © <script>document.write(new Date().getFullYear())</script> Luma Tickets
+  </footer>
+</body>
+</html>
