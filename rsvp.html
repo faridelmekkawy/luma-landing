@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RSVP — Luma TSVP Assistant</title>
+  <meta name="theme-color" content="#0f172a" />
+  <style>
+    :root{ --bg:#0f172a; --ink:#e5e7eb }
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+    /* If you want a header, add it; otherwise chat fills screen */
+    #chat-root{position:fixed;inset:0;background:#0f172a}
+    n8nchatui-inpage{display:block;width:100%;height:100%}
+  </style>
+</head>
+<body>
+  <div id="chat-root">
+    <n8nchatui-inpage></n8nchatui-inpage>
+  </div>
+
+  <script type="module">
+    import Chatbot from "https://cdn.n8nchatui.com/v1/embed.js";
+    Chatbot.initFull({
+      n8nChatUrl: "https://automation.evu.business/webhook/d2c83952-b78c-426c-af63-f4559400c536/chat",
+      theme: {
+        button: {},
+        chatWindow: {
+          height: 0, width: 0,
+          backgroundColor: "#0b1220",
+          title: "Luma TSVP",
+          welcomeMessage: "Welcome — I’m Luma TSVP. I collect event requirements (date, venue, guests, ticket types).",
+          errorMessage: "Connection error — please try again.",
+          starterPrompts: [
+            "Event date, city, and guest count",
+            "Ticket tiers (Gold/Silver?)",
+            "Tell me about your event"
+          ],
+          botMessage: {
+            backgroundColor:"#111827",
+            textColor:"#e5e7eb",
+            showAvatar:true,
+            avatarSrc:"https://www.svgrepo.com/show/334455/bot.svg"
+          },
+          userMessage: {
+            backgroundColor:"#38bdf8",
+            textColor:"#04121d",
+            showAvatar:false
+          },
+          textInput: {
+            placeholder:"Example: 15 Nov — Cairo — 400 guests — Gold/Silver",
+            backgroundColor:"#0b1220",
+            textColor:"#e5e7eb",
+            sendButtonColor:"#22c55e",
+            maxChars:500,
+            autoFocus:true,
+            borderRadius:10,
+            sendButtonBorderRadius:40
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
