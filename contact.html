@@ -4,141 +4,61 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contact — Luma Tickets</title>
-  <meta name="description" content="Contact Luma Tickets for a private demo and event onboarding." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230b0f1a'/><text x='50' y='58' font-size='56' text-anchor='middle' fill='white'>L</text></svg>">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
-
+  <meta name="theme-color" content="#0f172a" />
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-
   <style>
-    :root{
-      --bg:#0b0f1a; --panel:#0e1422; --ink:#e6e8ef; --muted:#99a0b3;
-      --pure:#ffffff; --lux:#e5c267; --lux-2:#d4af37; --accent:#38bdf8;
-      --radius:18px; --shadow:0 30px 80px rgba(0,0,0,.55)
-    }
-    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;}
-    h1,h2,h3{font-family:'Fraunces',serif;}
-    .container{max-width:1200px;margin:auto;padding:28px}
-    header{position:sticky;top:0;background:rgba(8,12,22,.8);backdrop-filter:blur(10px);border-bottom:1px solid rgba(229,194,103,.2)}
-    .nav{display:flex;justify-content:space-between;align-items:center}
-    .logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(140deg,var(--lux),var(--lux-2));display:grid;place-items:center;color:#0b0f1a;font-weight:800}
-    nav a{color:var(--ink);padding:10px 12px;border-radius:10px}
-    nav a[aria-current="page"]{background:rgba(229,194,103,.1);border:1px solid rgba(229,194,103,.3)}
-    .card{background:rgba(255,255,255,.05);border:1px solid rgba(229,194,103,.22);backdrop-filter:blur(12px);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
-    input,textarea{width:100%;padding:12px;border-radius:14px;background:rgba(14,20,34,.75);border:1px solid rgba(229,194,103,.22);color:var(--ink);font-size:15px}
-    button{background:linear-gradient(180deg,var(--lux),var(--lux-2));border:none;padding:14px 18px;border-radius:14px;font-weight:700;color:#1a1304;cursor:pointer;margin-top:4px}
-    .note{font-size:12px;color:#9aa2b8;margin-top:8px}
-    footer{border-top:1px solid rgba(229,194,103,.2);padding:28px;text-align:center;color:var(--muted)}
-    #contactMsg{margin-top:10px;font-size:14px}
+    :root{ --bg:#0f172a; --ink:#e5e7eb }
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui}
+    header{position:sticky;top:0;z-index:2;background:rgba(2,8,23,.8);backdrop-filter:blur(10px);border-bottom:1px solid rgba(148,163,184,.2)}
+    .container{max-width:1200px;margin:auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:white;font-weight:800}
+    nav a{color:#e5e7eb;padding:8px 10px;border-radius:10px;text-decoration:none}
+    nav a[aria-current="page"]{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
+    /* Fullscreen chat mount */
+    #chat-full{position:fixed; inset:62px 0 0 0;} /* below header */
   </style>
 </head>
-
 <body>
-
-<header>
-  <div class="container nav">
-    <div style="display:flex;align-items:center;gap:12px">
-      <div class="logo">LT</div><h1 style="font-size:20px;margin:0">Luma Tickets</h1>
-    </div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="features.html">Features</a>
-      <a href="how-it-works.html">How It Works</a>
-      <a href="analytics.html">Analytics</a>
-      <a aria-current="page" href="contact.html">Contact</a>
-      <a href="privacy.html">Privacy</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-  <section style="padding:60px 0 20px">
+  <header>
     <div class="container">
-      <h2 style="font-size:40px;margin-bottom:10px">Let's Plan Your Event</h2>
-      <p style="color:var(--muted)">Tell us a few details — we’ll reach out personally.</p>
-    </div>
-  </section>
-
-  <section>
-    <div class="container">
-      <div class="card">
-        <form id="contactForm" novalidate>
-
-          <!-- Honeypot -->
-          <input name="website" style="display:none">
-
-          <input name="full_name" placeholder="Full name" required>
-          <input name="email" placeholder="Work email" type="email" required>
-          <input name="company" placeholder="Company / Organization">
-          <input name="event_when_where" placeholder="Event date & city">
-          <input name="guests_estimate" placeholder="Estimated guests">
-          <input name="ticket_types" placeholder="Ticket types (e.g., Gold, Silver)">
-          <textarea name="notes" rows="5" placeholder="Notes / special requirements"></textarea>
-
-          <button type="submit">Request Demo</button>
-          <div id="contactMsg"></div>
-          <div class="note">This form logs your event request. Our concierge will follow up.</div>
-        </form>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="logo">LT</div><strong>Luma Tickets</strong>
       </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="how-it-works.html">How it Works</a>
+        <a href="analytics.html">Analytics</a>
+        <a aria-current="page" href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
     </div>
-  </section>
-</main>
+  </header>
 
-<footer>© <script>document.write(new Date().getFullYear())</script> Luma Tickets — All rights reserved.</footer>
+  <!-- Fullscreen embedded chat -->
+  <div id="chat-full" role="main" aria-label="Luma TSVP Assistant"></div>
 
-<div id="n8n-chat"></div>
-<script type="module">
-import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
-createChat({
-  webhookUrl:"https://automation.evu.business/webhook/d2c83952-b78c-426c-af63-f4559400c536/chat",
-  mode:"window",
-  initialMessages:[
-    "Welcome — I'm Luma RSVP.",
-    "I collect event requirements like date, venue, estimated guests & ticket types — I don’t take guest lists or generate QR codes here."
-  ],
-  i18n:{en:{title:"Luma RSVP",inputPlaceholder:"Tell me about your event..."}}
-});
-</script>
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-<script>
-const WEBHOOK = "https://automation.evu.business/webhook/luma/contact";
-
-document.getElementById("contactForm").addEventListener("submit", async(e)=>{
-  e.preventDefault();
-  const form = e.target;
-  const msg = document.getElementById("contactMsg");
-  msg.textContent="";
-
-  const fd = new FormData(form);
-  if(fd.get("website")){ form.reset(); msg.textContent="Thank you — we'll be in touch."; return; }
-
-  const payload = {
-    source:"luma-website",
-    page:"/contact.html",
-    ts:new Date().toISOString(),
-    userAgent:navigator.userAgent,
-    form:Object.fromEntries(fd.entries())
-  };
-
-  try{
-    let r = await fetch(WEBHOOK,{
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body:JSON.stringify(payload)
+    createChat({
+      webhookUrl: 'https://automation.evu.business/webhook/d2c83952-b78c-426c-af63-f4559400c536/chat',
+      target: '#chat-full',
+      mode: 'embedded',                  // FULLSCREEN via container
+      loadPreviousSession: true,
+      defaultLanguage: 'en',
+      initialMessages: [
+        "Welcome — I'm Luma RSVP.",
+        "I collect event requirements (date, venue, estimated guests, and ticket types). I don’t accept guest lists or generate QR codes here."
+      ],
+      i18n: {
+        en: {
+          title: 'Luma RSVP',
+          subtitle: 'Event registration intake • Ticket types • Requirements',
+          inputPlaceholder: 'Example: 15 Nov • Cairo • 400 guests • Gold/Silver ticket types'
+        }
+      }
     });
-    if(!r.ok) throw 0;
-    msg.style.color="#a8ffb5";
-    msg.textContent="✅ Request received — we will contact you shortly.";
-    form.reset();
-  }catch{
-    msg.style.color="#ff9e9e";
-    msg.textContent="⚠️ Something went wrong. Try again or contact us on WhatsApp.";
-  }
-});
-</script>
-
+  </script>
 </body>
 </html>
