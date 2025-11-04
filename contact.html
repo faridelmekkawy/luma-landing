@@ -3,225 +3,142 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Luma Tickets — Digital Invitations & QR Check-In</title>
-  <meta name="description" content="Luma Tickets delivers smart digital invitations, secure QR tickets, and seamless guest check-in for premium events." />
-  <meta name="theme-color" content="#0f172a" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f172a'/><text x='50' y='58' font-size='56' text-anchor='middle' fill='white'>L</text></svg>">
+  <title>Contact — Luma Tickets</title>
+  <meta name="description" content="Contact Luma Tickets for a private demo and event onboarding." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230b0f1a'/><text x='50' y='58' font-size='56' text-anchor='middle' fill='white'>L</text></svg>">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Luma Tickets — Digital Invitations & QR Check-In" />
-  <meta property="og:description" content="Smart invitations, QR tickets, and seamless entry for events." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://dummyimage.com/1200x630/0f172a/ffffff&text=Luma+Tickets" />
-  <meta property="og:url" content="https://your-domain.example/luma-tickets" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
 
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Luma Tickets",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Web",
-    "description": "Digital invitations, QR ticketing, and guest check-in for events.",
-    "brand": {"@type":"Brand","name":"Luma Tickets"},
-    "publisher": {"@type":"Organization","name":"SevenApes"}
-  }
-  </script>
-
-  <!-- n8n chat base styles -->
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
   <style>
-    /* ========= @n8n/chat THEME — brand colors ========= */
-   :root {
-	/* Luma colors applied to n8n variables */
-	--chat--color--primary: #38bdf8; /* main blue */
-	--chat--color--primary-shade-50: #2fade3;
-	--chat--color--primary--shade-100: #2298c7;
-
-	--chat--color--secondary: #22c55e; /* green accent */
-	--chat--color-secondary-shade-50: #1da851;
-
-	--chat--color-white: #ffffff;
-	--chat--color-light: #e5e7eb;
-	--chat--color-light-shade-50: #94a3b8;
-	--chat--color-light-shade-100: #64748b;
-
-	--chat--color-medium: #cbd5e1;
-	--chat--color-dark: #0f172a; /* dark mode background */
-	--chat--color-disabled: #777980;
-	--chat--color-typing: #94a3b8;
-
-	/* Chat frame */
-	--chat--window--width: 400px;
-	--chat--window--height: 600px;
-
-	/* Background + surfaces */
-	--chat--background: #0f172a;  /* popup background */
-	--chat--surface: #0b1220;     /* chat content bg */
-
-	/* Header */
-	--chat--header--background: var(--chat--color-dark);
-	--chat--header--color: var(--chat--color-light);
-
-	/* Bubbles */
-	--chat--message--bot--background: #111827;
-	--chat--message--bot--color: #e5e7eb;
-	--chat--message--user--background: #38bdf8;
-	--chat--message--user--color: #04121d;
-
-	/* Launcher button */
-	--chat--toggle--background: #38bdf8;
-	--chat--toggle--hover--background: #2fade3;
-	--chat--toggle--active--background: #2298c7;
-	--chat--toggle--color: #04121d;
-
-	--chat--toggle--size: 64px;
-}
-
-    /* ========= Site styles ========= */
     :root{
-      --bg:#0f172a; --panel:#111827; --muted:#94a3b8; --ink:#e5e7eb; --pure:#ffffff;
-      --accent:#38bdf8; --accent-2:#22c55e; --warn:#f59e0b;
-      --radius:18px; --shadow:0 20px 40px rgba(2,8,23,.35); --max:1200px;
+      --bg:#0b0f1a; --panel:#0e1422; --ink:#e6e8ef; --muted:#99a0b3;
+      --pure:#ffffff; --lux:#e5c267; --lux-2:#d4af37; --accent:#38bdf8;
+      --radius:18px; --shadow:0 30px 80px rgba(0,0,0,.55)
     }
-    *{box-sizing:border-box}
-    html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
-    a{color:var(--accent);text-decoration:none}
-    a:hover{text-decoration:underline}
-    .container{max-width:var(--max);margin-inline:auto;padding:28px}
-    .grid{display:grid;gap:24px}
-
-    /* Header */
-    header{position:sticky;top:0;backdrop-filter:saturate(120%) blur(8px);background:linear-gradient(180deg, rgba(2,8,23,.9), rgba(2,8,23,.65));border-bottom:1px solid rgba(148,163,184,.2);z-index:10}
-    .nav{display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:white;font-weight:800;box-shadow:var(--shadow)}
-    .brand h1{font-size:20px;margin:0;color:var(--pure);letter-spacing:.2px}
-    .nav a.btn{padding:10px 16px;border-radius:12px;background:var(--accent);color:#0b1220;font-weight:700;box-shadow:var(--shadow)}
-
-    /* Sections */
-    .hero{padding:64px 0 24px}
-    .hero-wrap{display:grid;grid-template-columns:1fr;gap:28px;align-items:center}
-    .hero h2{font-size:40px;line-height:1.15;margin:0 0 12px;color:var(--pure)}
-    .hero p{color:var(--muted);margin:0 0 20px}
-    .cta{display:flex;gap:12px;flex-wrap:wrap}
-    .btn{padding:14px 18px;border-radius:14px;font-weight:700;border:1px solid transparent;display:inline-flex;gap:10px;align-items:center;cursor:pointer}
-    .btn.primary{background:var(--accent);color:#04121d}
-    .btn.secondary{background:transparent;border-color:rgba(148,163,184,.35);color:var(--ink)}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.2);border-radius:var(--radius);box-shadow:var(--shadow)}
-
-    footer{border-top:1px solid rgba(148,163,184,.2);padding:28px 0;color:var(--muted)}
-    .links{display:flex;flex-wrap:wrap;gap:16px}
-
-    section>h2{font-size:28px;color:var(--pure);margin:0 0 6px}
-    section>p.lead{margin:0 0 18px;color:var(--muted)}
-
-    /* Forms */
-    form{display:grid;gap:12px}
-    input,textarea{width:100%;padding:12px 14px;border-radius:12px;color:var(--pure);background:#0b1220;border:1px solid rgba(148,163,184,.25)}
-    input::placeholder,textarea::placeholder{color:#6b7280}
+    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;}
+    h1,h2,h3{font-family:'Fraunces',serif;}
+    .container{max-width:1200px;margin:auto;padding:28px}
+    header{position:sticky;top:0;background:rgba(8,12,22,.8);backdrop-filter:blur(10px);border-bottom:1px solid rgba(229,194,103,.2)}
+    .nav{display:flex;justify-content:space-between;align-items:center}
+    .logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(140deg,var(--lux),var(--lux-2));display:grid;place-items:center;color:#0b0f1a;font-weight:800}
+    nav a{color:var(--ink);padding:10px 12px;border-radius:10px}
+    nav a[aria-current="page"]{background:rgba(229,194,103,.1);border:1px solid rgba(229,194,103,.3)}
+    .card{background:rgba(255,255,255,.05);border:1px solid rgba(229,194,103,.22);backdrop-filter:blur(12px);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    input,textarea{width:100%;padding:12px;border-radius:14px;background:rgba(14,20,34,.75);border:1px solid rgba(229,194,103,.22);color:var(--ink);font-size:15px}
+    button{background:linear-gradient(180deg,var(--lux),var(--lux-2));border:none;padding:14px 18px;border-radius:14px;font-weight:700;color:#1a1304;cursor:pointer;margin-top:4px}
+    .note{font-size:12px;color:#9aa2b8;margin-top:8px}
+    footer{border-top:1px solid rgba(229,194,103,.2);padding:28px;text-align:center;color:var(--muted)}
+    #contactMsg{margin-top:10px;font-size:14px}
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="container nav">
-      <div class="brand">
-        <div class="logo" aria-hidden="true">LT</div>
-        <h1>Luma Tickets</h1>
-      </div>
-      <nav class="links">
-        <a href="index.html">Home</a>
-        <a href="features.html">Features</a>
-        <a href="how-it-works.html">How It Works</a>
-        <a href="analytics.html">Analytics</a>
-        <a href="contact.html" style="opacity:.9;text-decoration:underline">Contact</a>
-        <a href="privacy.html">Privacy</a>
-      </nav>
+
+<header>
+  <div class="container nav">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="logo">LT</div><h1 style="font-size:20px;margin:0">Luma Tickets</h1>
     </div>
-  </header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="analytics.html">Analytics</a>
+      <a aria-current="page" href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </div>
+</header>
 
 <main>
-  <section class="contact">
+  <section style="padding:60px 0 20px">
     <div class="container">
-      <h2>Contact</h2>
-      <p class="lead">Want a demo or to set up your next event? Message us and the Luma TSVP bot can start your registration workflow.</p>
-      <div class="grid" style="grid-template-columns:1fr 1fr">
-        <div class="card" style="padding:20px">
-          <form action="#" onsubmit="alert('Thanks! We\'ll get in touch.'); return false;">
-            <input placeholder="Full name" required />
-            <input placeholder="Work email" type="email" required />
-            <input placeholder="Company / Organization" />
-            <textarea rows="5" placeholder="Tell us about your event (date, location, approx. guests)…"></textarea>
-            <button class="btn primary" type="submit">Send</button>
-          </form>
-        </div>
-        <div class="card" style="padding:20px">
-          <h3>Prefer chat?</h3>
-          <p>Use the chat bubble in the bottom-right. Ask the bot to create a guest list, add tiers, or send invitations via WhatsApp or email.</p>
-        </div>
+      <h2 style="font-size:40px;margin-bottom:10px">Let's Plan Your Event</h2>
+      <p style="color:var(--muted)">Tell us a few details — we’ll reach out personally.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="card">
+        <form id="contactForm" novalidate>
+
+          <!-- Honeypot -->
+          <input name="website" style="display:none">
+
+          <input name="full_name" placeholder="Full name" required>
+          <input name="email" placeholder="Work email" type="email" required>
+          <input name="company" placeholder="Company / Organization">
+          <input name="event_when_where" placeholder="Event date & city">
+          <input name="guests_estimate" placeholder="Estimated guests">
+          <input name="ticket_types" placeholder="Ticket types (e.g., Gold, Silver)">
+          <textarea name="notes" rows="5" placeholder="Notes / special requirements"></textarea>
+
+          <button type="submit">Request Demo</button>
+          <div id="contactMsg"></div>
+          <div class="note">This form logs your event request. Our concierge will follow up.</div>
+        </form>
       </div>
     </div>
   </section>
 </main>
-  <footer>
-    <div class="container" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
-      <div>
-        © <span id="y"></span> Luma Tickets. All rights reserved.
-        <span style="opacity:.7">Operated by Luma.</span>
-      </div>
-      <div class="links">
-        <a href="index.html">Home</a>
-        <a href="features.html">Features</a>
-        <a href="how-it-works.html">How It Works</a>
-        <a href="analytics.html">Analytics</a>
-        <a href="contact.html">Contact</a>
-        <a href="privacy.html">Privacy</a>
-      </div>
-    </div>
-    <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
-  </footer>
 
-  <!-- OPTIONAL mount target (ignored in window mode, harmless to keep): -->
-  <div id="n8n-chat" aria-hidden="true"></div>
+<footer>© <script>document.write(new Date().getFullYear())</script> Luma Tickets — All rights reserved.</footer>
 
-  <!-- n8n chat init -->
-  <script type="module">
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+<div id="n8n-chat"></div>
+<script type="module">
+import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
+createChat({
+  webhookUrl:"https://automation.evu.business/webhook/d2c83952-b78c-426c-af63-f4559400c536/chat",
+  mode:"window",
+  initialMessages:[
+    "Welcome — I'm Luma RSVP.",
+    "I collect event requirements like date, venue, estimated guests & ticket types — I don’t take guest lists or generate QR codes here."
+  ],
+  i18n:{en:{title:"Luma RSVP",inputPlaceholder:"Tell me about your event..."}}
+});
+</script>
 
-    createChat({
-      webhookUrl: 'https://automation.evu.business/webhook/d2c83952-b78c-426c-af63-f4559400c536/chat',
-      webhookConfig: {
-        method: 'POST',
-        headers: {}
-      },
-      target: '#n8n-chat',
-      mode: 'window',
-      chatInputKey: 'chatInput',
-      chatSessionKey: 'sessionId',
-      loadPreviousSession: true,
-      metadata: {},
+<script>
+const WEBHOOK = "https://automation.evu.business/webhook/luma/contact";
 
-      showWelcomeScreen: false,
-      defaultLanguage: 'en',
-      initialMessages: [
-        "Hi! I'm Luma RSVP — your event registration assistant.",
-        "Ask me to register guests, generate QR tickets, or set up tiers."
-      ],
-      i18n: {
-        en: {
-          title: 'Luma RSVP',
-          subtitle: 'Register guests • Create invites • Check-in with QR',
-          footer: '',
-          getStarted: 'Start Event Setup',
-          inputPlaceholder: 'Type: add guest, send invite via WhatsApp or email…'
-        }
-      },
-      enableStreaming: false
+document.getElementById("contactForm").addEventListener("submit", async(e)=>{
+  e.preventDefault();
+  const form = e.target;
+  const msg = document.getElementById("contactMsg");
+  msg.textContent="";
+
+  const fd = new FormData(form);
+  if(fd.get("website")){ form.reset(); msg.textContent="Thank you — we'll be in touch."; return; }
+
+  const payload = {
+    source:"luma-website",
+    page:"/contact.html",
+    ts:new Date().toISOString(),
+    userAgent:navigator.userAgent,
+    form:Object.fromEntries(fd.entries())
+  };
+
+  try{
+    let r = await fetch(WEBHOOK,{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify(payload)
     });
-  </script>
+    if(!r.ok) throw 0;
+    msg.style.color="#a8ffb5";
+    msg.textContent="✅ Request received — we will contact you shortly.";
+    form.reset();
+  }catch{
+    msg.style.color="#ff9e9e";
+    msg.textContent="⚠️ Something went wrong. Try again or contact us on WhatsApp.";
+  }
+});
+</script>
 
 </body>
 </html>
