@@ -1,69 +1,76 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>How It Works — Luma Tickets</title>
-  <meta name="theme-color" content="#0f172a" />
-  <style>
-    :root{
-      --bg:#0f172a; --panel:#0b1220; --ink:#e5e7eb; --muted:#94a3b8;
-      --accent:#38bdf8; --accent2:#22c55e; --radius:18px; --shadow:0 24px 60px rgba(2,8,23,.55);
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
-    a{text-decoration:none;color:var(--ink)}
-    .container{max-width:1180px;margin:auto;padding:28px}
-
-    header{position:sticky;top:0;background:rgba(2,8,23,.75);backdrop-filter:blur(10px);border-bottom:1px solid rgba(148,163,184,.18);z-index:10}
-    .nav{display:flex;justify-content:space-between;align-items:center}
-    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:#fff;font-weight:800}
-    nav a{padding:10px 14px;border-radius:10px}
-    nav a[aria-current="page"], nav a:hover{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
-    .btn{padding:12px 16px;border-radius:14px;font-weight:600;display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(148,163,184,.35)}
-    .btn.primary{background:var(--accent);color:#04121d;border-color:transparent;box-shadow:0 6px 18px rgba(56,189,248,.35)}
-
-    .section-title{margin:32px 0 8px;font-size:32px}
-    .lead{color:var(--muted);margin:0 0 18px}
-    .grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
-    .num{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;background:rgba(56,189,248,.15);border:1px solid rgba(56,189,248,.35);font-weight:800;margin-bottom:8px}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>How It Works — Luma Tickets</title>
+<meta name="theme-color" content="#0f172a" />
+<style>
+:root{
+  --bg:#0f172a; --panel:#0b1220; --ink:#e5e7eb; --muted:#94a3b8;
+  --accent:#38bdf8; --accent2:#22c55e; --radius:18px; --shadow:0 24px 60px rgba(2,8,23,.55);
+  --mobile-pad:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+a{text-decoration:none;color:var(--ink)}
+.container{max-width:1180px;margin:auto;padding:28px}
+header{position:sticky;top:0;background:rgba(2,8,23,.75);backdrop-filter:blur(10px);border-bottom:1px solid rgba(148,163,184,.18);z-index:10}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:#fff;font-weight:800}
+nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+nav a{padding:10px 14px;border-radius:10px}
+nav a[aria-current="page"], nav a:hover{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
+.btn{padding:12px 16px;border-radius:14px;font-weight:600;display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(148,163,184,.35)}
+.btn.primary{background:var(--accent);color:#04121d;border-color:transparent;box-shadow:0 6px 18px rgba(56,189,248,.35)}
+.section-title{margin:32px 0 8px;font-size:32px}
+.lead{color:var(--muted);margin:0 0 18px}
+.grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.num{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;background:rgba(56,189,248,.15);border:1px solid rgba(56,189,248,.35);font-weight:800;margin-bottom:8px}
+footer{border-top:1px solid rgba(148,163,184,.2);padding:26px;color:var(--muted);padding-bottom:calc(26px + env(safe-area-inset-bottom))}
+@media (max-width:880px){
+  .container{max-width:100%;padding:var(--mobile-pad)}
+  header .container.nav{flex-wrap:wrap}
+  nav{gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .card{padding:16px;border-radius:14px}
+  .section-title{font-size:28px}
+}
+</style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <div style="display:flex;gap:12px;align-items:center">
-        <div class="logo">LT</div><strong>Luma Tickets</strong>
-      </div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="features.html">Features</a>
-        <a aria-current="page" href="how-it-works.html">How it Works</a>
-        <a href="analytics.html">Analytics</a>
-        <a class="btn primary" href="rsvp.html">RSVP (Chat)</a>
-      </nav>
+<header>
+  <div class="container nav">
+    <div style="display:flex;gap:12px;align-items:center">
+      <div class="logo">LT</div><strong>Luma Tickets</strong>
     </div>
-  </header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a aria-current="page" href="how-it-works.html">How it Works</a>
+      <a href="analytics.html">Analytics</a>
+      <a class="btn primary" href="rsvp.html">RSVP (Chat)</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </div>
+</header>
 
-  <main class="container" style="padding:42px 0 28px">
-    <h1 class="section-title">How It Works</h1>
-    <p class="lead">From RSVP intake to elegant check-in — simple, secure, and fast.</p>
+<main class="container" style="padding:42px 0 28px">
+  <h1 class="section-title">How It Works</h1>
+  <p class="lead">From RSVP intake to elegant check-in — simple, secure, and fast.</p>
 
-    <section class="grid">
-      <div class="card"><div class="num">1</div><h3>Collect Requirements</h3><p>Use <em>RSVP (Chat)</em> to specify date, venue, estimated guests, and ticket types (e.g., Gold/Silver).</p></div>
-      <div class="card"><div class="num">2</div><h3>Prepare Guest Data</h3><p>Import Sheets/CSV, apply tiers and +1 rules, and generate unique tokens.</p></div>
-      <div class="card"><div class="num">3</div><h3>Distribute Invites</h3><p>Send branded digital invitations with secure QR ticket links.</p></div>
-      <div class="card"><div class="num">4</div><h3>On-Site Check-In</h3><p>Scan at gates via mobile/web scanners; instant validation and counters.</p></div>
-      <div class="card"><div class="num">5</div><h3>Live Analytics</h3><p>Track arrivals, capacity, and tier performance in real time.</p></div>
-      <div class="card"><div class="num">6</div><h3>Export & Audit</h3><p>One-click CSV/Sheets export with logs for compliance and follow-up.</p></div>
-    </section>
+  <section class="grid">
+    <div class="card"><div class="num">1</div><h3>Collect Requirements</h3><p>Use <em>RSVP (Chat)</em> to specify date, venue, estimated guests, and ticket types (e.g., Gold/Silver).</p></div>
+    <div class="card"><div class="num">2</div><h3>Prepare Guest Data</h3><p>Import Sheets/CSV, apply tiers and +1 rules, and generate unique tokens.</p></div>
+    <div class="card"><div class="num">3</div><h3>Distribute Invites</h3><p>Send branded digital invitations with secure QR ticket links.</p></div>
+    <div class="card"><div class="num">4</div><h3>On-Site Check-In</h3><p>Scan at gates via mobile/web scanners; instant validation and counters.</p></div>
+    <div class="card"><div class="num">5</div><h3>Live Analytics</h3><p>Track arrivals, capacity, and tier performance in real time.</p></div>
+    <div class="card"><div class="num">6</div><h3>Export & Audit</h3><p>One-click CSV/Sheets export with logs for compliance and follow-up.</p></div>
+  </section>
 
-    <div style="margin-top:22px"><a class="btn primary" href="rsvp.html">Start RSVP in Chat</a></div>
-  </main>
+  <div style="margin-top:22px"><a class="btn primary" href="rsvp.html">Start RSVP in Chat</a></div>
+</main>
 
-  <footer class="container" style="border-top:1px solid rgba(148,163,184,.2);padding:26px;color:var(--muted)">
-    © <script>document.write(new Date().getFullYear())</script> Luma Tickets
-  </footer>
+<footer class="container">© <script>document.write(new Date().getFullYear())</script> Luma Tickets</footer>
 </body>
 </html>
