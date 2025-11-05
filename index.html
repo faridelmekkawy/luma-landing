@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Luma Tickets — Premium Event RSVP & Check-In</title>
-<meta name="description" content="Premium digital invitations and onsite QR check-in for luxury events." />
+<title>Luma Tickets — Main</title>
 <meta name="theme-color" content="#0f172a" />
 <style>
 :root{
@@ -21,25 +20,20 @@ header{position:sticky;top:0;background:rgba(2,8,23,.75);backdrop-filter:blur(10
 .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:#fff;font-weight:800}
 nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 nav a{padding:10px 14px;border-radius:10px}
-nav a.active, nav a:hover{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
+nav a:hover, nav a.active{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
 .btn{padding:12px 16px;border-radius:14px;font-weight:600;display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(148,163,184,.35)}
 .btn.primary{background:var(--accent);color:#04121d;border-color:transparent;box-shadow:0 6px 18px rgba(56,189,248,.35)}
-.hero{padding:100px 0 50px}
-.hero h1{font-size:46px;margin:0 0 12px;color:#fff}
-.hero p{color:var(--muted);max-width:700px}
-.card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
-section h2{margin:40px 0 12px;font-size:28px}
-.grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+section h2{margin:32px 0 12px;font-size:28px}
+.grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 .badge{font-size:12px;padding:6px 10px;border-radius:30px;background:rgba(148,163,184,.12);border:1px solid rgba(148,163,184,.25)}
 footer{border-top:1px solid rgba(148,163,184,.2);padding:26px;color:var(--muted);padding-bottom:calc(26px + env(safe-area-inset-bottom))}
 @media (max-width:880px){
   .container{max-width:100%;padding:var(--mobile-pad)}
   header .container.nav{flex-wrap:wrap}
   nav{gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .hero{padding:56px 0 24px}
-  .hero h1{font-size:28px}
-  section h2{font-size:22px}
   .card{padding:16px;border-radius:14px}
+  section h2{font-size:22px}
 }
 </style>
 </head>
@@ -47,41 +41,134 @@ footer{border-top:1px solid rgba(148,163,184,.2);padding:26px;color:var(--muted)
 <header>
   <div class="container nav">
     <div style="display:flex;gap:12px;align-items:center">
-      <div class="logo">LT</div><strong>Luma Tickets</strong>
+      <div class="logo">LT</div><strong>Luma</strong>
     </div>
     <nav>
       <a class="active" href="index.html">Home</a>
-      <a href="features.html">Features</a>
-      <a href="how-it-works.html">How it Works</a>
-      <a href="analytics.html">Analytics</a>
-      <a class="btn primary" href="rsvp.html">RSVP (Chat)</a>
+      <a href="#features">Features</a>
+      <a href="#how">How It Works</a>
+      <a href="#analytics">Analytics</a>
       <a href="privacy.html">Privacy</a>
+      <a class="btn primary" href="rsvp.html">Get a Quote</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <section class="hero container">
-    <div class="card">
-      <h1>Premium Digital RSVP & Guest Check-In</h1>
-      <p>Concierge-level event access. Smart RSVPs, VIP tier handling, seamless entry, and elegant real-time dashboards.</p>
-      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
-        <a class="btn primary" href="rsvp.html">Start RSVP in Chat</a>
-        <a class="btn" href="features.html">Explore Features</a>
+  <!-- MAIN SECTION -->
+  <section class="container card" id="main">
+    <h2>Effortless Invitations. Instant Check-Ins. Smart Event Control.</h2>
+    <p>Manage your guest list, send branded digital invitations, and check them in with a single scan — no hardware, no hassle, just your phone.</p>
+    <ul style="margin:12px 0 0;display:grid;gap:6px">
+      <li>✅  Personalized Invitations</li>
+      <li>✅  Secure QR Access</li>
+      <li>✅  Real-Time Analytics</li>
+    </ul>
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn primary" href="rsvp.html">Get a Demo</a>
+      <a class="btn" href="rsvp.html">Explore Features</a>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section class="container" id="features">
+    <h2>Everything you need for a smooth, branded guest experience.</h2>
+    <p style="color:var(--muted)">From invitations to check-ins, Luma handles it all. Fast, reliable, and beautifully simple.</p>
+    <div class="grid">
+      <div class="card"><span class="badge">Invitations</span><p>Personalized Digital Invites: Send branded invites via WhatsApp, email, or SMS with guest names and RSVP buttons.</p></div>
+      <div class="card"><span class="badge">QR Access</span><p>Secure QR Access: Each guest receives a unique, unduplicable QR code linked to their entry token.</p></div>
+      <div class="card"><span class="badge">Scanning</span><p>Instant Mobile Scanning: All you need is a smartphone. Scan, validate, and welcome guests in seconds.</p></div>
+      <div class="card"><span class="badge">Dashboard</span><p>Real-Time Dashboard: Monitor arrivals and guest capacity, with instant updates.</p></div>
+      <div class="card"><span class="badge">VIP</span><p>VIP Handling: Manage +1s, guest notes, and access tiers all in one view.</p></div>
+      <div class="card"><span class="badge">Branding</span><p>Full Branding Control: Add your logo, colors, and event identity across every screen.</p></div>
+    </div>
+    <div style="margin-top:14px"><a class="btn" href="rsvp.html">Explore Full Feature Set</a></div>
+  </section>
+
+  <!-- HOW IT WORKS SECTION -->
+  <section class="container" id="how">
+    <h2>From invite to check-in, in minutes, not hours.</h2>
+    <div class="grid">
+      <div class="card"><strong>1. Create Guest List</strong><p>Upload your CSV or Sheets file, set tiers and +1s, and generate digital tickets instantly.</p></div>
+      <div class="card"><strong>2. Send Invitations</strong><p>Distribute invitations with embedded QR tickets via WhatsApp, (SMS, or email)?</p></div>
+      <div class="card"><strong>3. Scan at Entry</strong><p>Validate every guest using any smartphone, iOS, Android, or web. No extra hardware required.</p></div>
+      <div class="card"><strong>4. Track in Real Time</strong><p>Monitor who arrives, when they check in, and how they interact with their tier benefits, all live.</p></div>
+    </div>
+  </section>
+
+  <!-- ANALYTICS & INSIGHTS -->
+  <section class="container" id="analytics">
+    <h2>Smart Data for Smart Hosts.</h2>
+    <p>See the full story of your event, from entry times to guest engagement. Track arrivals, departures, dwell times, and live capacity. Export any analytics you need to CSV or Sheets — customized for your reporting style.</p>
+    <div style="margin:12px 0"><a class="btn primary" href="rsvp.html">See Analytics in Action</a></div>
+
+    <!-- Example analytics snapshot (demo) -->
+    <div class="grid" style="margin-top:16px">
+      <div class="card">
+        <h3 style="margin:0 0 6px">Invited / RSVP / Checked-In</h3>
+        <p style="color:var(--muted);margin:0 0 10px">Example snapshot</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+          <div><div style="font-weight:700;font-size:26px">1,200</div><div style="color:var(--muted)">Invited</div></div>
+          <div><div style="font-weight:700;font-size:26px">860</div><div style="color:var(--muted)">RSVP</div></div>
+          <div><div style="font-weight:700;font-size:26px">742</div><div style="color:var(--muted)">Checked-In</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin:0 0 6px">Arrivals per 15 min</h3>
+        <svg viewBox="0 0 300 60" preserveAspectRatio="none" style="display:block;width:100%;height:60px;margin-top:6px">
+          <polyline fill="none" stroke="#38bdf8" stroke-width="3"
+            points="0,50 20,48 40,45 60,40 80,35 100,32 120,28 140,22 160,16 180,12 200,18 220,26 240,34 260,42 280,48 300,50"/>
+        </svg>
+      </div>
+      <div class="card">
+        <h3 style="margin:0 0 6px">Tier Breakdown (Example)</h3>
+        <table style="width:100%;border-collapse:collapse">
+          <thead><tr><th style="text-align:left;padding:8px;border-bottom:1px solid rgba(148,163,184,.2)">Tier</th><th style="text-align:left;padding:8px;border-bottom:1px solid rgba(148,163,184,.2)">Invited</th><th style="text-align:left;padding:8px;border-bottom:1px solid rgba(148,163,184,.2)">RSVP</th><th style="text-align:left;padding:8px;border-bottom:1px solid rgba(148,163,184,.2)">Checked-In</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:8px;border-bottom:1px dashed rgba(148,163,184,.2)">Gold</td><td style="padding:8px;border-bottom:1px dashed rgba(148,163,184,.2)">300</td><td style="padding:8px;border-bottom:1px dashed rgba(148,163,184,.2)">260</td><td style="padding:8px;border-bottom:1px dashed rgba(148,163,184,.2)">242</td></tr>
+            <tr><td style="padding:8px">Silver</td><td style="padding:8px">900</td><td style="padding:8px">600</td><td style="padding:8px">500</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
 
-  <section class="container">
-    <h2>Highlights</h2>
+  <!-- USE CASES -->
+  <section class="container" id="use-cases">
+    <h2>Built for Every Premium Experience.</h2>
+    <p style="color:var(--muted)">Whether it’s a private launch or a global brand activation, Luma adapts to your flow.</p>
     <div class="grid">
-      <div class="card"><span class="badge">Invites</span><h3>Luxury Digital Invites</h3><p>Your brand, elegant motion, VIP aesthetics.</p></div>
-      <div class="card"><span class="badge">Access</span><h3>Secure QR Check-in</h3><p>Unique encrypted QR per guest.</p></div>
-      <div class="card"><span class="badge">Control</span><h3>Tiered Access</h3><p>Gold/Silver entry logic, +1 rules.</p></div>
+      <div class="card"><strong>Corporate Events</strong><p>Product launches, board meetings, partner nights, and VIP experiences.</p></div>
+      <div class="card"><strong>Private Functions</strong><p>Curated guest lists and personalized entry for high-touch hospitality.</p></div>
+      <div class="card"><strong>Elite Member Experiences</strong><p>Tiered access, +1 rules, and seamless repeat-guest handling.</p></div>
     </div>
+  </section>
+
+  <!-- COMPLIANCE & DATA POLICY (condensed) -->
+  <section class="container" id="policy">
+    <h2>We take data privacy seriously.</h2>
+    <p>Luma Tickets follows best practices for data protection and GDPR compliance. We collect only essential information to operate your event and never share or sell data. Guests can request data removal anytime through our support team.</p>
+    <div><a class="btn" href="privacy.html">View Full Policy</a></div>
+  </section>
+
+  <!-- GLOBAL PRESENCE -->
+  <section class="container" id="global">
+    <h2>Trusted. Tested. Operational.</h2>
+    <p>Luma Tickets is live and operational across the UK, UAE, Germany, and Egypt, delivering seamless guest management experiences for events of every scale. Now ready to expand globally.</p>
+    <div><a class="btn primary" href="rsvp.html">Start Your Event Setup</a></div>
   </section>
 </main>
 
-<footer>© <script>document.write(new Date().getFullYear())</script> Luma Tickets</footer>
+<footer class="container">
+  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+    <nav style="display:flex;flex-wrap:wrap;gap:12px">
+      <a href="#features">Features</a>
+      <a href="#how">How It Works</a>
+      <a href="#analytics">Analytics</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </nav>
+    <div>© <script>document.write(new Date().getFullYear())</script> Luma</div>
+  </div>
+</footer>
 </body>
 </html>
