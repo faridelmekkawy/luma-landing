@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Luma — AI & Automation for Events, Ticketing & Store POS</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:#050816;
+      --bg-soft:#0b1120;
+      --panel:#020617;
+      --ink:#f9fafb;
+      --muted:#9ca3af;
+      --accent:#22c55e;
+      --accent-soft:rgba(34,197,94,0.12);
+      --accent-strong:#16a34a;
+      --border:rgba(148,163,184,0.35);
+      --radius:18px;
+      --shadow:0 22px 60px rgba(15,23,42,0.45);
+      --max-width:1120px;
+    }
+
+    * {
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body {
+      font-family:"Montserrat",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:radial-gradient(circle at top, #1d283a 0, #020617 55%, #000 100%);
+      color:var(--ink);
+      -webkit-font-smoothing:antialiased;
+    }
+
+    a { color:inherit; text-decoration:none; }
+
+    .page {
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    header {
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter:blur(24px);
+      background:linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,0.4), transparent);
+      border-bottom:1px solid rgba(148,163,184,0.3);
+    }
+
+    .nav {
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .nav-left {
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .logo-mark {
+      width:32px;
+      height:32px;
+      border-radius:999px;
+      background:conic-gradient(from 220deg, #22c55e, #22d3ee, #4f46e5, #22c55e);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 0 0 1px rgba(15,23,42,0.7), 0 10px 30px rgba(56,189,248,0.4);
+    }
+
+    .logo-mark span {
+      font-size:16px;
+      font-weight:700;
+      color:#0b1120;
+    }
+
+    .logo-text {
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+
+    .logo-text strong {
+      font-size:18px;
+      letter-spacing:0.05em;
+    }
+
+    .logo-text small {
+      font-size:11px;
+      color:var(--muted);
+      text-transform:uppercase;
+    }
+
+    .nav-links {
+      display:flex;
+      align-items:center;
+      gap:22px;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .nav-links a {
+      position:relative;
+    }
+
+    .nav-links a:hover {
+      color:var(--ink);
+    }
+
+    .nav-links a::after {
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-4px;
+      width:0;
+      height:2px;
+      border-radius:999px;
+      background:linear-gradient(90deg,#22c55e,#22d3ee);
+      transition:width .18s ease-out;
+    }
+
+    .nav-links a:hover::after {
+      width:100%;
+    }
+
+    .nav-cta {
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:9px 18px;
+      border-radius:999px;
+      border:1px solid transparent;
+      font-size:13px;
+      font-weight:600;
+      cursor:pointer;
+      transition:transform .1s ease-out, box-shadow .1s ease-out, background .15s ease-out, border-color .15s ease-out;
+      white-space:nowrap;
+    }
+
+    .btn-primary {
+      background:linear-gradient(135deg,#22c55e,#22d3ee);
+      color:#020617;
+      box-shadow:0 12px 35px rgba(34,197,94,0.55);
+    }
+
+    .btn-primary:hover {
+      transform:translateY(-1px);
+      box-shadow:0 18px 45px rgba(34,197,94,0.75);
+    }
+
+    .btn-ghost {
+      border-color:rgba(148,163,184,0.5);
+      color:var(--muted);
+      background:rgba(15,23,42,0.5);
+    }
+
+    .btn-ghost:hover {
+      border-color:rgba(148,163,184,0.9);
+      color:var(--ink);
+    }
+
+    main {
+      flex:1;
+    }
+
+    section {
+      padding:60px 20px;
+    }
+
+    .container {
+      max-width:var(--max-width);
+      margin:0 auto;
+    }
+
+    /* HERO */
+    .hero {
+      padding-top:72px;
+      padding-bottom:72px;
+    }
+
+    .hero-grid {
+      display:grid;
+      grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);
+      gap:40px;
+      align-items:center;
+    }
+
+    .hero-kicker {
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:4px 10px 4px 4px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.6);
+      background:rgba(15,23,42,0.85);
+      color:var(--muted);
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.09em;
+      margin-bottom:16px;
+    }
+
+    .hero-kicker-pill {
+      border-radius:999px;
+      padding:4px 9px;
+      background:linear-gradient(135deg,#22c55e,#22d3ee);
+      color:#020617;
+      font-weight:600;
+    }
+
+    .hero-title {
+      font-size:clamp(32px,4vw,40px);
+      line-height:1.08;
+      letter-spacing:0.03em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .hero-title span {
+      background:linear-gradient(120deg,#a5b4fc,#22c55e,#22d3ee);
+      -webkit-background-clip:text;
+      color:transparent;
+    }
+
+    .hero-subtitle {
+      font-size:15px;
+      color:var(--muted);
+      max-width:460px;
+      line-height:1.6;
+      margin-bottom:22px;
+    }
+
+    .hero-badges {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:24px;
+    }
+
+    .hero-badge {
+      font-size:11px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.4);
+      padding:5px 10px;
+      color:var(--muted);
+      background:rgba(15,23,42,0.85);
+    }
+
+    .hero-cta-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+      margin-bottom:16px;
+    }
+
+    .hero-note {
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .hero-right {
+      position:relative;
+    }
+
+    .hero-card {
+      border-radius:var(--radius);
+      border:1px solid rgba(148,163,184,0.45);
+      background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.18), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(56,189,248,0.15), transparent 55%),
+        rgba(15,23,42,0.96);
+      box-shadow:var(--shadow);
+      padding:18px 18px 16px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .hero-chip-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .hero-chip {
+      font-size:11px;
+      padding:4px 9px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(148,163,184,0.5);
+      color:var(--muted);
+    }
+
+    .hero-metrics {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+      margin-top:4px;
+    }
+
+    .metric {
+      padding:10px;
+      border-radius:12px;
+      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(148,163,184,0.45);
+    }
+
+    .metric-label {
+      font-size:11px;
+      color:var(--muted);
+      margin-bottom:2px;
+    }
+
+    .metric-value {
+      font-size:15px;
+      font-weight:600;
+    }
+
+    .metric-tag {
+      font-size:10px;
+      color:#4ade80;
+      margin-top:2px;
+    }
+
+    .hero-footer {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:6px;
+    }
+
+    .hero-footer small {
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    /* AUTOMATION STRIP */
+    .automation-strip {
+      border-top:1px solid rgba(148,163,184,0.3);
+      border-bottom:1px solid rgba(148,163,184,0.3);
+      background:rgba(15,23,42,0.9);
+    }
+
+    .automation-inner {
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      font-size:13px;
+    }
+
+    .automation-inner strong {
+      font-size:13px;
+    }
+
+    .automation-chips {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .automation-chip {
+      font-size:11px;
+      padding:4px 10px;
+      border-radius:999px;
+      background:var(--accent-soft);
+      color:#bbf7d0;
+      border:1px solid rgba(34,197,94,0.35);
+    }
+
+    /* LEVELS */
+    .levels {
+      background:radial-gradient(circle at top, rgba(15,23,42,1), #020617 55%);
+    }
+
+    .section-kicker {
+      text-transform:uppercase;
+      font-size:11px;
+      letter-spacing:0.16em;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+
+    .section-title {
+      font-size:24px;
+      margin-bottom:24px;
+    }
+
+    .section-title span {
+      color:#4ade80;
+    }
+
+    .levels-grid {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .level-card {
+      border-radius:16px;
+      border:1px solid rgba(148,163,184,0.45);
+      padding:14px 14px 16px;
+      background:rgba(15,23,42,0.95);
+    }
+
+    .level-label {
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.16em;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+
+    .level-title {
+      font-size:15px;
+      font-weight:600;
+      margin-bottom:6px;
+    }
+
+    .level-body {
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.6;
+      margin-bottom:10px;
+    }
+
+    .level-tag {
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:var(--accent-soft);
+      color:#bbf7d0;
+      display:inline-flex;
+    }
+
+    /* TESTIMONIALS / CTA */
+    .testimonials {
+      background:#020617;
+    }
+
+    .testimonials-grid {
+      display:grid;
+      grid-template-columns:2fr 3fr;
+      gap:28px;
+      align-items:flex-start;
+    }
+
+    .quote {
+      font-size:16px;
+      line-height:1.7;
+      margin-bottom:16px;
+    }
+
+    .quote span {
+      color:#a5b4fc;
+    }
+
+    .quote-meta {
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .cards-grid {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .mini-card {
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,0.45);
+      padding:12px 12px 14px;
+      background:rgba(15,23,42,0.98);
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .mini-card strong {
+      display:block;
+      font-size:13px;
+      color:var(--ink);
+      margin-bottom:4px;
+    }
+
+    .cta-final {
+      margin-top:36px;
+      padding:18px 18px 16px;
+      border-radius:18px;
+      border:1px solid rgba(148,163,184,0.6);
+      background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.18), transparent 65%),
+        rgba(15,23,42,0.98);
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .cta-final-text {
+      max-width:360px;
+    }
+
+    .cta-final-text h3 {
+      font-size:18px;
+      margin-bottom:4px;
+    }
+
+    .cta-final-text p {
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top:1px solid rgba(148,163,184,0.3);
+      padding:16px 20px 24px;
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .footer-inner {
+      max-width:var(--max-width);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .footer-links {
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width:900px) {
+      .hero-grid,
+      .testimonials-grid {
+        grid-template-columns:minmax(0,1fr);
+      }
+      .hero-right {
+        order:-1;
+      }
+      .levels-grid {
+        grid-template-columns:minmax(0,1fr);
+      }
+      .cards-grid {
+        grid-template-columns:minmax(0,1fr);
+      }
+      .nav-links {
+        display:none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="nav">
+        <div class="nav-left">
+          <div class="logo-mark"><span>L</span></div>
+          <div class="logo-text">
+            <strong>LUMA</strong>
+            <small>AI Events & Store OS</small>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <a href="#products">Products</a>
+          <a href="#levels">How it works</a>
+          <a href="#stories">Use cases</a>
+          <a href="#contact">Pricing</a>
+        </nav>
+        <div class="nav-cta">
+          <button class="btn btn-ghost" type="button">Sign in</button>
+          <button class="btn btn-primary" type="button">Book a demo</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero" id="top">
+        <div class="container hero-grid">
+          <div>
+            <div class="hero-kicker">
+              <span class="hero-kicker-pill">AI & AUTOMATION</span>
+              Connected ticketing, events & store POS
+            </div>
+            <h1 class="hero-title">
+              ALL YOUR <span>TICKETS, EVENTS & STORES</span>,<br/>
+              RUNNING ON AUTOMATION.
+            </h1>
+            <p class="hero-subtitle">
+              Luma is the AI layer for your operations — from ticketing systems and event handling
+              to store POS and stock — automated, connected, and visible in real time.
+            </p>
+            <div class="hero-badges">
+              <div class="hero-badge">AI-powered ticketing system</div>
+              <div class="hero-badge">Automated event handling</div>
+              <div class="hero-badge">Smart store POS & stock</div>
+              <div class="hero-badge">End-to-end workflows on autopilot</div>
+            </div>
+            <div class="hero-cta-row">
+              <button class="btn btn-primary" type="button">Book a demo</button>
+              <button class="btn btn-ghost" type="button">See how automation works</button>
+            </div>
+            <div class="hero-note">
+              Automation in every step: invites → check-in → sales → receipts → reports.
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <div class="hero-card">
+              <div class="hero-chip-row">
+                <div class="hero-chip">AI detects bottlenecks</div>
+                <div class="hero-chip">Workflows auto-triggered</div>
+                <div class="hero-chip">No more manual syncing</div>
+              </div>
+              <div class="hero-metrics">
+                <div class="metric">
+                  <div class="metric-label">Tickets processed</div>
+                  <div class="metric-value">+10k</div>
+                  <div class="metric-tag">Automated QR & check-in</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">POS sessions</div>
+                  <div class="metric-value">+2.3k</div>
+                  <div class="metric-tag">Synced with stock in real time</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">Manual work saved</div>
+                  <div class="metric-value">6h / day</div>
+                  <div class="metric-tag">AI & automation doing the admin</div>
+                </div>
+              </div>
+              <div class="hero-footer">
+                <small>One brain handling tickets, events, and stores — automatically.</small>
+                <small>Powered by Luma Automations.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AUTOMATION STRIP -->
+      <section class="automation-strip">
+        <div class="container automation-inner">
+          <div>
+            <strong>Automation in every step.</strong> From the moment a guest registers until the last item is sold, Luma keeps everything in sync.
+          </div>
+          <div class="automation-chips">
+            <div class="automation-chip">Ticket creation & QR sending</div>
+            <div class="automation-chip">Guest & tombola data flows to dashboards</div>
+            <div class="automation-chip">POS → stock → reports updated in seconds</div>
+            <div class="automation-chip">AI insights on what to fix next</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LEVELS / HOW IT WORKS -->
+      <section class="levels" id="levels">
+        <div class="container">
+          <div class="section-kicker">How it works</div>
+          <h2 class="section-title">4 layers of <span>AI & automation</span> across your operation.</h2>
+          <div class="levels-grid">
+            <div class="level-card">
+              <div class="level-label">Level 1</div>
+              <div class="level-title">Ticketing system on autopilot</div>
+              <p class="level-body">
+                Online forms, AI-cleaned guest data, automatic QR ticket generation, reminder messages,
+                and tombola numbers — all handled by automated flows.
+              </p>
+              <div class="level-tag">Automated ticketing & registrations</div>
+            </div>
+            <div class="level-card">
+              <div class="level-label">Level 2</div>
+              <div class="level-title">Events handled with workflows</div>
+              <p class="level-body">
+                Check-in, gate status, capacity alerts, session timing, and winner screens are all driven
+                by rules and automations instead of last-minute chaos.
+              </p>
+              <div class="level-tag">Smart event handling</div>
+            </div>
+            <div class="level-card">
+              <div class="level-label">Level 3</div>
+              <div class="level-title">Store POS & stock that syncs itself</div>
+              <p class="level-body">
+                Every sale from the POS updates stock, branch totals, vendor quotas, and returns.
+                VAT & service fees are applied automatically from your settings.
+              </p>
+              <div class="level-tag">Automated store POS & inventory</div>
+            </div>
+            <div class="level-card">
+              <div class="level-label">Final Level</div>
+              <div class="level-title">AI insights & daily reports</div>
+              <p class="level-body">
+                Luma’s AI surfaces what matters: best-selling items, weak branches, underperforming
+                sessions, and suggested changes for your next event or pop-up.
+              </p>
+              <div class="level-tag">AI copilots for decisions</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STORIES / TESTIMONIAL STYLE -->
+      <section class="testimonials" id="stories">
+        <div class="container testimonials-grid">
+          <div>
+            <div class="section-kicker">This is what automated ops feel like</div>
+            <p class="quote">
+              “Before Luma, ticketing, POS, and reports were all separate. Now
+              <span>AI and automations connect every step</span> — from who entered the gate to
+              what they actually bought.”
+            </p>
+            <div class="quote-meta">Event Owner • Luma pilot customer</div>
+          </div>
+          <div>
+            <div class="cards-grid">
+              <div class="mini-card">
+                <strong>Soueast Owners Club</strong>
+                AI-assisted ticketing, QR check-in, and automated F&B reporting — all feeding into one live dashboard.
+              </div>
+              <div class="mini-card">
+                <strong>Lokamania Tombola</strong>
+                Automated registration, tombola number assignment, and winner display. No manual lists, no missed entries.
+              </div>
+              <div class="mini-card">
+                <strong>Luma Bazaar</strong>
+                Vendors, POS, stock, and staff performance for each stall, all synced automatically and summarized by AI.
+              </div>
+              <div class="mini-card">
+                <strong>Your next event</strong>
+                Ticketing system, event handling, and store POS running with automations instead of sticky notes.
+              </div>
+            </div>
+
+            <div class="cta-final" id="contact">
+              <div class="cta-final-text">
+                <h3>Put automation and AI at the center of your events & stores.</h3>
+                <p>
+                  Share your next activation, and we’ll map how Luma can automate ticketing,
+                  event handling, and store POS step by step.
+                </p>
+              </div>
+              <div>
+                <button class="btn btn-primary" type="button">Talk to Luma</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div>© Luma 2025 — AI & Automation for Events, Ticketing & Store POS</div>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms</a>
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
