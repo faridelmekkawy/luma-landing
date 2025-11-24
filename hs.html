@@ -259,11 +259,33 @@
 
     .flow-progress-wrapper {
       position:relative;
-      padding:24px 20px 8px;
+      padding:22px 20px 18px;
       border-top:1px solid rgba(148,163,184,0.3);
       border-bottom:1px solid rgba(148,163,184,0.2);
       background:#020617;
       z-index:5;
+    }
+
+    /* Progress line that moves with scroll */
+    .progress-line {
+      position:absolute;
+      left:20px;
+      right:20px;
+      top:50%;
+      height:4px;
+      background:rgba(51,65,85,0.7);
+      border-radius:999px;
+      transform:translateY(-50%);
+      overflow:hidden;
+      z-index:0;
+    }
+
+    .progress-line-fill {
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius:inherit;
+      box-shadow:0 0 15px rgba(34,197,94,0.7);
     }
 
     .flow-progress {
@@ -274,6 +296,8 @@
       justify-content:space-between;
       gap:10px;
       font-size:13px;
+      position:relative;
+      z-index:1;
     }
 
     .flow-step {
@@ -285,7 +309,7 @@
       border-radius:999px;
       border:1px solid rgba(148,163,184,0.35);
       color:var(--muted);
-      background:rgba(15,23,42,0.6);
+      background:rgba(15,23,42,0.85);
       cursor:default;
       transition:0.2s;
       justify-content:center;
@@ -546,6 +570,10 @@
       .flow-step {
         justify-content:flex-start;
       }
+      .progress-line {
+        top:auto;
+        bottom:10px;
+      }
     }
   </style>
 </head>
@@ -636,12 +664,12 @@
         <div class="product-card" id="pAI">
           <div class="product-title">Luma AI Counseling</div>
           <div class="product-desc">
-            Sit with a Luma counselor who studies your case and recommends tailored solutions,
-            strategies, and automations for your operation.
+            Sit with a Luma counselor who studies how your business runs — whether it’s stores,
+            events, services, or something completely different — and recommends tailored solutions.
           </div>
           <div class="product-meta">
             Ideal when you know something is not working, but you’re not sure where to start or
-            which systems you actually need.
+            what kind of system or changes you actually need.
           </div>
         </div>
 
@@ -649,9 +677,15 @@
     </div>
   </section>
 
-  <!-- SYSTEMS AREA: PROGRESS SLIDER + FLOWS -->
+  <!-- SYSTEMS AREA: PROGRESS LINE + FLOWS -->
   <section id="systemsArea">
     <div class="flow-progress-wrapper">
+      <!-- Line that moves with scroll -->
+      <div class="progress-line">
+        <div class="progress-line-fill" id="progressFill"></div>
+      </div>
+
+      <!-- Steps -->
       <div class="flow-progress" id="flowProgressBar">
         <div class="flow-step active" data-flow="flowTickets"><span>1</span>Tickets</div>
         <div class="flow-step" data-flow="flowStore"><span>2</span>Store POS</div>
@@ -718,7 +752,7 @@
                 <div class="flow-visual-box">
                   Placeholder for a “scan success” screen with green tick and guest details.
                 </div>
-                <div>Later, drop a real screenshot from Firebase-hosted app here.</div>
+                <div>Later, drop a real screenshot from your app here.</div>
               </div>
             </div>
           </div>
@@ -957,7 +991,8 @@
                 <div class="flow-label">Luma AI Counseling • Slide 1</div>
                 <div class="flow-title">Start with a conversation, not a system.</div>
                 <p class="flow-body">
-                  You sit with a Luma counselor who listens to how your events or stores run today.
+                  You sit with a Luma counselor who listens to how your business runs today —
+                  whether you’re running stores, events, services, or something else entirely.
                   We focus on your problems before we talk about tools.
                 </p>
                 <ul class="flow-list">
@@ -986,13 +1021,13 @@
                 <div class="flow-label">Luma AI Counseling • Slide 2</div>
                 <div class="flow-title">You receive clear recommendations and a roadmap.</div>
                 <p class="flow-body">
-                  Based on what we learn, we recommend concrete steps to improve your operations,
-                  which may or may not include Luma systems — depending on what’s best.
+                  Based on what we learn, we recommend concrete steps to improve your operations —
+                  including process changes, system choices, and practical ways to use technology and data.
                 </p>
                 <ul class="flow-list">
                   <li>Clear diagnosis of what’s blocking you.</li>
                   <li>Prioritized list of suggested changes.</li>
-                  <li>Practical options with and without Luma.</li>
+                  <li>Practical next steps that fit your reality.</li>
                 </ul>
                 <div class="flow-tagline">
                   The goal is to design something that you can actually run.
@@ -1015,8 +1050,9 @@
                 <div class="flow-label">Luma AI Counseling • Slide 3</div>
                 <div class="flow-title">We work with you to implement the right changes.</div>
                 <p class="flow-body">
-                  If you decide to move forward, we help you implement the changes — whether
-                  that means Luma systems, process tweaks, or both.
+                  If you decide to move forward, we help you implement the changes —
+                  whether that means new workflows, new tools, or using Luma systems
+                  where they make sense for your case.
                 </p>
                 <ul class="flow-list">
                   <li>Support from planning to execution.</li>
@@ -1129,11 +1165,28 @@
     pinSpacing:false
   });
 
-  /* Horizontal slide flows for each product */
+  /* Progress line fill across the whole systems area */
+  gsap.fromTo("#progressFill",
+    { width:"0%" },
+    {
+      width:"100%",
+      ease:"none",
+      scrollTrigger:{
+        trigger:"#systemsArea",
+        start:"top top",
+        end:"bottom bottom",
+        scrub:true
+      }
+    }
+  );
+
+  /* Horizontal slide flows for each product - slower movement */
   gsap.utils.toArray(".product-flow").forEach(section => {
     const inner = section.querySelector(".flow-inner");
     const slides = section.querySelectorAll(".flow-slide");
     if (!inner || slides.length <= 1) return;
+
+    const distancePerSlide = 1.8; // higher = slower slide per scroll
 
     gsap.to(inner, {
       xPercent: -100 * (slides.length - 1),
@@ -1141,7 +1194,7 @@
       scrollTrigger:{
         trigger:section,
         start:"top top",
-        end:"+=" + (slides.length * window.innerHeight),
+        end: () => "+=" + (slides.length * window.innerHeight * distancePerSlide),
         scrub:true,
         pin:true,
         anticipatePin:1
