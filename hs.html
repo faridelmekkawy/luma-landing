@@ -259,23 +259,22 @@
 
     .flow-progress-wrapper {
       position:relative;
-      padding:22px 20px 18px;
+      padding:18px 20px 40px; /* more bottom space so line sits in white space */
       border-top:1px solid rgba(148,163,184,0.3);
       border-bottom:1px solid rgba(148,163,184,0.2);
       background:#020617;
       z-index:5;
     }
 
-    /* Progress line that moves with scroll */
+    /* Progress line that moves with scroll - NOW UNDER THE NAMES */
     .progress-line {
       position:absolute;
       left:20px;
       right:20px;
-      top:50%;
+      bottom:10px;               /* put it in the whitespace below the chips */
       height:4px;
       background:rgba(51,65,85,0.7);
       border-radius:999px;
-      transform:translateY(-50%);
       overflow:hidden;
       z-index:0;
     }
@@ -571,8 +570,7 @@
         justify-content:flex-start;
       }
       .progress-line {
-        top:auto;
-        bottom:10px;
+        bottom:8px;
       }
     }
   </style>
@@ -1182,13 +1180,13 @@
     }
   );
 
-  /* Horizontal slide flows for each product - SLOWER MOVEMENT */
+  /* Horizontal slide flows for each product - MUCH SLOWER MOVEMENT */
   gsap.utils.toArray(".product-flow").forEach(section => {
     const inner = section.querySelector(".flow-inner");
     const slides = section.querySelectorAll(".flow-slide");
     if (!inner || slides.length <= 1) return;
 
-    const distancePerSlide = 2.4; // was 1.8 — higher = slower per scroll
+    const distancePerSlide = 4.5; // higher = slower per scroll
 
     gsap.to(inner, {
       xPercent: -100 * (slides.length - 1),
