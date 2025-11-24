@@ -259,19 +259,19 @@
 
     .flow-progress-wrapper {
       position:relative;
-      padding:18px 20px 40px; /* more bottom space so line sits in white space */
+      padding:18px 20px 40px;
       border-top:1px solid rgba(148,163,184,0.3);
       border-bottom:1px solid rgba(148,163,184,0.2);
       background:#020617;
       z-index:5;
     }
 
-    /* Progress line that moves with scroll - NOW UNDER THE NAMES */
+    /* Progress line under the chips */
     .progress-line {
       position:absolute;
       left:20px;
       right:20px;
-      bottom:10px;               /* put it in the whitespace below the chips */
+      bottom:10px;
       height:4px;
       background:rgba(51,65,85,0.7);
       border-radius:999px;
@@ -340,9 +340,35 @@
       border-color:transparent;
     }
 
+    /* NEW: connector line in the big blank space */
+    .connector-space {
+      height:180px;
+      position:relative;
+      overflow:visible;
+    }
+
+    .connector-track {
+      position:absolute;
+      left:15%;
+      right:15%;
+      top:50%;
+      height:3px;
+      background:rgba(31,41,55,0.7);
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .connector-fill {
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      border-radius:inherit;
+      box-shadow:0 0 18px rgba(34,197,94,0.6);
+    }
+
     .flows-wrapper {
       position:relative;
-      margin-top:20px;
+      margin-top:0;
     }
 
     .product-flow {
@@ -549,6 +575,13 @@
       .flow-slide-content {
         grid-template-columns:minmax(0,1fr);
       }
+      .connector-space {
+        height:140px;
+      }
+      .connector-track {
+        left:10%;
+        right:10%;
+      }
     }
 
     @media (max-width:600px) {
@@ -659,7 +692,6 @@
           </div>
         </div>
 
-        <!-- UPDATED AI COUNSELING CARD TEXT -->
         <div class="product-card" id="pAI">
           <div class="product-title">Luma AI Counseling</div>
           <div class="product-desc">
@@ -677,10 +709,10 @@
     </div>
   </section>
 
-  <!-- SYSTEMS AREA: PROGRESS LINE + FLOWS -->
+  <!-- SYSTEMS AREA: PROGRESS LINE + CONNECTOR + FLOWS -->
   <section id="systemsArea">
     <div class="flow-progress-wrapper">
-      <!-- Line that moves with scroll -->
+      <!-- Line under the names -->
       <div class="progress-line">
         <div class="progress-line-fill" id="progressFill"></div>
       </div>
@@ -691,6 +723,13 @@
         <div class="flow-step" data-flow="flowStore"><span>2</span>Store POS</div>
         <div class="flow-step" data-flow="flowEvents"><span>3</span>Events</div>
         <div class="flow-step" data-flow="flowAI"><span>4</span>AI Counseling</div>
+      </div>
+    </div>
+
+    <!-- NEW: connector line in the big whitespace -->
+    <div class="connector-space">
+      <div class="connector-track">
+        <div class="connector-fill" id="connectorFill"></div>
       </div>
     </div>
 
@@ -981,7 +1020,7 @@
         </div>
       </div>
 
-      <!-- AI Counseling Flow (UPDATED TEXT) -->
+      <!-- AI Counseling Flow -->
       <div class="product-flow" id="flowAI">
         <div class="flow-inner">
           <!-- Slide 1 -->
@@ -1085,7 +1124,6 @@
   <section id="trustedby">
     <div class="trusted-title">Trusted by</div>
     <div class="trusted-logos">
-      <!-- Just put your Firebase Storage logo URLs in src="" -->
       <div class="trusted-logo"><img src="" alt="Logo 1"></div>
       <div class="trusted-logo"><img src="" alt="Logo 2"></div>
       <div class="trusted-logo"><img src="" alt="Logo 3"></div>
@@ -1093,7 +1131,6 @@
     </div>
   </section>
 
-  <!-- SIMPLE PLACEHOLDER SECTIONS FOR ANCHORS -->
   <section id="events">
     <div class="container">
       This is a placeholder for your future “Submit an event” form or page.
@@ -1180,7 +1217,22 @@
     }
   );
 
-  /* Horizontal slide flows for each product - MUCH SLOWER MOVEMENT */
+  /* NEW: connector line fill in the whitespace */
+  gsap.fromTo("#connectorFill",
+    { width:"0%" },
+    {
+      width:"100%",
+      ease:"none",
+      scrollTrigger:{
+        trigger:"#systemsArea",
+        start:"top top",
+        end:"bottom bottom",
+        scrub:true
+      }
+    }
+  );
+
+  /* Horizontal slide flows for each product - slower */
   gsap.utils.toArray(".product-flow").forEach(section => {
     const inner = section.querySelector(".flow-inner");
     const slides = section.querySelectorAll(".flow-slide");
