@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Luma — Build Your Operations System</title>
 
-  <!-- Fonts -->
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
   <!-- GSAP -->
@@ -27,18 +27,14 @@
 
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      font-family:"Montserrat", sans-serif;
+      font-family:"Montserrat",sans-serif;
       background:var(--bg);
       color:var(--ink);
       overflow-x:hidden;
     }
     a { text-decoration:none; color:inherit; }
 
-    /* PAGE WRAPPER */
-    main {
-      width:100%;
-      overflow:hidden;
-    }
+    main { width:100%; overflow-x:hidden; }
 
     section {
       width:100%;
@@ -50,18 +46,23 @@
       max-width:var(--max-width);
       margin:0 auto;
       position:relative;
-      z-index:3;
+      z-index:2;
     }
 
-    /* HERO SECTION */
+    /* HERO (ZOOM SCENE) */
     #hero {
       padding-top:130px;
       padding-bottom:130px;
-      background:radial-gradient(
-        circle at 30% -10%,
-        rgba(34,197,94,0.25),
-        transparent 60%
-      );
+      background:
+        radial-gradient(circle at 30% -10%, rgba(34,197,94,0.25), transparent 60%),
+        radial-gradient(circle at 80% 120%, rgba(34,211,238,0.18), transparent 60%),
+        #020617;
+      overflow:visible;
+    }
+
+    .hero-camera {
+      position:relative;
+      transform-origin:center center;
     }
 
     .hero-title {
@@ -84,6 +85,7 @@
       display:flex;
       gap:16px;
       flex-wrap:wrap;
+      margin-bottom:40px;
     }
 
     .btn {
@@ -93,20 +95,28 @@
       font-weight:600;
       cursor:pointer;
       transition:0.2s;
+      border:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
     }
 
     .btn-primary {
       background:linear-gradient(135deg,var(--accent),var(--accent2));
       color:#020617;
+      box-shadow:0 15px 40px rgba(34,197,94,0.55);
     }
+    .btn-primary:hover { transform:translateY(-1px) scale(1.02); }
 
     .btn-secondary {
       border:1px solid var(--muted);
       color:var(--muted);
+      background:transparent;
     }
     .btn-secondary:hover { color:var(--ink); border-color:var(--ink); }
 
-    /* FLOATING BLOCKS */
+    /* FLOATING BLOCKS ORBIT */
     .blocks-wrapper {
       position:absolute;
       top:50%;
@@ -120,59 +130,118 @@
     .block {
       position:absolute;
       padding:14px 22px;
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.15);
+      background:rgba(15,23,42,0.85);
+      border:1px solid rgba(148,163,184,0.5);
       border-radius:var(--radius);
       font-size:14px;
-      backdrop-filter:blur(8px);
+      backdrop-filter:blur(10px);
       box-shadow:var(--shadow);
       white-space:nowrap;
     }
 
-    /* PRODUCT SECTION */
-    #products { padding-top:120px; }
+    /* PRODUCTS (CONNECTED BY A LINE) */
+    #products {
+      padding-top:110px;
+      padding-bottom:110px;
+      background:radial-gradient(circle at top, #020617, #020617 55%, #020617 100%);
+    }
+
+    .products-header {
+      max-width:540px;
+      margin-bottom:40px;
+    }
+
+    .products-header h2 {
+      font-size:30px;
+      margin-bottom:16px;
+    }
+
+    .products-header p {
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.6;
+    }
 
     .products-grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      position:relative;
+      display:flex;
+      flex-direction:column;
       gap:28px;
-      margin-top:40px;
+      padding-left:32px; /* space for line & dots */
+      margin-top:10px;
+    }
+
+    /* vertical spine line */
+    .products-grid::before {
+      content:"";
+      position:absolute;
+      left:12px;
+      top:0;
+      bottom:0;
+      width:2px;
+      background:linear-gradient(to bottom, rgba(148,163,184,0.5), rgba(148,163,184,0.1));
     }
 
     .product-card {
+      position:relative;
       background:var(--panel);
       border-radius:var(--radius);
-      padding:28px;
+      padding:24px 22px 22px;
       box-shadow:var(--shadow);
       border:1px solid rgba(255,255,255,0.08);
       transition:0.25s ease;
     }
 
+    .product-card::before {
+      /* dot that attaches to the line */
+      content:"";
+      position:absolute;
+      left:-22px;
+      top:26px;
+      width:12px;
+      height:12px;
+      border-radius:999px;
+      background:radial-gradient(circle, var(--accent) 0, #22d3ee 70%);
+      box-shadow:0 0 0 3px rgba(34,197,94,0.4);
+    }
+
     .product-card:hover {
-      transform:translateY(-6px) scale(1.02);
-      box-shadow:0 40px 100px rgba(0,0,0,0.6);
+      transform:translateY(-4px);
+      box-shadow:0 35px 80px rgba(0,0,0,0.7);
+      border-color:rgba(94,234,212,0.6);
     }
 
     .product-title {
-      font-size:20px;
+      font-size:18px;
       font-weight:600;
-      margin-bottom:10px;
+      margin-bottom:8px;
+    }
+
+    .product-tag {
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.15em;
+      color:var(--muted);
+      margin-bottom:6px;
     }
 
     .product-desc {
       font-size:14px;
       color:var(--muted);
       line-height:1.6;
-      margin-bottom:18px;
+      margin-bottom:16px;
     }
 
     .product-cta {
-      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:6px;
     }
 
     .product-cta .btn {
-      font-size:13px;
-      padding:8px 20px;
+      font-size:12px;
+      padding:8px 18px;
       border-radius:999px;
     }
 
@@ -181,10 +250,11 @@
       padding-top:80px;
       padding-bottom:80px;
       text-align:center;
+      background:#020617;
     }
 
     .trusted-title {
-      font-size:18px;
+      font-size:16px;
       color:var(--muted);
       margin-bottom:22px;
     }
@@ -199,12 +269,13 @@
     .trusted-logo {
       width:120px;
       height:60px;
-      background:#111;
+      background:#0b1120;
       border-radius:10px;
       display:flex;
       align-items:center;
       justify-content:center;
       overflow:hidden;
+      border:1px solid rgba(148,163,184,0.4);
     }
 
     .trusted-logo img {
@@ -212,139 +283,185 @@
       height:100%;
       object-fit:contain;
     }
+
+    /* RESPONSIVE */
+    @media (max-width:900px) {
+      .blocks-wrapper {
+        position:relative;
+        top:auto;
+        left:auto;
+        transform:none;
+        width:100%;
+        height:260px;
+        margin-top:40px;
+      }
+      #hero {
+        padding-bottom:90px;
+      }
+    }
   </style>
 </head>
 
 <body>
 <main>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="container">
-    <h1 class="hero-title">
-      Build your own operations system.<br/>
-      With just your phone.
-    </h1>
+  <!-- HERO (ZOOM) -->
+  <section id="hero">
+    <div class="container hero-camera" id="heroCamera">
+      <h1 class="hero-title">
+        Build your own operations system.<br/>
+        With just your phone.
+      </h1>
 
-    <p class="hero-sub">
-      Luma gives you four standalone systems — Tickets, Store POS, Event Handling,
-      and AI Counseling.  
-      Each system works alone, or you can snap them together in any combination.  
-      No hardware. Everything runs on mobile.
-    </p>
+      <p class="hero-sub">
+        Luma gives you four standalone systems — Tickets, Store POS, Event Handling,
+        and AI Counseling. Each system works alone, or you can combine them in any way.
+        No hardware. Everything runs on mobile.
+      </p>
 
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="#contact">Book a Demo</a>
-      <a class="btn btn-secondary" href="#events">Submit an Event</a>
-      <a style="font-size:14px; color:var(--muted);" href="#counseling">Book a Counseling Session</a>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#demo">Book a Demo</a>
+        <a class="btn btn-secondary" href="#events">Submit an Event</a>
+        <a href="#counseling" style="font-size:14px; color:var(--muted); align-self:center;">
+          Book a Counseling Session
+        </a>
+      </div>
+
+      <!-- floating blocks around the hero (modular systems) -->
+      <div class="blocks-wrapper">
+        <div class="block" id="blockTickets" style="top:10%; left:10%;">TICKETS</div>
+        <div class="block" id="blockStore" style="top:65%; left:15%;">STORE POS</div>
+        <div class="block" id="blockEvents" style="top:40%; left:70%;">EVENTS</div>
+        <div class="block" id="blockAI" style="top:15%; left:65%;">AI COUNSELING</div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <!-- FLOATING BLOCKS (ANIMATED) -->
-  <div class="blocks-wrapper">
-    <div class="block" id="blockTickets" style="top:10%; left:10%;">TICKETS</div>
-    <div class="block" id="blockStore" style="top:65%; left:15%;">STORE POS</div>
-    <div class="block" id="blockEvents" style="top:40%; left:70%;">EVENTS</div>
-    <div class="block" id="blockAI" style="top:15%; left:65%;">AI COUNSELING</div>
-  </div>
-</section>
-
-<!-- PRODUCTS -->
-<section id="products">
-  <div class="container">
-    <h2 style="font-size:30px; margin-bottom:20px;">Our Systems</h2>
-    <p style="color:var(--muted); max-width:540px; margin-bottom:40px;">
-      Choose one system or mix multiple together.  
-      All modules run independently and on mobile — no hardware required.
-    </p>
-
-    <div class="products-grid">
-
-      <!-- Tickets -->
-      <div class="product-card" id="pTickets">
-        <div class="product-title">Luma Tickets</div>
-        <div class="product-desc">
-          Invitations, RSVPs, registrations, QR tickets, gate scanning,  
-          giveaways and redemptions — all mobile-first.
-        </div>
-        <div class="product-cta">
-          <a class="btn btn-primary" href="#events">Submit Event</a>
-        </div>
+  <!-- PRODUCTS (CONNECTED LINE) -->
+  <section id="products">
+    <div class="container">
+      <div class="products-header">
+        <h2>Our systems — use one or mix them.</h2>
+        <p>
+          Tickets, Store POS, Event Handling, and AI Counseling all work as separate products.
+          You can start with one, or connect multiple systems together when you need more.
+          Every system is fully accessible from mobile — no dedicated hardware required.
+        </p>
       </div>
 
-      <!-- Store POS -->
-      <div class="product-card" id="pStore">
-        <div class="product-title">Luma Store POS</div>
-        <div class="product-desc">
-          A full mobile POS for retail & F&B.  
-          Stock tracking, sales, branches, insights — used with no hardware at all.
-        </div>
-        <div class="product-cta">
-          <a class="btn btn-primary" href="#demo">Try POS</a>
-        </div>
-      </div>
+      <div class="products-grid">
 
-      <!-- Events -->
-      <div class="product-card" id="pEvents">
-        <div class="product-title">Luma Events</div>
-        <div class="product-desc">
-          Vendor POS on their phones, live dashboards, stock, sales,  
-          traffic and full event visibility — all from your mobile.
+        <!-- Luma Tickets -->
+        <div class="product-card" id="pTickets">
+          <div class="product-tag">System 1 · Tickets</div>
+          <div class="product-title">Luma Tickets</div>
+          <div class="product-desc">
+            Invitations, RSVPs, registrations, QR tickets, gate scanning,
+            giveaways and redemptions — all handled from your phone.
+          </div>
+          <div class="product-cta">
+            <a class="btn btn-primary" href="#events">Submit Event</a>
+            <a class="btn btn-secondary" href="#demo">Book Demo</a>
+          </div>
         </div>
-        <div class="product-cta">
-          <a class="btn btn-primary" href="#events">Submit Event</a>
-        </div>
-      </div>
 
-      <!-- AI Counseling -->
-      <div class="product-card" id="pAI">
-        <div class="product-title">Luma AI Counseling</div>
-        <div class="product-desc">
-          Sit with a Luma specialist who studies your case  
-          and gives you custom solutions, automations, and system design.
+        <!-- Luma Store POS -->
+        <div class="product-card" id="pStore">
+          <div class="product-tag">System 2 · Store POS</div>
+          <div class="product-title">Luma Store POS</div>
+          <div class="product-desc">
+            A full POS for retail & F&B that runs entirely on mobile.
+            Track stock, sales, branches and staff performance — without any extra hardware.
+          </div>
+          <div class="product-cta">
+            <a class="btn btn-primary" href="#demo">Try Luma POS</a>
+            <a class="btn btn-secondary" href="#demo">Book Demo</a>
+          </div>
         </div>
-        <div class="product-cta">
-          <a class="btn btn-primary" href="#counseling">Book Counseling</a>
-        </div>
-      </div>
 
+        <!-- Luma Events -->
+        <div class="product-card" id="pEvents">
+          <div class="product-tag">System 3 · Events</div>
+          <div class="product-title">Luma Events</div>
+          <div class="product-desc">
+            Give every vendor their own mobile POS and dashboard, see live stock and sales,
+            and monitor every inch of your event from a single view.
+          </div>
+          <div class="product-cta">
+            <a class="btn btn-primary" href="#events">Submit Event</a>
+            <a class="btn btn-secondary" href="#demo">Book Demo</a>
+          </div>
+        </div>
+
+        <!-- Luma AI Counseling -->
+        <div class="product-card" id="pAI">
+          <div class="product-tag">System 4 · Counseling</div>
+          <div class="product-title">Luma AI Counseling</div>
+          <div class="product-desc">
+            Sit with a Luma specialist who studies your case and
+            recommends tailored systems, automations, and improvements built for your reality.
+          </div>
+          <div class="product-cta">
+            <a class="btn btn-primary" href="#counseling">Book Counseling</a>
+          </div>
+        </div>
+
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- TRUSTED BY -->
-<section id="trustedby">
-  <div class="trusted-title">Trusted by</div>
-  <div class="trusted-logos">
-    <!-- PLACEHOLDERS FOR FIREBASE LOGOS -->
-    <div class="trusted-logo"><img src="" alt="logo1"/></div>
-    <div class="trusted-logo"><img src="" alt="logo2"/></div>
-    <div class="trusted-logo"><img src="" alt="logo3"/></div>
-    <div class="trusted-logo"><img src="" alt="logo4"/></div>
-  </div>
-</section>
+  <!-- TRUSTED BY (LOGO PLACEHOLDERS FOR FIREBASE LINKS) -->
+  <section id="trustedby">
+    <div class="trusted-title">Trusted by</div>
+    <div class="trusted-logos">
+      <!-- Put Firebase Storage image URLs in src="" later -->
+      <div class="trusted-logo"><img src="" alt="logo1"></div>
+      <div class="trusted-logo"><img src="" alt="logo2"></div>
+      <div class="trusted-logo"><img src="" alt="logo3"></div>
+      <div class="trusted-logo"><img src="" alt="logo4"></div>
+    </div>
+  </section>
 
 </main>
 
 <script>
-  /* Floating Blocks Animation */
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* 1) HERO CAMERA ZOOM + PIN
+     Scroll feels like you're zooming into the Luma world before dropping into products.
+  */
+  gsap.to("#heroCamera", {
+    scale:1.12,
+    y:-100,
+    ease:"none",
+    scrollTrigger:{
+      trigger:"#hero",
+      start:"top top",
+      end:"+=700",   // how long the zoom journey lasts
+      scrub:true,
+      pin:true,
+      anticipatePin:1
+    }
+  });
+
+  /* 2) Floating blocks subtle motion (modular systems) */
   gsap.to("#blockTickets", {
-    y:-20, duration:2.5, repeat:-1, yoyo:true, ease:"power1.inOut"
+    y:-18, duration:2.6, repeat:-1, yoyo:true, ease:"power1.inOut"
   });
 
   gsap.to("#blockStore", {
-    y:20, duration:3, repeat:-1, yoyo:true, ease:"power1.inOut"
+    y:18, duration:3.2, repeat:-1, yoyo:true, ease:"power1.inOut"
   });
 
   gsap.to("#blockEvents", {
-    x:15, duration:2.8, repeat:-1, yoyo:true, ease:"power1.inOut"
+    x:16, duration:2.9, repeat:-1, yoyo:true, ease:"power1.inOut"
   });
 
   gsap.to("#blockAI", {
-    x:-12, y:-10, duration:3.4, repeat:-1, yoyo:true, ease:"power1.inOut"
+    x:-14, y:-10, duration:3.4, repeat:-1, yoyo:true, ease:"power1.inOut"
   });
 
-  /* Fade in product cards on scroll */
+  /* 3) Fade + slide products when they come into view */
   gsap.utils.toArray(".product-card").forEach((card, i) => {
     gsap.from(card, {
       scrollTrigger:{
@@ -353,8 +470,8 @@
       },
       opacity:0,
       y:40,
-      duration:0.8,
-      delay:i*0.1,
+      duration:0.7,
+      delay:i*0.05,
       ease:"power2.out"
     });
   });
