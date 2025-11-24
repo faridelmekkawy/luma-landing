@@ -1,1226 +1,1260 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8" />
   <title>Luma — Build Your Operations System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Fonts -->
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-
-  <!-- GSAP -->
-  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 
   <style>
     :root {
-      --bg:#050816;
-      --panel:#0b1120;
-      --ink:#f9fafb;
-      --muted:#9ca3af;
-      --accent:#22c55e;
-      --accent2:#22d3ee;
-      --radius:16px;
-      --shadow:0 25px 60px rgba(0,0,0,0.45);
-      --max-width:1120px;
+      --bg: #f3f4f6;
+      --bg-soft: #e5e7eb;
+      --panel: #ffffff;
+      --panel-soft: #f9fafb;
+      --ink: #0f172a;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+      --accent-strong: #1d4ed8;
+      --accent-alt: #14b8a6;
+      --radius-lg: 24px;
+      --radius: 16px;
+      --shadow-soft: 0 18px 40px rgba(15,23,42,0.09);
+      --shadow-card: 0 14px 30px rgba(15,23,42,0.08);
+      --max-width: 1120px;
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #e0f2fe, #f9fafb 40%, #f1f5f9 75%, #e5e7eb);
+      color: var(--ink);
+    }
 
     body {
-      font-family:"Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:var(--bg);
-      color:var(--ink);
-      overflow-x:hidden;
-      -webkit-font-smoothing:antialiased;
+      overflow: hidden; /* We control scroll with JS */
     }
 
-    a { text-decoration:none; color:inherit; }
-
-    main {
-      width:100%;
-      overflow-x:hidden;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    section {
-      width:100%;
-      padding:90px 20px;
-      position:relative;
+    /* Top progress bar */
+
+    .top-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 8px 20px;
+      z-index: 1000;
+      pointer-events: none;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
-    .container {
-      max-width:var(--max-width);
-      margin:0 auto;
-      position:relative;
-      z-index:3;
+    .top-progress-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
     }
 
-    .btn {
-      padding:12px 26px;
-      border-radius:999px;
-      font-size:14px;
-      font-weight:600;
-      cursor:pointer;
-      transition:0.2s;
-      border:1px solid transparent;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      white-space:nowrap;
+    .progress-track {
+      width: 100%;
+      height: 3px;
+      background: rgba(148,163,184,0.35);
+      border-radius: 999px;
+      overflow: hidden;
     }
 
-    .btn-primary {
-      background:linear-gradient(135deg,var(--accent),var(--accent2));
-      color:#020617;
-      box-shadow:0 18px 40px rgba(34,197,94,0.55);
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+      transition: width 0.5s ease;
     }
 
-    .btn-primary:hover {
-      box-shadow:0 26px 70px rgba(34,197,94,0.75);
-      transform:translateY(-1px);
+    /* Spine */
+
+    .spine {
+      position: fixed;
+      left: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      z-index: 999;
+      pointer-events: none;
     }
 
-    .btn-secondary {
-      border-color:var(--muted);
-      color:var(--muted);
-      background:rgba(15,23,42,0.4);
-    }
-    .btn-secondary:hover {
-      color:var(--ink);
-      border-color:var(--ink);
+    .spine-inner {
+      position: relative;
+      padding-left: 24px;
+      pointer-events: auto;
     }
 
-    /* HERO SECTION */
-    #hero {
-      padding-top:130px;
-      padding-bottom:130px;
-      background:
-        radial-gradient(circle at 25% -10%, rgba(34,197,94,0.25), transparent 55%),
-        radial-gradient(circle at 80% 0%, rgba(34,211,238,0.25), transparent 60%),
-        #020617;
+    .spine-line {
+      position: absolute;
+      left: 8px;
+      top: -32px;
+      bottom: -32px;
+      width: 2px;
+      background: rgba(148,163,184,0.4);
     }
 
-    .hero-inner {
-      position:relative;
-      max-width:var(--max-width);
-      margin:0 auto;
-      min-height:60vh;
-      transform-origin:center center;
+    .spine-dot {
+      position: relative;
+      margin: 4px 0;
+      padding: 4px 0 4px 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-left: 0;
+    }
+
+    .spine-dot::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      box-shadow: 0 0 0 2px #ffffff;
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .spine-dot span {
+      white-space: nowrap;
+      opacity: 0.9;
+    }
+
+    .spine-dot.active {
+      color: #0f172a;
+    }
+
+    .spine-dot.active::before {
+      background: var(--accent);
+      transform: scale(1.12);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.25);
+    }
+
+    @media (max-width: 900px) {
+      .spine {
+        display: none;
+      }
+    }
+
+    /* Scroll shell */
+
+    .scroll-shell {
+      height: 100vh;
+      overflow: hidden; /* Scrolling done via JS */
+      position: relative;
+    }
+
+    .slides-container {
+      height: 100%;
+    }
+
+    .slide {
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 96px 16px 32px;
+    }
+
+    .slide-inner {
+      max-width: var(--max-width);
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .slide.in-view .slide-inner {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slide-header-eyebrow {
+      display: inline-flex;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(37,99,235,0.06);
+      color: #1d4ed8;
+      font-weight: 600;
+    }
+
+    .slide-title {
+      font-size: 32px;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin: 8px 0 12px;
+    }
+
+    .slide-subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    .slide-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .slide {
+        padding: 88px 18px 24px;
+      }
+      .slide-title {
+        font-size: 26px;
+      }
+      .slide-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .slide-copy p {
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0 0 14px;
+      color: #111827;
+    }
+
+    .slide-copy ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 16px;
+    }
+
+    .slide-copy li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 14px;
+      color: #111827;
+      margin-bottom: 6px;
+    }
+
+    .slide-copy li::before {
+      content: "•";
+      font-size: 14px;
+      line-height: 1.2;
+      margin-top: 2px;
+      color: var(--accent);
+    }
+
+    .primary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+      color: white;
+      box-shadow: 0 10px 24px rgba(37,99,235,0.45);
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .primary-button span {
+      margin-left: 6px;
+      font-size: 13px;
+    }
+
+    .primary-button:active {
+      transform: translateY(1px);
+      box-shadow: 0 6px 16px rgba(37,99,235,0.45);
+    }
+
+    .secondary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      font-size: 13px;
+      font-weight: 500;
+      background: rgba(255,255,255,0.8);
+      color: #0f172a;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .secondary-button + .secondary-button {
+      margin-left: 8px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    /* Hero */
+
+    .slide-hero .slide-inner {
+      text-align: left;
+    }
+
+    .hero-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 40px;
+      align-items: center;
     }
 
     .hero-title {
-      font-size:clamp(34px,4vw,46px);
-      font-weight:700;
-      line-height:1.1;
-      max-width:600px;
-      margin-bottom:20px;
+      font-size: 42px;
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+      margin: 0 0 16px;
     }
 
-    .hero-sub {
-      font-size:16px;
-      color:var(--muted);
-      max-width:520px;
-      line-height:1.6;
-      margin-bottom:30px;
+    .hero-subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 520px;
     }
 
-    .hero-cta {
-      display:flex;
-      gap:16px;
-      flex-wrap:wrap;
-      align-items:center;
+    .hero-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
     }
 
-    /* FLOATING BLOCKS */
-    .blocks-wrapper {
-      position:absolute;
-      top:50%;
-      right:0;
-      transform:translateY(-50%);
-      width:420px;
-      height:420px;
-      pointer-events:none;
+    .hero-tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.03);
+      border: 1px solid rgba(148,163,184,0.4);
+      font-size: 12px;
+      color: #334155;
+      font-weight: 500;
     }
 
-    .block {
-      position:absolute;
-      padding:14px 22px;
-      background:rgba(15,23,42,0.85);
-      border:1px solid rgba(148,163,184,0.4);
-      border-radius:var(--radius);
-      font-size:14px;
-      backdrop-filter:blur(10px);
-      box-shadow:var(--shadow);
-      white-space:nowrap;
+    .hero-right-card {
+      background: radial-gradient(circle at top, #e0f2fe, #eff6ff 45%, #e5f9f4);
+      border-radius: 28px;
+      box-shadow: var(--shadow-soft);
+      padding: 20px 18px;
+      border: 1px solid rgba(148,163,184,0.4);
     }
 
-    /* PRODUCTS OVERVIEW (VERTICAL LINE + NODES, NO CTAs) */
-    #products {
-      padding-top:120px;
-      padding-bottom:120px;
-      background:#020617;
+    .hero-right-header {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #64748b;
+      font-weight: 600;
+      margin-bottom: 10px;
     }
 
-    #products::before {
-      content:"";
-      position:absolute;
-      top:160px;
-      bottom:60px;
-      left:50%;
-      transform:translateX(-50%);
-      width:2px;
-      background:linear-gradient(180deg, rgba(148,163,184,0.2), rgba(34,197,94,0.7), rgba(34,211,238,0.4));
-      opacity:0.75;
-      pointer-events:none;
+    .hero-systems-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
     }
 
-    .products-header {
-      text-align:left;
-      max-width:540px;
-      margin:0 auto 40px;
+    .hero-system-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(148,163,184,0.5);
+      font-size: 13px;
     }
 
-    .products-header h2 {
-      font-size:30px;
-      margin-bottom:12px;
+    .hero-system-label {
+      font-weight: 500;
+      color: #0f172a;
     }
 
-    .products-header p {
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.6;
+    .hero-system-pill {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(37,99,235,0.08);
+      color: #1d4ed8;
+      font-weight: 500;
     }
 
-    .products-stack {
-      max-width:620px;
-      margin:0 auto;
-      position:relative;
-      z-index:2;
-    }
-
-    .product-card {
-      position:relative;
-      background:var(--panel);
-      border-radius:var(--radius);
-      padding:26px 24px 24px;
-      box-shadow:var(--shadow);
-      border:1px solid rgba(255,255,255,0.08);
-      margin-bottom:34px;
-      transition:0.25s ease;
-    }
-
-    .product-card::before {
-      content:"";
-      position:absolute;
-      top:0;
-      left:50%;
-      transform:translate(-50%,-50%);
-      width:16px;
-      height:16px;
-      border-radius:999px;
-      background:#020617;
-      border:3px solid var(--accent2);
-      box-shadow:0 0 0 4px rgba(34,211,238,0.22);
-    }
-
-    .product-card:hover {
-      transform:translateY(-4px);
-      box-shadow:0 32px 80px rgba(0,0,0,0.5);
-      border-color:rgba(255,255,255,0.14);
-    }
-
-    .product-title {
-      font-size:18px;
-      font-weight:600;
-      margin-bottom:8px;
-      text-align:center;
-    }
-
-    .product-desc {
-      font-size:14px;
-      color:var(--muted);
-      line-height:1.6;
-      margin-bottom:8px;
-      text-align:center;
-    }
-
-    .product-meta {
-      font-size:12px;
-      color:var(--muted);
-      text-align:center;
-    }
-
-    /* SYSTEMS AREA (PROGRESS + FLOWS) */
-    #systemsArea {
-      background:#020617;
-      padding:0 0 120px;
-      position:relative;
-    }
-
-    .flow-progress-wrapper {
-      position:relative;
-      padding:22px 20px 18px;
-      border-top:1px solid rgba(148,163,184,0.3);
-      border-bottom:1px solid rgba(148,163,184,0.2);
-      background:#020617;
-      z-index:5;
-    }
-
-    /* Progress line that moves with scroll */
-    .progress-line {
-      position:absolute;
-      left:20px;
-      right:20px;
-      top:50%;
-      height:4px;
-      background:rgba(51,65,85,0.7);
-      border-radius:999px;
-      transform:translateY(-50%);
-      overflow:hidden;
-      z-index:0;
-    }
-
-    .progress-line-fill {
-      width:0%;
-      height:100%;
-      background:linear-gradient(90deg, var(--accent), var(--accent2));
-      border-radius:inherit;
-      box-shadow:0 0 15px rgba(34,197,94,0.7);
-    }
-
-    .flow-progress {
-      max-width:var(--max-width);
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      font-size:13px;
-      position:relative;
-      z-index:1;
-    }
-
-    .flow-step {
-      flex:1;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.35);
-      color:var(--muted);
-      background:rgba(15,23,42,0.85);
-      cursor:default;
-      transition:0.2s;
-      justify-content:center;
-      text-align:center;
-      white-space:nowrap;
-    }
-
-    .flow-step span {
-      width:20px;
-      height:20px;
-      border-radius:999px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      font-size:11px;
-      background:rgba(15,23,42,0.9);
-      border:1px solid rgba(148,163,184,0.6);
-    }
-
-    .flow-step.active {
-      border-color:rgba(34,197,94,0.9);
-      background:linear-gradient(135deg, rgba(34,197,94,0.22), rgba(34,211,238,0.14));
-      color:var(--ink);
-    }
-
-    .flow-step.active span {
-      background:linear-gradient(135deg,var(--accent),var(--accent2));
-      color:#020617;
-      border-color:transparent;
-    }
-
-    .flows-wrapper {
-      position:relative;
-      margin-top:20px;
-    }
-
-    .product-flow {
-      height:100vh;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .flow-inner {
-      display:flex;
-      width:400%;
-      height:100%;
-    }
-
-    .flow-slide {
-      width:100vw;
-      max-width:100%;
-      padding:90px 20px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .flow-slide-content {
-      max-width:var(--max-width);
-      margin:0 auto;
-      display:grid;
-      grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr);
-      gap:40px;
-      align-items:center;
-    }
-
-    .flow-label {
-      font-size:12px;
-      letter-spacing:0.16em;
-      text-transform:uppercase;
-      color:var(--muted);
-      margin-bottom:10px;
-    }
-
-    .flow-title {
-      font-size:26px;
-      margin-bottom:12px;
-    }
-
-    .flow-body {
-      font-size:14px;
-      color:var(--muted);
-      line-height:1.7;
-      margin-bottom:16px;
-    }
-
-    .flow-list {
-      font-size:13px;
-      color:var(--muted);
-      line-height:1.6;
-      margin-left:16px;
-      margin-bottom:10px;
-    }
-
-    .flow-list li {
-      margin-bottom:4px;
-    }
-
-    .flow-tagline {
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .flow-visual {
-      border-radius:18px;
-      border:1px solid rgba(148,163,184,0.42);
-      background:radial-gradient(circle at top left, rgba(34,197,94,0.18), transparent 60%), rgba(15,23,42,0.98);
-      box-shadow:0 26px 70px rgba(0,0,0,0.6);
-      padding:18px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .flow-visual-title {
-      font-size:14px;
-      font-weight:600;
-      margin-bottom:4px;
-    }
-
-    .flow-visual-box {
-      border-radius:12px;
-      border:1px dashed rgba(148,163,184,0.6);
-      padding:10px 12px;
-      margin-bottom:4px;
-    }
-
-    .flow-cta-row {
-      margin-top:18px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-    }
-
-    .flow-cta-note {
-      font-size:12px;
-      color:var(--muted);
-      margin-top:6px;
-    }
-
-    /* TRUSTED BY */
-    #trustedby {
-      padding-top:70px;
-      padding-bottom:80px;
-      text-align:center;
-      background:#020617;
-      border-top:1px solid rgba(148,163,184,0.3);
-    }
-
-    .trusted-title {
-      font-size:18px;
-      color:var(--muted);
-      margin-bottom:22px;
-    }
-
-    .trusted-logos {
-      display:flex;
-      gap:28px;
-      justify-content:center;
-      flex-wrap:wrap;
-    }
-
-    .trusted-logo {
-      width:120px;
-      height:60px;
-      background:#050816;
-      border-radius:10px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-      border:1px solid rgba(148,163,184,0.4);
-    }
-
-    .trusted-logo img {
-      width:100%;
-      height:100%;
-      object-fit:contain;
-    }
-
-    /* FOOTER / PLACEHOLDER SECTIONS */
-    #events, #counseling, #demo, #contact {
-      padding:60px 20px;
-      background:#020617;
-      border-top:1px solid rgba(148,163,184,0.2);
-    }
-
-    #events .container,
-    #counseling .container,
-    #demo .container,
-    #contact .container {
-      max-width:var(--max-width);
-      margin:0 auto;
-      font-size:13px;
-      color:var(--muted);
-    }
-
-    #contact { padding-bottom:80px; }
-
-    /* RESPONSIVE */
-    @media (max-width:900px) {
-      #hero {
-        padding-top:110px;
-        padding-bottom:110px;
+    @media (max-width: 900px) {
+      .hero-main {
+        grid-template-columns: minmax(0, 1fr);
       }
-      .blocks-wrapper {
-        position:relative;
-        width:100%;
-        height:260px;
-        margin-top:40px;
-        transform:none;
-      }
-      .hero-inner {
-        min-height:auto;
-      }
-      #products::before {
-        left:24px;
-        transform:none;
-      }
-      .product-card::before {
-        left:24px;
-        transform:translate(-50%,-50%);
-      }
-      .products-stack {
-        margin-left:40px;
-        margin-right:10px;
-      }
-      .product-title,
-      .product-desc,
-      .product-meta {
-        text-align:left;
-      }
-      .flow-slide {
-        padding:80px 20px;
-      }
-      .flow-slide-content {
-        grid-template-columns:minmax(0,1fr);
-      }
-    }
-
-    @media (max-width:600px) {
       .hero-title {
-        font-size:30px;
+        font-size: 32px;
       }
-      .blocks-wrapper {
-        height:220px;
+      .hero-right-card {
+        margin-top: 8px;
       }
-      .block {
-        font-size:12px;
-        padding:10px 16px;
+    }
+
+    /* Overview slide */
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .overview-grid {
+        grid-template-columns: minmax(0, 1fr);
       }
-      .flow-progress {
-        flex-direction:column;
-        align-items:stretch;
-      }
-      .flow-step {
-        justify-content:flex-start;
-      }
-      .progress-line {
-        top:auto;
-        bottom:10px;
+    }
+
+    .overview-card {
+      background: rgba(255,255,255,0.9);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(148,163,184,0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .overview-card-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .overview-card-body {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .overview-card-tag {
+      font-size: 11px;
+      color: #0f172a;
+      margin-top: 4px;
+    }
+
+    /* Mockup cards (right side visuals) */
+
+    .mockup-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.96), rgba(248,250,252,0.98));
+      border-radius: 26px;
+      border: 1px solid rgba(148,163,184,0.5);
+      box-shadow: var(--shadow-card);
+      padding: 16px 18px;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mockup-tag {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .mockup-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #0f172a;
+    }
+
+    .mockup-text {
+      font-size: 13px;
+      color: #6b7280;
+      max-width: 280px;
+    }
+
+    .mockup-pill {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(37,99,235,0.08);
+      color: #1d4ed8;
+      font-weight: 500;
+    }
+
+    /* End / meta slide */
+
+    .meta-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 28px;
+      align-items: flex-start;
+    }
+
+    .meta-box {
+      background: rgba(255,255,255,0.95);
+      border-radius: var(--radius);
+      border: 1px solid rgba(148,163,184,0.4);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 20px;
+      font-size: 13px;
+      color: #4b5563;
+    }
+
+    .meta-box-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #0f172a;
+    }
+
+    @media (max-width: 900px) {
+      .meta-layout {
+        grid-template-columns: minmax(0, 1fr);
       }
     }
   </style>
 </head>
-
 <body>
-<main>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-inner">
-      <div class="container">
-        <h1 class="hero-title">
-          Build your own operations system.<br/>
-          With just your phone.
-        </h1>
-
-        <p class="hero-sub">
-          Luma gives you four standalone systems — Tickets, Store POS, Event Handling,
-          and AI Counseling. Each system works on its own, and you can connect them in
-          any combination. No hardware. Everything runs on mobile.
-        </p>
-
-        <div class="hero-cta">
-          <a class="btn btn-primary" href="#contact">Book a demo</a>
-          <a class="btn btn-secondary" href="#events">Submit an event</a>
-          <a style="font-size:14px; color:var(--muted);" href="#counseling">Book a counseling session</a>
-        </div>
-      </div>
-
-      <!-- FLOATING BLOCKS -->
-      <div class="blocks-wrapper">
-        <div class="block" id="blockTickets" style="top:8%; left:8%;">TICKETS</div>
-        <div class="block" id="blockStore" style="top:68%; left:16%;">STORE POS</div>
-        <div class="block" id="blockEvents" style="top:42%; left:70%;">EVENTS</div>
-        <div class="block" id="blockAI" style="top:16%; left:66%;">AI COUNSELING</div>
+  <!-- Top progress bar -->
+  <div class="top-progress">
+    <div class="top-progress-inner">
+      <div class="progress-track">
+        <div class="progress-fill"></div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- PRODUCTS OVERVIEW (NO CTAs) -->
-  <section id="products">
-    <div class="container">
-      <div class="products-header">
-        <h2>Four systems. One mobile-first universe.</h2>
-        <p>
-          Use Tickets, Store POS, Events, or AI Counseling on their own — or mix them as you need.
-          All our systems run on phones, so you never need special hardware.
-        </p>
-      </div>
-
-      <div class="products-stack">
-
-        <div class="product-card" id="pTickets">
-          <div class="product-title">Luma Tickets</div>
-          <div class="product-desc">
-            Invitations, RSVPs, registrations, QR tickets, gate scanning, giveaways and redemptions —
-            all managed from mobile, end to end.
-          </div>
-          <div class="product-meta">
-            Ideal for ticketed experiences, gated events, and any activation that needs
-            clean guest flows and redemptions.
-          </div>
-        </div>
-
-        <div class="product-card" id="pStore">
-          <div class="product-title">Luma Store POS</div>
-          <div class="product-desc">
-            A full POS for retail and F&amp;B that lives on your phone. Track stock, sales,
-            branches, returns, and staff performance — no terminals or extra devices.
-          </div>
-          <div class="product-meta">
-            Ideal for everyday stores, cafés, kiosks, and pop-ups that want real insights without hardware.
-          </div>
-        </div>
-
-        <div class="product-card" id="pEvents">
-          <div class="product-title">Luma Events</div>
-          <div class="product-desc">
-            Vendor POS on their phones, event dashboards for owners, stock and sales per
-            brand, and full visibility over what happens during the event.
-          </div>
-          <div class="product-meta">
-            Ideal for bazaars, markets, brand activations, and experiences where vendors sell
-            and you want to see every inch of the event.
-          </div>
-        </div>
-
-        <div class="product-card" id="pAI">
-          <div class="product-title">Luma AI Counseling</div>
-          <div class="product-desc">
-            Sit with a Luma counselor who studies how your business runs — whether it’s stores,
-            events, services, or something completely different — and recommends tailored solutions.
-          </div>
-          <div class="product-meta">
-            Ideal when you know something is not working, but you’re not sure where to start or
-            what kind of system or changes you actually need.
-          </div>
-        </div>
-
-      </div>
+  <!-- Spine navigation -->
+  <div class="spine">
+    <div class="spine-inner">
+      <div class="spine-line"></div>
+      <button class="spine-dot" data-product="tickets">
+        <span>Tickets</span>
+      </button>
+      <button class="spine-dot" data-product="store-pos">
+        <span>Store POS</span>
+      </button>
+      <button class="spine-dot" data-product="events">
+        <span>Events</span>
+      </button>
+      <button class="spine-dot" data-product="ai-counseling">
+        <span>AI Counseling</span>
+      </button>
     </div>
-  </section>
+  </div>
 
-  <!-- SYSTEMS AREA: PROGRESS LINE + FLOWS -->
-  <section id="systemsArea">
-    <div class="flow-progress-wrapper">
-      <!-- Line that moves with scroll -->
-      <div class="progress-line">
-        <div class="progress-line-fill" id="progressFill"></div>
-      </div>
+  <div class="scroll-shell">
+    <div class="slides-container">
 
-      <!-- Steps -->
-      <div class="flow-progress" id="flowProgressBar">
-        <div class="flow-step active" data-flow="flowTickets"><span>1</span>Tickets</div>
-        <div class="flow-step" data-flow="flowStore"><span>2</span>Store POS</div>
-        <div class="flow-step" data-flow="flowEvents"><span>3</span>Events</div>
-        <div class="flow-step" data-flow="flowAI"><span>4</span>AI Counseling</div>
-      </div>
-    </div>
-
-    <div class="flows-wrapper">
-
-      <!-- Tickets Flow -->
-      <div class="product-flow" id="flowTickets">
-        <div class="flow-inner">
-          <!-- Slide 1 -->
-          <div class="flow-slide">
-            <div class="flow-slide-content">
-              <div>
-                <div class="flow-label">Luma Tickets • Slide 1</div>
-                <div class="flow-title">Start with clean invitations and RSVPs.</div>
-                <p class="flow-body">
-                  You share a link. Guests RSVP and register. Luma keeps the data clean,
-                  removes duplicates, and prepares everything for the event day.
-                </p>
-                <ul class="flow-list">
-                  <li>Online invitations and registration forms.</li>
-                  <li>RSVP tracking without messy spreadsheets.</li>
-                  <li>Guest data ready for scanning and reporting.</li>
-                </ul>
-                <div class="flow-tagline">
-                  All from your phone — no extra hardware, no custom devices.
-                </div>
+      <!-- Slide 0: Hero -->
+      <section class="slide slide-hero" data-index="0">
+        <div class="slide-inner">
+          <div class="hero-main">
+            <div>
+              <div class="slide-header-eyebrow">Luma</div>
+              <h1 class="hero-title">Build your own operations system.<br/>With just your phone.</h1>
+              <p class="hero-subtitle">
+                Luma gives you four standalone systems — Tickets, Store POS, Events, and AI Counseling. Each system works on its own, and you can connect them in any combination. No hardware. Everything runs on mobile.
+              </p>
+              <div class="hero-buttons">
+                <a href="#contact" class="primary-button">Book a demo<span>→</span></a>
+                <a href="#submit-event" class="secondary-button">Submit an event</a>
+                <a href="#ai-counseling" class="secondary-button">Book counseling</a>
               </div>
-              <div class="flow-visual">
-                <div class="flow-visual-title">Invites & RSVPs</div>
-                <div class="flow-visual-box">
-                  Sample screen: guest list updating in real time as people RSVP.
-                </div>
-                <div>Use this visual later for an actual UI screenshot.</div>
+              <div class="hero-tag-row">
+                <div class="hero-tag">Tickets</div>
+                <div class="hero-tag">Store POS</div>
+                <div class="hero-tag">Events</div>
+                <div class="hero-tag">AI Counseling</div>
               </div>
             </div>
-          </div>
-
-          <!-- Slide 2 -->
-          <div class="flow-slide">
-            <div class="flow-slide-content">
-              <div>
-                <div class="flow-label">Luma Tickets • Slide 2</div>
-                <div class="flow-title">QR tickets, gate scanning, and smooth entry.</div>
-                <p class="flow-body">
-                  Luma generates QR tickets for each guest. On event day, any staff member can
-                  scan using just their phone — no scanners, no hardware.
-                </p>
-                <ul class="flow-list">
-                  <li>Unique QR tickets for each guest.</li>
-                  <li>Gate scanning on any phone.</li>
-                  <li>Live count of who entered and who didn’t.</li>
-                </ul>
-                <div class="flow-tagline">
-                  The moment a QR is scanned, your dashboard updates.
+            <div class="hero-right-card">
+              <div class="hero-right-header">Four systems. One mobile-first universe.</div>
+              <div class="hero-systems-grid">
+                <div class="hero-system-item">
+                  <span class="hero-system-label">Luma Tickets</span>
+                  <span class="hero-system-pill">Guests & QR</span>
                 </div>
-              </div>
-              <div class="flow-visual">
-                <div class="flow-visual-title">Gate Scan</div>
-                <div class="flow-visual-box">
-                  Placeholder for a “scan success” screen with green tick and guest details.
+                <div class="hero-system-item">
+                  <span class="hero-system-label">Luma Store POS</span>
+                  <span class="hero-system-pill">Retail & F&amp;B</span>
                 </div>
-                <div>Later, drop a real screenshot from your app here.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 3 (Final with CTA) -->
-          <div class="flow-slide">
-            <div class="flow-slide-content">
-              <div>
-                <div class="flow-label">Luma Tickets • Slide 3</div>
-                <div class="flow-title">Giveaways, redemptions, and full ticket reporting.</div>
-                <p class="flow-body">
-                  After check-in, Luma keeps supporting your event with giveaways and redemptions,
-                  so every prize, tombola number, or special access is tracked.
-                </p>
-                <ul class="flow-list">
-                  <li>Redemption tracking for giveaways and offers.</li>
-                  <li>Clean list of who redeemed what and when.</li>
-                  <li>End-of-event report with all ticket metrics.</li>
-                </ul>
-                <div class="flow-cta-row">
-                  <a class="btn btn-primary" href="#events">Submit an event</a>
+                <div class="hero-system-item">
+                  <span class="hero-system-label">Luma Events</span>
+                  <span class="hero-system-pill">Vendors & Zones</span>
                 </div>
-                <div class="flow-cta-note">
-                  Tell us about your next event, and we’ll set up your Luma Tickets flow end to end.
+                <div class="hero-system-item">
+                  <span class="hero-system-label">Luma AI Counseling</span>
+                  <span class="hero-system-pill">Operations strategy</span>
                 </div>
-              </div>
-              <div class="flow-visual">
-                <div class="flow-visual-title">Giveaway & Redemption View</div>
-                <div class="flow-visual-box">
-                  Placeholder: redemption list with status and simple insights.
-                </div>
-                <div>Use this card for a future “Giveaways / Tombola” dashboard mockup.</div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Store POS Flow -->
-      <div class="product-flow" id="flowStore">
-        <div class="flow-inner">
-          <!-- Slide 1 -->
-          <div class="flow-slide">
-            <div class="flow-slide-content">
-              <div>
-                <div class="flow-label">Luma Store POS • Slide 1</div>
-                <div class="flow-title">Turn any phone into a full POS.</div>
-                <p class="flow-body">
-                  Forget heavy terminals. Luma Store POS runs on phones, so your cashier,
-                  barista, or salesperson can run the entire checkout flow from a pocket device.
-                </p>
-                <ul class="flow-list">
-                  <li>Simple cart interface made for touch.</li>
-                  <li>Supports products, variants, and returns.</li>
-                  <li>Works in normal stores and event pop-ups.</li>
-                </ul>
-                <div class="flow-tagline">
-                  Same experience in every branch — with zero extra hardware.
-                </div>
+      <!-- Slide 1: Overview -->
+      <section class="slide slide-overview" data-index="1">
+        <div class="slide-inner">
+          <div>
+            <div class="slide-header-eyebrow">Four systems. One mobile-first universe.</div>
+            <h2 class="slide-title">Mix Tickets, Store POS, Events, and AI Counseling as you need.</h2>
+            <p class="slide-subtitle">
+              Use each system on its own, or connect them when you want everything to talk to each other. All our systems run on phones, so you never need special hardware.
+            </p>
+          </div>
+          <div class="overview-grid">
+            <div class="overview-card">
+              <div class="overview-card-title">Luma Tickets</div>
+              <div class="overview-card-body">
+                Invitations, RSVPs, registrations, QR tickets, gate scanning, giveaways and redemptions — all managed from mobile, end to end.
               </div>
-              <div class="flow-visual">
-                <div class="flow-visual-title">Checkout Screen</div>
-                <div class="flow-visual-box">
-                  Placeholder: items list, quantity, and total showing on a mobile layout.
-                </div>
-                <div>Later, insert your real Luma POS screen here.</div>
+              <div class="overview-card-tag">
+                Ideal for ticketed experiences, gated events, and any activation that needs clean guest flows and redemptions.
               </div>
             </div>
-          </div>
-
-          <!-- Slide 2 -->
-          <div class="flow-slide">
-            <div class="flow-slide-content">
-              <div>
-                <div class="flow-label">Luma Store POS • Slide 2</div>
-                <div class="flow-title">Live stock and branch-level insights.</div>
-                <p class="flow-body">
-                  Every sale updates stock automatically. You see which products are moving,
-                  which branches are performing, and where returns are happening.
-                </p>
-                <ul class="flow-list">
-                  <li>Real-time stock per product and per branch.</li>
-                  <li>Automatic VAT and service fee handling.</li>
-                  <li>Quick view of returns and net sales.</li>
-                </ul>
-                <div class="flow-tagline">
-                  This is your command center for all branches, on one dashboard.
-                </div>
+            <div class="overview-card">
+              <div class="overview-card-title">Luma Store POS</div>
+              <div class="overview-card-body">
+                A full POS for retail and F&amp;B that lives on your phone. Track stock, sales, branches, returns, and staff performance — no terminals or extra devices.
               </div>
-              <div class="flow-visual">
-                <div class="flow-visual-title">Stock & Branch View</div>
-                <div class="flow-visual-box">
-                  Placeholder: stock levels and branch comparison tiles.
-                </div>
-                <div>Use this box later for a multi-branch dashboard screenshot.</div>
+              <div class="overview-card-tag">
+                Ideal for everyday stores, cafés, kiosks, and pop-ups that want real insights without buying hardware.
               </div>
             </div>
-          </div>
-
-          <!-- Slide 3 (Final with CTA) -->
-          <div class="flow-slide">
-            <div class="flow-slide-content">
-              <div>
-                <div class="flow-label">Luma Store POS • Slide 3</div>
-                <div class="flow-title">From everyday stores to event pop-ups.</div>
-                <p class="flow-body">
-                  Use Luma Store POS in your daily branches — and drop the same system inside
-                  your event booths and pop-ups if you want everything unified.
-                </p>
-                <ul class="flow-list">
-                  <li>Use it alone for your retail / F&amp;B business.</li>
-                  <li>Or connect it to events for a full picture.</li>
-                  <li>Always mobile-first, always insight-driven.</li>
-                </ul>
-                <div class="flow-cta-row">
-                  <a class="btn btn-primary" href="#demo">Try POS</a>
-                </div>
-                <div class="flow-cta-note">
-                  We can walk you through a live POS demo or set up a pilot branch for you.
-                </div>
+            <div class="overview-card">
+              <div class="overview-card-title">Luma Events</div>
+              <div class="overview-card-body">
+                Vendor POS on their phones, event dashboards for owners, stock and sales per brand, and full visibility over what happens during the event.
               </div>
-              <div class="flow-visual">
-                <div class="flow-visual-title">Branch & Event Mix</div>
-                <div class="flow-visual-box">
-                  Placeholder: one view combining branch sales and event pop-up performance.
-                </div>
-                <div>Later, showcase how store POS data looks when mixed with event data.</div>
+              <div class="overview-card-tag">
+                Ideal for bazaars, markets, brand activations, and experiences where vendors sell and you want to see every inch of the event.
+              </div>
+            </div>
+            <div class="overview-card">
+              <div class="overview-card-title">Luma AI Counseling</div>
+              <div class="overview-card-body">
+                Sit with a Luma counselor who studies how your business runs — whether it’s stores, events, services, clinics, or something completely different — and recommends tailored solutions.
+              </div>
+              <div class="overview-card-tag">
+                Ideal when you know something is not working, but you’re not sure where to start or what kind of system or changes you actually need.
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Events Flow -->
-      <div class="product-flow" id="flowEvents">
-        <div class="flow-inner">
-          <!-- Slide 1 -->
-          <div class="flow-slide">
-            <div class="flow-slide-content">
-              <div>
-                <div class="flow-label">Luma Events • Slide 1</div>
-                <div class="flow-title">Vendors get POS and dashboards on their phones.</div>
-                <p class="flow-body">
-                  Each brand in your event gets their own POS login on mobile and a mini dashboard.
-                  They can see stock and sales for that event without needing any hardware.
-                </p>
-                <ul class="flow-list">
-                  <li>Mobile POS for every vendor.</li>
-                  <li>Vendor-level stock and sales.</li>
-                  <li>Easy onboarding with simple links.</li>
-                </ul>
-                <div class="flow-tagline">
-                  Vendors feel in control, and you see the full picture.
-                </div>
-              </div>
-              <div class="flow-visual">
-                <div class="flow-visual-title">Vendor POS View</div>
-                <div class="flow-visual-box">
-                  Placeholder: vendor’s event dashboard showing today’s sales and stock.
-                </div>
-                <div>Later, use a real vendor dashboard screenshot here.</div>
-              </div>
+      <!-- Tickets Slide 1 -->
+      <section class="slide" data-index="2" data-product="tickets">
+        <div class="slide-inner">
+          <div class="slide-layout">
+            <div class="slide-copy">
+              <div class="slide-header-eyebrow">Luma Tickets • Slide 1</div>
+              <h2 class="slide-title">Start with clean invitations and RSVPs.</h2>
+              <p>
+                You share a link. Guests RSVP and register. Luma keeps the data clean, removes duplicates, and prepares everything for the event day.
+              </p>
+              <ul>
+                <li>Online invitations and registration forms.</li>
+                <li>RSVP tracking without messy spreadsheets.</li>
+                <li>Guest data ready for scanning and reporting.</li>
+              </ul>
+              <p>All from your phone — no extra hardware, no custom devices.</p>
             </div>
-          </div>
-
-          <!-- Slide 2 -->
-          <div class="flow-slide">
-            <div class="flow-slide-content">
-              <div>
-                <div class="flow-label">Luma Events • Slide 2</div>
-                <div class="flow-title">You see every inch of the event in real time.</div>
-                <p class="flow-body">
-                  As vendors sell, your event dashboard updates. You know who’s doing well,
-                  which zones are quiet, and how the event is performing overall.
-                </p>
-                <ul class="flow-list">
-                  <li>Live overview of vendors and categories.</li>
-                  <li>Sales, returns, and stock alerts per area.</li>
-                  <li>Ability to react while the event is still live.</li>
-                </ul>
-                <div class="flow-tagline">
-                  No more guessing — you actually see what’s happening as it happens.
+            <div class="slide-visual">
+              <div class="mockup-card">
+                <div class="mockup-tag">Invites &amp; RSVPs</div>
+                <div class="mockup-title">Guest list updating in real time.</div>
+                <div class="mockup-text">
+                  Placeholder: guest list view where you can see RSVPs, ticket types, and +1s. Later, replace this box with your actual UI screenshot.
                 </div>
-              </div>
-              <div class="flow-visual">
-                <div class="flow-visual-title">Event Owner Dashboard</div>
-                <div class="flow-visual-box">
-                  Placeholder: heatmap or tile-based event dashboard with key metrics.
-                </div>
-                <div>Use this to show your event owner dashboard later.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 3 (Final with CTA) -->
-          <div class="flow-slide">
-            <div class="flow-slide-content">
-              <div>
-                <div class="flow-label">Luma Events • Slide 3</div>
-                <div class="flow-title">Mix tickets, vendors, and store POS when you’re ready.</div>
-                <p class="flow-body">
-                  Start with just event handling. Later, you can link it to Luma Tickets and Luma Store POS
-                  to unify everything — but only if and when you need it.
-                </p>
-                <ul class="flow-list">
-                  <li>Use Luma Events on its own today.</li>
-                  <li>Add ticketing or store POS later if the event grows.</li>
-                  <li>Always mobile-first, with no extra hardware needed.</li>
-                </ul>
-                <div class="flow-cta-row">
-                  <a class="btn btn-primary" href="#events">Submit an event</a>
-                </div>
-                <div class="flow-cta-note">
-                  Share your next bazaar, market, or activation and we’ll design the event flow for you.
-                </div>
-              </div>
-              <div class="flow-visual">
-                <div class="flow-visual-title">Event Mix Options</div>
-                <div class="flow-visual-box">
-                  Placeholder: visual showing possible combinations (Events + Tickets, Events + POS, etc.).
-                </div>
-                <div>This is where you can visually show “mix and match” later.</div>
+                <div class="mockup-pill">Sample screen</div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- AI Counseling Flow -->
-      <div class="product-flow" id="flowAI">
-        <div class="flow-inner">
-          <!-- Slide 1 -->
-          <div class="flow-slide">
-            <div class="flow-slide-content">
-              <div>
-                <div class="flow-label">Luma AI Counseling • Slide 1</div>
-                <div class="flow-title">Start with a conversation, not a system.</div>
-                <p class="flow-body">
-                  You sit with a Luma counselor who listens to how your business runs today —
-                  whether you’re running stores, events, services, or something else entirely.
-                  We focus on your problems before we talk about tools.
-                </p>
-                <ul class="flow-list">
-                  <li>Understand your current workflows and pain points.</li>
-                  <li>Look at what data you already have (or don’t have).</li>
-                  <li>Clarify what “better” would look like for you.</li>
-                </ul>
-                <div class="flow-tagline">
-                  No pressure to pick a product. We start by understanding your reality.
-                </div>
-              </div>
-              <div class="flow-visual">
-                <div class="flow-visual-title">Counseling Session</div>
-                <div class="flow-visual-box">
-                  Placeholder: notes and questions from a discovery call.
-                </div>
-                <div>Later, this can be a simple UI of structured notes & insights.</div>
-              </div>
+      <!-- Tickets Slide 2 -->
+      <section class="slide" data-index="3" data-product="tickets">
+        <div class="slide-inner">
+          <div class="slide-layout">
+            <div class="slide-copy">
+              <div class="slide-header-eyebrow">Luma Tickets • Slide 2</div>
+              <h2 class="slide-title">QR tickets, gate scanning, and smooth entry.</h2>
+              <p>
+                Luma generates QR tickets for each guest. On event day, any staff member can scan using just their phone — no scanners, no hardware.
+              </p>
+              <ul>
+                <li>Unique QR tickets for each guest.</li>
+                <li>Gate scanning on any phone.</li>
+                <li>Live count of who entered and who didn’t.</li>
+              </ul>
+              <p>The moment a QR is scanned, your dashboard updates.</p>
             </div>
-          </div>
-
-          <!-- Slide 2 -->
-          <div class="flow-slide">
-            <div class="flow-slide-content">
-              <div>
-                <div class="flow-label">Luma AI Counseling • Slide 2</div>
-                <div class="flow-title">You receive clear recommendations and a roadmap.</div>
-                <p class="flow-body">
-                  Based on what we learn, we recommend concrete steps to improve your operations —
-                  including process changes, system choices, and practical ways to use technology and data.
-                </p>
-                <ul class="flow-list">
-                  <li>Clear diagnosis of what’s blocking you.</li>
-                  <li>Prioritized list of suggested changes.</li>
-                  <li>Practical next steps that fit your reality.</li>
-                </ul>
-                <div class="flow-tagline">
-                  The goal is to design something that you can actually run.
+            <div class="slide-visual">
+              <div class="mockup-card">
+                <div class="mockup-tag">Gate Scan</div>
+                <div class="mockup-title">Scan success on mobile.</div>
+                <div class="mockup-text">
+                  Placeholder: a scan success screen with a green tick, guest name, ticket type, and entry time. Replace with your real scan UI later.
                 </div>
-              </div>
-              <div class="flow-visual">
-                <div class="flow-visual-title">Recommendations View</div>
-                <div class="flow-visual-box">
-                  Placeholder: roadmap or plan with simple phases and actions.
-                </div>
-                <div>This can later show a real “counseling output” summary screen.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 3 (Final with CTA) -->
-          <div class="flow-slide">
-            <div class="flow-slide-content">
-              <div>
-                <div class="flow-label">Luma AI Counseling • Slide 3</div>
-                <div class="flow-title">We work with you to implement the right changes.</div>
-                <p class="flow-body">
-                  If you decide to move forward, we help you implement the changes —
-                  whether that means new workflows, new tools, or using Luma systems
-                  where they make sense for your case.
-                </p>
-                <ul class="flow-list">
-                  <li>Support from planning to execution.</li>
-                  <li>Follow-up on how the changes are working.</li>
-                  <li>Ability to adjust as you grow.</li>
-                </ul>
-                <div class="flow-cta-row">
-                  <a class="btn btn-primary" href="#counseling">Book a counseling session</a>
-                </div>
-                <div class="flow-cta-note">
-                  Tell us about your current situation and we’ll help you see what’s possible.
-                </div>
-              </div>
-              <div class="flow-visual">
-                <div class="flow-visual-title">Ongoing Support</div>
-                <div class="flow-visual-box">
-                  Placeholder: view of changes implemented and their impact over time.
-                </div>
-                <div>Later, this can show before/after metrics or progress tracking.</div>
+                <div class="mockup-pill">QR success state</div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-    </div> <!-- flows-wrapper -->
-  </section>
+      <!-- Tickets Slide 3 -->
+      <section class="slide" data-index="4" data-product="tickets">
+        <div class="slide-inner">
+          <div class="slide-layout">
+            <div class="slide-copy">
+              <div class="slide-header-eyebrow">Luma Tickets • Slide 3</div>
+              <h2 class="slide-title">Giveaways, redemptions, and full ticket reporting.</h2>
+              <p>
+                After check-in, Luma keeps supporting your event with giveaways and redemptions, so every prize, tombola number, or special access is tracked.
+              </p>
+              <ul>
+                <li>Redemption tracking for giveaways and offers.</li>
+                <li>Clean list of who redeemed what and when.</li>
+                <li>End-of-event report with all ticket metrics.</li>
+              </ul>
+              <a href="#submit-event" class="primary-button">Submit an event<span>→</span></a>
+              <p style="font-size:12px;color:var(--muted);margin-top:10px;">
+                Tell us about your next event, and we’ll set up your Luma Tickets flow end to end.
+              </p>
+            </div>
+            <div class="slide-visual">
+              <div class="mockup-card">
+                <div class="mockup-tag">Giveaway &amp; Redemption View</div>
+                <div class="mockup-title">Tracked redemptions at a glance.</div>
+                <div class="mockup-text">
+                  Placeholder: redemption list with status and simple insights. Later, use this card for a “Giveaways / Tombola” dashboard mockup.
+                </div>
+                <div class="mockup-pill">Redemptions</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <!-- TRUSTED BY (LOGOS FROM FIREBASE STORAGE) -->
-  <section id="trustedby">
-    <div class="trusted-title">Trusted by</div>
-    <div class="trusted-logos">
-      <!-- Just put your Firebase Storage logo URLs in src="" -->
-      <div class="trusted-logo"><img src="" alt="Logo 1"></div>
-      <div class="trusted-logo"><img src="" alt="Logo 2"></div>
-      <div class="trusted-logo"><img src="" alt="Logo 3"></div>
-      <div class="trusted-logo"><img src="" alt="Logo 4"></div>
+      <!-- Store POS Slide 1 -->
+      <section class="slide" data-index="5" data-product="store-pos">
+        <div class="slide-inner">
+          <div class="slide-layout">
+            <div class="slide-copy">
+              <div class="slide-header-eyebrow">Luma Store POS • Slide 1</div>
+              <h2 class="slide-title">Turn any phone into a full POS.</h2>
+              <p>
+                Forget heavy terminals. Luma Store POS runs on phones, so your cashier, barista, or salesperson can run the entire checkout flow from a pocket device.
+              </p>
+              <ul>
+                <li>Simple cart interface made for touch.</li>
+                <li>Supports products, variants, and returns.</li>
+                <li>Works in normal stores and event pop-ups.</li>
+              </ul>
+              <p>Same experience in every branch — with zero extra hardware.</p>
+            </div>
+            <div class="slide-visual">
+              <div class="mockup-card">
+                <div class="mockup-tag">Checkout Screen</div>
+                <div class="mockup-title">Cart, totals, and payment.</div>
+                <div class="mockup-text">
+                  Placeholder: items list, quantity, and total showing on a mobile layout. Later, insert your real Luma POS checkout screen here.
+                </div>
+                <div class="mockup-pill">POS flow</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Store POS Slide 2 -->
+      <section class="slide" data-index="6" data-product="store-pos">
+        <div class="slide-inner">
+          <div class="slide-layout">
+            <div class="slide-copy">
+              <div class="slide-header-eyebrow">Luma Store POS • Slide 2</div>
+              <h2 class="slide-title">Live stock and branch-level insights.</h2>
+              <p>
+                Every sale updates stock automatically. You see which products are moving, which branches are performing, and where returns are happening.
+              </p>
+              <ul>
+                <li>Real-time stock per product and per branch.</li>
+                <li>Automatic VAT and service fee handling.</li>
+                <li>Quick view of returns and net sales.</li>
+              </ul>
+              <p>This is your command center for all branches, on one dashboard.</p>
+            </div>
+            <div class="slide-visual">
+              <div class="mockup-card">
+                <div class="mockup-tag">Stock &amp; Branch View</div>
+                <div class="mockup-title">See what’s moving, and where.</div>
+                <div class="mockup-text">
+                  Placeholder: stock levels and branch comparison tiles. Use this box later for a multi-branch dashboard screenshot.
+                </div>
+                <div class="mockup-pill">Branch insights</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Store POS Slide 3 -->
+      <section class="slide" data-index="7" data-product="store-pos">
+        <div class="slide-inner">
+          <div class="slide-layout">
+            <div class="slide-copy">
+              <div class="slide-header-eyebrow">Luma Store POS • Slide 3</div>
+              <h2 class="slide-title">From everyday stores to event pop-ups.</h2>
+              <p>
+                Use Luma Store POS in your daily branches — and drop the same system inside your event booths and pop-ups if you want everything unified.
+              </p>
+              <ul>
+                <li>Use it alone for your retail / F&amp;B business.</li>
+                <li>Or connect it to events for a full picture.</li>
+                <li>Always mobile-first, always insight-driven.</li>
+              </ul>
+              <a href="#try-pos" class="primary-button">Try POS<span>→</span></a>
+              <p style="font-size:12px;color:var(--muted);margin-top:10px;">
+                We can walk you through a live POS demo or set up a pilot branch for you.
+              </p>
+            </div>
+            <div class="slide-visual">
+              <div class="mockup-card">
+                <div class="mockup-tag">Branch &amp; Event Mix</div>
+                <div class="mockup-title">Branches and events in one view.</div>
+                <div class="mockup-text">
+                  Placeholder: one view combining branch sales and event pop-up performance. Later, show how store POS data looks when mixed with event data.
+                </div>
+                <div class="mockup-pill">Unified data</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Events Slide 1 -->
+      <section class="slide" data-index="8" data-product="events">
+        <div class="slide-inner">
+          <div class="slide-layout">
+            <div class="slide-copy">
+              <div class="slide-header-eyebrow">Luma Events • Slide 1</div>
+              <h2 class="slide-title">Vendors get POS and dashboards on their phones.</h2>
+              <p>
+                Each brand in your event gets their own POS login on mobile and a mini dashboard. They can see stock and sales for that event without needing any hardware.
+              </p>
+              <ul>
+                <li>Mobile POS for every vendor.</li>
+                <li>Vendor-level stock and sales.</li>
+                <li>Easy onboarding with simple links.</li>
+              </ul>
+              <p>Vendors feel in control, and you see the full picture.</p>
+            </div>
+            <div class="slide-visual">
+              <div class="mockup-card">
+                <div class="mockup-tag">Vendor POS View</div>
+                <div class="mockup-title">Today’s sales and stock.</div>
+                <div class="mockup-text">
+                  Placeholder: vendor’s event dashboard showing today’s sales and stock. Later, use a real vendor dashboard screenshot here.
+                </div>
+                <div class="mockup-pill">Vendor dashboard</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Events Slide 2 -->
+      <section class="slide" data-index="9" data-product="events">
+        <div class="slide-inner">
+          <div class="slide-layout">
+            <div class="slide-copy">
+              <div class="slide-header-eyebrow">Luma Events • Slide 2</div>
+              <h2 class="slide-title">You see every inch of the event in real time.</h2>
+              <p>
+                As vendors sell, your event dashboard updates. You know who’s doing well, which zones are quiet, and how the event is performing overall.
+              </p>
+              <ul>
+                <li>Live overview of vendors and categories.</li>
+                <li>Sales, returns, and stock alerts per area.</li>
+                <li>Ability to react while the event is still live.</li>
+              </ul>
+              <p>No more guessing — you actually see what’s happening as it happens.</p>
+            </div>
+            <div class="slide-visual">
+              <div class="mockup-card">
+                <div class="mockup-tag">Event Owner Dashboard</div>
+                <div class="mockup-title">Live performance and zones.</div>
+                <div class="mockup-text">
+                  Placeholder: heatmap or tile-based event dashboard with key metrics. Use this to show your event owner dashboard later.
+                </div>
+                <div class="mockup-pill">Live view</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Events Slide 3 -->
+      <section class="slide" data-index="10" data-product="events">
+        <div class="slide-inner">
+          <div class="slide-layout">
+            <div class="slide-copy">
+              <div class="slide-header-eyebrow">Luma Events • Slide 3</div>
+              <h2 class="slide-title">Mix tickets, vendors, and store POS when you’re ready.</h2>
+              <p>
+                Start with just event handling. Later, you can link it to Luma Tickets and Luma Store POS to unify everything — but only if and when you need it.
+              </p>
+              <ul>
+                <li>Use Luma Events on its own today.</li>
+                <li>Add ticketing or Store POS later if the event grows.</li>
+                <li>Always mobile-first, with no extra hardware needed.</li>
+              </ul>
+              <a href="#submit-event" class="primary-button">Submit an event<span>→</span></a>
+              <p style="font-size:12px;color:var(--muted);margin-top:10px;">
+                Share your next bazaar, market, or activation and we’ll design the event flow for you.
+              </p>
+            </div>
+            <div class="slide-visual">
+              <div class="mockup-card">
+                <div class="mockup-tag">Event Mix Options</div>
+                <div class="mockup-title">Tickets, vendors, POS — your mix.</div>
+                <div class="mockup-text">
+                  Placeholder: visual showing possible combinations (Events + Tickets, Events + POS, etc.). This is where you can visually show “mix and match” later.
+                </div>
+                <div class="mockup-pill">Mix &amp; match</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Counseling Slide 1 -->
+      <section class="slide" data-index="11" data-product="ai-counseling">
+        <div class="slide-inner">
+          <div class="slide-layout">
+            <div class="slide-copy">
+              <div class="slide-header-eyebrow">Luma AI Counseling • Slide 1</div>
+              <h2 class="slide-title">Start with a conversation, not a system.</h2>
+              <p>
+                You sit with a Luma counselor who listens to how your business runs today — whether you’re running physical stores, events, online services, a clinic, a franchise, or something else entirely. We focus on your real problems before we talk about tools.
+              </p>
+              <ul>
+                <li>We map your current workflows step by step.</li>
+                <li>We identify pain points, bottlenecks, and hidden manual work.</li>
+                <li>We clarify what “better” would look like in numbers, not just feelings.</li>
+              </ul>
+              <p>
+                There’s no pressure to pick a product. The first goal is to understand your reality clearly.
+              </p>
+            </div>
+            <div class="slide-visual">
+              <div class="mockup-card">
+                <div class="mockup-tag">Counseling Session</div>
+                <div class="mockup-title">Structured discovery, not guesswork.</div>
+                <div class="mockup-text">
+                  Placeholder: notes and questions from a discovery call. Later, this can be a simple UI of structured notes &amp; insights.
+                </div>
+                <div class="mockup-pill">Discovery</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Counseling Slide 2 -->
+      <section class="slide" data-index="12" data-product="ai-counseling">
+        <div class="slide-inner">
+          <div class="slide-layout">
+            <div class="slide-copy">
+              <div class="slide-header-eyebrow">Luma AI Counseling • Slide 2</div>
+              <h2 class="slide-title">You receive clear recommendations and a roadmap.</h2>
+              <p>
+                Based on what we learn, we turn the conversation into a concrete plan to improve your operations — with or without Luma systems. You get a clear diagnosis and a prioritized roadmap that fits your size, budget, and team.
+              </p>
+              <ul>
+                <li>A written diagnosis of what’s blocking you and why.</li>
+                <li>A prioritized list of changes (quick wins vs long-term moves).</li>
+                <li>Practical system and process recommendations, not generic advice.</li>
+              </ul>
+              <p>The goal is to show you what to do next, in what order, and what impact to expect.</p>
+            </div>
+            <div class="slide-visual">
+              <div class="mockup-card">
+                <div class="mockup-tag">Recommendations View</div>
+                <div class="mockup-title">Roadmap you can actually run.</div>
+                <div class="mockup-text">
+                  Placeholder: roadmap or plan with simple phases and actions. Later, this can show a real “counseling output” summary screen.
+                </div>
+                <div class="mockup-pill">Roadmap</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Counseling Slide 3 -->
+      <section class="slide" data-index="13" data-product="ai-counseling" id="ai-counseling">
+        <div class="slide-inner">
+          <div class="slide-layout">
+            <div class="slide-copy">
+              <div class="slide-header-eyebrow">Luma AI Counseling • Slide 3</div>
+              <h2 class="slide-title">We work with you to implement the right changes.</h2>
+              <p>
+                If you decide to move forward, we don’t just send a PDF and disappear. We help you implement the changes — whether that means adjusting workflows, choosing new tools, or rolling out Luma systems where they make sense for your case.
+              </p>
+              <ul>
+                <li>Support from planning to rollout (training, pilots, and refinement).</li>
+                <li>Follow-up sessions to review what’s working and what isn’t.</li>
+                <li>Ability to adjust the roadmap as your business and data evolve.</li>
+              </ul>
+              <a href="#ai-form" class="primary-button">Book a counseling session<span>→</span></a>
+              <p style="font-size:12px;color:var(--muted);margin-top:10px;">
+                Tell us about your current situation and we’ll help you see what’s possible.
+              </p>
+            </div>
+            <div class="slide-visual">
+              <div class="mockup-card">
+                <div class="mockup-tag">Ongoing Support</div>
+                <div class="mockup-title">Changes you can measure over time.</div>
+                <div class="mockup-text">
+                  Placeholder: view of changes implemented and their impact over time. Later, this can show before/after metrics or progress tracking.
+                </div>
+                <div class="mockup-pill">Before / After</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final / Meta Slide -->
+      <section class="slide" data-index="14" id="contact">
+        <div class="slide-inner">
+          <div>
+            <div class="slide-header-eyebrow">What happens next</div>
+            <h2 class="slide-title">Trusted by teams who want more from their operations than “just a system”.</h2>
+            <p class="slide-subtitle">
+              This is where your forms will live. For now, use it as a placeholder while we design your final flows.
+            </p>
+          </div>
+          <div class="meta-layout">
+            <div class="meta-box" id="submit-event">
+              <div class="meta-box-title">Submit an event</div>
+              <p>
+                This is a placeholder for your future “Submit an event” form or page. Links from Tickets &amp; Events currently scroll here.
+              </p>
+              <p>
+                You can add fields for event type, dates, expected size, vendors, and whether you need Tickets, Store POS, Events, or a mix.
+              </p>
+            </div>
+            <div class="meta-box" id="try-pos">
+              <div class="meta-box-title">Try Luma Store POS</div>
+              <p>
+                This is a placeholder for your future “Try POS / book a POS demo” section. Add a short form to request a pilot store or a live demo.
+              </p>
+            </div>
+            <div class="meta-box" id="ai-form">
+              <div class="meta-box-title">AI Counseling</div>
+              <p>
+                This is a placeholder for your future “AI Counseling” booking form. Include questions about your current operations, size, and what you want to fix.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
-  </section>
+  </div>
 
-  <!-- SIMPLE PLACEHOLDER SECTIONS FOR ANCHORS -->
-  <section id="events">
-    <div class="container">
-      This is a placeholder for your future “Submit an event” form or page.
-      Links from Tickets & Events flows currently scroll here.
-    </div>
-  </section>
+  <script>
+    (function () {
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const progressFill = document.querySelector('.progress-fill');
+      const spineDots = Array.from(document.querySelectorAll('.spine-dot'));
 
-  <section id="demo">
-    <div class="container">
-      This is a placeholder for your future “Try POS / book a POS demo” section.
-    </div>
-  </section>
+      let currentIndex = 0;
+      let isAnimating = false;
 
-  <section id="counseling">
-    <div class="container">
-      This is a placeholder for your future “AI Counseling” details and booking form.
-    </div>
-  </section>
+      // Map first slide index per product for spine click
+      const productFirstIndex = {};
+      slides.forEach((s, i) => {
+        const p = s.dataset.product;
+        if (p && !(p in productFirstIndex)) {
+          productFirstIndex[p] = i;
+        }
+      });
 
-  <section id="contact">
-    <div class="container">
-      This is a placeholder for your general contact / demo booking section.
-    </div>
-  </section>
-
-</main>
-
-<script>
-  gsap.registerPlugin(ScrollTrigger);
-
-  /* HERO ZOOM / PIN EFFECT */
-  gsap.to(".hero-inner", {
-    scale:0.85,
-    y:-80,
-    opacity:0.8,
-    scrollTrigger:{
-      trigger:"#hero",
-      start:"top top",
-      end:"+=120%",
-      scrub:true,
-      pin:true,
-      anticipatePin:1
-    }
-  });
-
-  /* Floating blocks subtle motion */
-  gsap.to("#blockTickets", {
-    y:-18, duration:2.5, repeat:-1, yoyo:true, ease:"power1.inOut"
-  });
-
-  gsap.to("#blockStore", {
-    y:20, duration:3, repeat:-1, yoyo:true, ease:"power1.inOut"
-  });
-
-  gsap.to("#blockEvents", {
-    x:14, duration:2.8, repeat:-1, yoyo:true, ease:"power1.inOut"
-  });
-
-  gsap.to("#blockAI", {
-    x:-12, y:-10, duration:3.4, repeat:-1, yoyo:true, ease:"power1.inOut"
-  });
-
-  /* Pin progress bar over systems area */
-  ScrollTrigger.create({
-    trigger:"#systemsArea",
-    start:"top top",
-    end:"bottom bottom",
-    pin:".flow-progress-wrapper",
-    pinSpacing:false
-  });
-
-  /* Progress line fill across the whole systems area */
-  gsap.fromTo("#progressFill",
-    { width:"0%" },
-    {
-      width:"100%",
-      ease:"none",
-      scrollTrigger:{
-        trigger:"#systemsArea",
-        start:"top top",
-        end:"bottom bottom",
-        scrub:true
+      function clampIndex(idx) {
+        if (idx < 0) return 0;
+        if (idx > slides.length - 1) return slides.length - 1;
+        return idx;
       }
-    }
-  );
 
-  /* Horizontal slide flows for each product - slower movement */
-  gsap.utils.toArray(".product-flow").forEach(section => {
-    const inner = section.querySelector(".flow-inner");
-    const slides = section.querySelectorAll(".flow-slide");
-    if (!inner || slides.length <= 1) return;
+      function goToSlide(idx) {
+        idx = clampIndex(idx);
+        if (idx === currentIndex) return;
 
-    const distancePerSlide = 1.8; // higher = slower slide per scroll
+        isAnimating = true;
+        currentIndex = idx;
+        const slide = slides[currentIndex];
+        slide.scrollIntoView({ behavior: 'smooth' });
 
-    gsap.to(inner, {
-      xPercent: -100 * (slides.length - 1),
-      ease:"none",
-      scrollTrigger:{
-        trigger:section,
-        start:"top top",
-        end: () => "+=" + (slides.length * window.innerHeight * distancePerSlide),
-        scrub:true,
-        pin:true,
-        anticipatePin:1
+        updateInView();
+        updateProgress();
+        updateSpine();
+
+        setTimeout(() => {
+          isAnimating = false;
+        }, 800);
       }
-    });
-  });
 
-  /* Progress slider active state based on scroll */
-  const steps = document.querySelectorAll(".flow-step");
-  function setActiveFlow(id) {
-    steps.forEach(step => {
-      step.classList.toggle("active", step.getAttribute("data-flow") === id);
-    });
-  }
+      function updateInView() {
+        slides.forEach((s, i) => {
+          s.classList.toggle('in-view', i === currentIndex);
+        });
+      }
 
-  gsap.utils.toArray(".product-flow").forEach(section => {
-    const id = section.id;
-    ScrollTrigger.create({
-      trigger:section,
-      start:"top center",
-      end:"bottom center",
-      onEnter: () => setActiveFlow(id),
-      onEnterBack: () => setActiveFlow(id)
-    });
-  });
-</script>
+      function updateProgress() {
+        if (!progressFill) return;
+        const ratio = currentIndex / (slides.length - 1);
+        progressFill.style.width = (ratio * 100) + '%';
+      }
 
+      function updateSpine() {
+        const slide = slides[currentIndex];
+        const product = slide.dataset.product;
+        spineDots.forEach(dot => {
+          const p = dot.dataset.product;
+          const active = product && p === product;
+          dot.classList.toggle('active', active);
+        });
+      }
+
+      function onWheel(e) {
+        e.preventDefault();
+        if (isAnimating) return;
+
+        const delta = e.deltaY || e.wheelDelta;
+        if (delta > 0) {
+          goToSlide(currentIndex + 1);
+        } else if (delta < 0) {
+          goToSlide(currentIndex - 1);
+        }
+      }
+
+      // Touch support (basic)
+      let touchStartY = null;
+      let touchEndY = null;
+
+      function onTouchStart(e) {
+        if (e.touches && e.touches.length === 1) {
+          touchStartY = e.touches[0].clientY;
+        }
+      }
+
+      function onTouchMove(e) {
+        if (touchStartY != null && e.touches && e.touches.length === 1) {
+          touchEndY = e.touches[0].clientY;
+        }
+      }
+
+      function onTouchEnd(e) {
+        if (touchStartY == null || touchEndY == null) {
+          touchStartY = null;
+          touchEndY = null;
+          return;
+        }
+        const diff = touchStartY - touchEndY;
+        if (Math.abs(diff) > 40 && !isAnimating) {
+          if (diff > 0) {
+            goToSlide(currentIndex + 1);
+          } else {
+            goToSlide(currentIndex - 1);
+          }
+        }
+        touchStartY = null;
+        touchEndY = null;
+      }
+
+      // Keyboard arrows
+      function onKeyDown(e) {
+        if (isAnimating) return;
+        if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+          e.preventDefault();
+          goToSlide(currentIndex + 1);
+        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+          e.preventDefault();
+          goToSlide(currentIndex - 1);
+        }
+      }
+
+      // Spine clicks
+      spineDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          const product = dot.dataset.product;
+          const targetIndex = productFirstIndex[product];
+          if (typeof targetIndex === 'number') {
+            goToSlide(targetIndex);
+          }
+        });
+      });
+
+      // Attach listeners
+      window.addEventListener('wheel', onWheel, { passive: false });
+      window.addEventListener('keydown', onKeyDown);
+      window.addEventListener('touchstart', onTouchStart, { passive: true });
+      window.addEventListener('touchmove', onTouchMove, { passive: true });
+      window.addEventListener('touchend', onTouchEnd, { passive: true });
+
+      // Initial state
+      updateInView();
+      updateProgress();
+      updateSpine();
+    })();
+  </script>
 </body>
 </html>
