@@ -1,166 +1,553 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Luma Tickets — Main</title>
-<meta name="theme-color" content="#0f172a" />
-<style>
-:root{
-  --bg:#0f172a; --panel:#0b1220; --ink:#e5e7eb; --muted:#94a3b8;
-  --accent:#38bdf8; --accent2:#22c55e; --radius:18px; --shadow:0 24px 60px rgba(2,8,23,.55);
-  --mobile-pad:16px;
-}
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
-a{text-decoration:none;color:var(--ink)}
-.container{max-width:1180px;margin:auto;padding:28px}
-header{position:sticky;top:0;background:rgba(2,8,23,.75);backdrop-filter:blur(10px);border-bottom:1px solid rgba(148,163,184,.18);z-index:10}
-.nav{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0ea5e9,#22c55e);display:grid;place-items:center;color:#fff;font-weight:800}
-nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-nav a{padding:10px 14px;border-radius:10px}
-nav a:hover, nav a.active{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35)}
-.btn{padding:12px 16px;border-radius:14px;font-weight:600;display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(148,163,184,.35)}
-.btn.primary{background:var(--accent);color:#04121d;border-color:transparent;box-shadow:0 6px 18px rgba(56,189,248,.35)}
-.card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
-section h2{margin:32px 0 12px;font-size:28px}
-.grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.badge{font-size:12px;padding:6px 10px;border-radius:30px;background:rgba(148,163,184,.12);border:1px solid rgba(148,163,184,.25)}
-footer{border-top:1px solid rgba(148,163,184,.2);padding:26px;color:var(--muted);padding-bottom:calc(26px + env(safe-area-inset-bottom))}
-@media (max-width:880px){
-  .container{max-width:100%;padding:var(--mobile-pad)}
-  header .container.nav{flex-wrap:wrap}
-  nav{gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .card{padding:16px;border-radius:14px}
-  section h2{font-size:22px}
-}
-</style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Luma Events — Vendor Signup</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --bg:#f3f4f6;
+      --panel:#ffffff;
+      --panel-soft:#f9fafb;
+      --ink:#111827;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --accent:#2563eb;
+      --accent-soft:#dbeafe;
+      --accent-strong:#1d4ed8;
+      --radius:16px;
+      --shadow:0 18px 40px rgba(15,23,42,.12);
+      --danger:#ef4444;
+      --ok:#16a34a;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{
+      min-height:100%;
+      font-family:"Montserrat",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+    }
+
+    .page-shell{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .auth-wrapper{
+      width:100%;
+      max-width:520px;
+      background:var(--panel);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      border:1px solid rgba(148,163,184,.3);
+      padding:20px 18px 18px;
+    }
+
+    .auth-header{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:8px;
+    }
+    .auth-logo{
+      width:40px;height:40px;border-radius:999px;
+      background:linear-gradient(135deg,#2563eb,#a855f7);
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;font-weight:700;font-size:18px;
+      overflow:hidden;
+      background-size:cover;
+      background-position:center;
+    }
+    .auth-title{font-size:17px;font-weight:700;}
+    .auth-subtitle{font-size:11px;color:var(--muted);margin-top:2px;}
+
+    .event-chip{
+      margin-top:4px;
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .auth-alert{
+      padding:8px 10px;
+      border-radius:10px;
+      font-size:11px;
+      margin-top:10px;
+      margin-bottom:10px;
+    }
+    .auth-alert-error{
+      background:#fef2f2;
+      color:#b91c1c;
+      border:1px solid #fecaca;
+    }
+    .auth-alert-ok{
+      background:#ecfdf3;
+      color:#166534;
+      border:1px solid #bbf7d0;
+    }
+    .auth-alert-info{
+      background:#eff6ff;
+      color:#1d4ed8;
+      border:1px solid #bfdbfe;
+    }
+
+    .field{margin-bottom:10px;}
+    .field-label{
+      font-size:11px;
+      margin-bottom:4px;
+      color:#4b5563;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .field-required{
+      font-size:10px;
+      color:#ef4444;
+    }
+    .field-input,.field-select,textarea.field-input{
+      width:100%;
+      padding:8px;
+      border-radius:9px;
+      border:1px solid var(--border);
+      background:#f9fafb;
+      font-size:12px;
+      resize:vertical;
+    }
+    .field-input:focus,.field-select:focus,textarea.field-input:focus{
+      outline:none;
+      border-color:var(--accent);
+      box-shadow:0 0 0 1px var(--accent-soft);
+      background:#fff;
+    }
+    .field-hint{
+      font-size:10px;
+      color:var(--muted);
+      margin-top:3px;
+    }
+
+    .btn{
+      border:none;border-radius:999px;
+      padding:9px 12px;
+      font-size:12px;font-weight:600;
+      cursor:pointer;display:inline-flex;
+      align-items:center;justify-content:center;
+      gap:6px;
+    }
+    .btn-primary{background:var(--accent);color:#fff;}
+    .btn-primary:hover{background:var(--accent-strong);}
+    .btn-ghost{
+      background:transparent;
+      color:var(--accent-strong);
+      border:1px solid var(--accent-soft);
+    }
+    .btn-ghost:hover{background:var(--accent-soft);}
+
+    .auth-footer{
+      text-align:center;
+      margin-top:10px;
+      font-size:10px;
+      color:var(--muted);
+    }
+
+    .divider{
+      margin:10px 0;
+      border:none;
+      border-top:1px dashed var(--border);
+    }
+
+    .info-steps{
+      margin-top:12px;
+      padding:10px 10px 8px;
+      background:var(--panel-soft);
+      border-radius:12px;
+      border:1px dashed var(--border);
+      font-size:11px;
+      color:var(--muted);
+    }
+    .info-steps-title{
+      font-weight:600;
+      font-size:11px;
+      color:var(--ink);
+      margin-bottom:6px;
+    }
+    .info-steps ol{
+      padding-left:16px;
+    }
+    .info-steps li{
+      margin-bottom:4px;
+      line-height:1.4;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <div class="container nav">
-    <div style="display:flex;gap:12px;align-items:center">
-      <div class="logo">LT</div><strong>Luma Tickets</strong>
-    </div>
-    <nav>
-      <a class="active" href="index.html">Home</a>
-      <a href="#features">Features</a>
-      <a href="#how">How It Works</a>
-      <a href="#analytics">Analytics</a>
-      <a href="privacy.html">Privacy</a>
-      <a class="btn primary" href="rsvp.html">Get a Quote</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-  <!-- MAIN SECTION -->
-  <section class="container card" id="main">
-    <h2>Effortless Invitations. Instant Check-Ins. Smart Event Control.</h2>
-    <p>Manage your guest list, send branded digital invitations, and check them in with a single scan — no hardware, no hassle, just your phone.</p>
-    <ul style="margin:12px 0 0;display:grid;gap:6px">
-      <li>✅  Personalized Invitations</li>
-      <li>✅  Secure QR Access</li>
-      <li>✅  Real-Time Analytics</li>
-    </ul>
-    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
-      <a class="btn primary" href="rsvp.html">Get a Demo</a>
-      <!-- Explore Features -> features.html -->
-      <a class="btn" href="features.html">Explore Features</a>
-    </div>
-  </section>
-
-  <!-- FEATURES SECTION -->
-  <section class="container" id="features">
-    <h2>Everything you need for a smooth, branded guest experience.</h2>
-    <p style="color:var(--muted)">From invitations to check-ins, Luma handles it all. Fast, reliable, and beautifully simple.</p>
-    <div class="grid">
-      <div class="card"><span class="badge">Invitations</span><p>Personalized Digital Invites: Send branded invites via WhatsApp or email with guest names and RSVP buttons.</p></div>
-      <div class="card"><span class="badge">QR Access</span><p>Secure QR Access: Each guest receives a unique, unduplicable QR code linked to their entry token.</p></div>
-      <div class="card"><span class="badge">Scanning</span><p>Instant Mobile Scanning: All you need is a smartphone. Scan, validate, and welcome guests in seconds.</p></div>
-      <div class="card"><span class="badge">Dashboard</span><p>Real-Time Dashboard: Monitor arrivals and guest capacity, with instant updates.</p></div>
-      <div class="card"><span class="badge">VIP</span><p>VIP Handling: Manage +1s, guest notes, and access tiers all in one view.</p></div>
-      <div class="card"><span class="badge">Branding</span><p>Full Branding Control: Add your logo, colors, and event identity across every screen.</p></div>
-    </div>
-    <!-- Explore Full Feature Set -> features.html -->
-    <div style="margin-top:14px"><a class="btn" href="features.html">Explore Full Feature Set</a></div>
-  </section>
-
-  <!-- HOW IT WORKS SECTION -->
-  <section class="container" id="how">
-    <h2>From invite to check-in, in minutes, not hours.</h2>
-    <div class="grid">
-      <div class="card"><strong>1. Create Guest List</strong><p>Upload your CSV or Sheets file, set tiers and +1s, and generate digital tickets instantly.</p></div>
-      <div class="card"><strong>2. Send Invitations</strong><p>Distribute invitations with embedded QR tickets via WhatsApp or email.</p></div>
-      <div class="card"><strong>3. Scan at Entry</strong><p>Validate every guest using any smartphone, iOS, Android, or web. No extra hardware required.</p></div>
-      <div class="card"><strong>4. Track in Real Time</strong><p>Monitor who arrives, when they check in, and how they interact with their tier benefits, all live.</p></div>
-    </div>
-  </section>
-
-  <!-- ANALYTICS & INSIGHTS -->
-  <section class="container" id="analytics">
-    <h2>Smart Data for Smart Hosts.</h2>
-    <p>See the full story of your event, from entry times to guest engagement. Track arrivals, departures, dwell times, and live capacity. Export any analytics you need to CSV or Sheets — customized for your reporting style.</p>
-    <!-- See Analytics in Action -> analytics.html -->
-    <div style="margin:12px 0"><a class="btn primary" href="analytics.html">See Analytics in Action</a></div>
-
-    <!-- Example analytics snapshot (demo) -->
-    <div class="grid" style="margin-top:16px">
-      <div class="card">
-        <h3 style="margin:0 0 6px">Invited / RSVP / Checked-In</h3>
-        <p style="color:var(--muted);margin:0 0 10px">Example snapshot</p>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
-          <div><div style="font-weight:700;font-size:26px">1,200</div><div style="color:var(--muted)">Invited</div></div>
-          <div><div style="font-weight:700;font-size:26px">860</div><div style="color:var(--muted)">RSVP</div></div>
-          <div><div style="font-weight:700;font-size:26px">742</div><div style="color:var(--muted)">Checked-In</div></div>
+<div class="page-shell">
+  <div class="auth-wrapper">
+    <div class="auth-header">
+      <div class="auth-logo" id="event-logo-circle">E</div>
+      <div>
+        <div class="auth-title">Luma Events — Vendor Signup</div>
+        <div class="auth-subtitle" id="auth-subtitle">
+          Register your brand to participate in this event.
+        </div>
+        <div class="event-chip" id="event-chip">
+          Loading event details…
         </div>
       </div>
-      <div class="card">
-        <h3 style="margin:0 0 6px">Arrivals per 15 min</h3>
-        <svg viewBox="0 0 300 60" preserveAspectRatio="none" style="display:block;width:100%;height:60px;margin-top:6px">
-          <polyline fill="none" stroke="#38bdf8" stroke-width="3"
-            points="0,50 20,48 40,45 60,40 80,35 100,32 120,28 140,22 160,16 180,12 200,18 220,26 240,34 260,42 280,48 300,50"/>
-        </svg>
-      </div>
-      <div class="card">
-        <h3 style="margin:0 0 6px">Tier Breakdown (Example)</h3>
-        <table style="width:100%;border-collapse:collapse">
-          <thead><tr><th style="text-align:left;padding:8px;border-bottom:1px solid rgba(148,163,184,.2)">Tier</th><th style="text-align:left;padding:8px;border-bottom:1px solid rgba(148,163,184,.2)">Invited</th><th style="text-align:left;padding:8px;border-bottom:1px solid rgba(148,163,184,.2)">RSVP</th><th style="text-align:left;padding:8px;border-bottom:1px solid rgba(148,163,184,.2)">Checked-In</th></tr></thead>
-          <tbody>
-            <tr><td style="padding:8px;border-bottom:1px dashed rgba(148,163,184,.2)">Gold</td><td style="padding:8px;border-bottom:1px dashed rgba(148,163,184,.2)">300</td><td style="padding:8px;border-bottom:1px dashed rgba(148,163,184,.2)">260</td><td style="padding:8px;border-bottom:1px dashed rgba(148,163,184,.2)">242</td></tr>
-            <tr><td style="padding:8px">Silver</td><td style="padding:8px">900</td><td style="padding:8px">600</td><td style="padding:8px">500</td></tr>
-          </tbody>
-        </table>
-      </div>
     </div>
-  </section>
 
-  <!-- COMPLIANCE & DATA POLICY (condensed) -->
-  <section class="container" id="policy">
-    <h2>We take data privacy seriously.</h2>
-    <p>Luma Tickets follows best practices for data protection and GDPR compliance. We collect only essential information to operate your event and never share or sell data. Guests can request data removal anytime through our support team.</p>
-    <div><a class="btn" href="privacy.html">View Full Policy</a></div>
-  </section>
+    <div id="alert-container"></div>
 
-  <!-- GLOBAL PRESENCE -->
-  <section class="container" id="global">
-    <h2>Trusted. Tested. Operational.</h2>
-    <p>Luma Tickets is live and operational across the UK, UAE, Germany, and Egypt, delivering seamless guest management experiences for events of every scale. Now ready to expand globally.</p>
-    <div><a class="btn primary" href="rsvp.html">Start Your Event Setup</a></div>
-  </section>
-</main>
+    <form id="vendor-form">
+      <!-- BRAND -->
+      <div class="field">
+        <div class="field-label">
+          <span>Brand name</span>
+          <span class="field-required">Required</span>
+        </div>
+        <input id="brand-name" class="field-input" placeholder="Example: Nizu, Oudies…"/>
+      </div>
 
-<footer class="container">
-  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
-    <nav style="display:flex;flex-wrap:wrap;gap:12px">
-      <a href="#features">Features</a>
-      <a href="#how">How It Works</a>
-      <a href="#analytics">Analytics</a>
-      <a href="privacy.html">Privacy Policy</a>
-    </nav>
-    <div>© <script>document.write(new Date().getFullYear())</script> Luma</div>
+      <div class="field">
+        <div class="field-label">
+          <span>Product category</span>
+          <span class="field-required">Required</span>
+        </div>
+        <input id="category" class="field-input" placeholder="Coffee, food, desserts, accessories, clothing…"/>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- CONTACT -->
+      <div class="field">
+        <div class="field-label">
+          <span>Owner / main contact name</span>
+          <span class="field-required">Required</span>
+        </div>
+        <input id="owner-name" class="field-input" placeholder="Full name"/>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <span>Phone (WhatsApp)</span>
+          <span class="field-required">Required</span>
+        </div>
+        <input id="phone" class="field-input" placeholder="+20…"/>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <span>Email</span>
+          <span class="field-required">Required</span>
+        </div>
+        <input id="email" class="field-input" type="email" placeholder="you@example.com"/>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <span>Create password (for your Brand Portal login)</span>
+          <span class="field-required">Required</span>
+        </div>
+        <input id="password" class="field-input" type="password" placeholder="Minimum 6 characters"/>
+        <div class="field-hint">
+          You’ll use this email + password to access your Luma Store OS brand dashboard.
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <div class="field">
+        <div class="field-label">
+          <span>Notes to organizer</span>
+          <span style="font-size:10px;color:var(--muted);">Optional</span>
+        </div>
+        <textarea id="notes" class="field-input" rows="2"
+          placeholder="Power requirements, special setup, allergies, anything important…"></textarea>
+      </div>
+
+      <button type="submit" id="btn-submit" class="btn btn-primary" style="width:100%;margin-top:6px;">
+        Submit & open my dashboard
+      </button>
+    </form>
+
+    <div class="info-steps">
+      <div class="info-steps-title">What happens after you register?</div>
+      <ol>
+        <li><strong>Step 1 —</strong> We review and approve your application (you’ll get a WhatsApp / email update).</li>
+        <li><strong>Step 2 —</strong> You log into your Brand Dashboard to add products and upload photos.</li>
+        <li><strong>Step 3 —</strong> You create cashier users for your booth and share the POS link with them.</li>
+        <li><strong>Step 4 —</strong> During the event, all orders, reports, and analytics are linked to this event.</li>
+      </ol>
+    </div>
+
+    <div class="auth-footer">
+      Your application will be reviewed by the event organizer. You’ll receive access details once approved.
+    </div>
   </div>
-</footer>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import {
+    getFirestore, doc, collection, addDoc, setDoc, getDoc, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+  import {
+    getAuth, createUserWithEmailAndPassword, updateProfile
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+  // 🔐 Your events Firebase config (UNCHANGED)
+  const firebaseConfig = {
+    apiKey:"AIzaSyA80bAAGPuyscnTVS-zwrxE9Jp3tPiS1gM",
+    authDomain:"events-339ce.firebaseapp.com",
+    projectId:"events-339ce",
+    storageBucket:"events-339ce.firebasestorage.app",
+    messagingSenderId:"175601544315",
+    appId:"1:175601544315:web:00c94b4affa972b3a286de"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+  const auth = getAuth(app);
+
+  // Brand dashboard file
+  const BRAND_DASHBOARD_URL = "brand.html";
+
+  const qs  = s => document.querySelector(s);
+  const alertContainer = qs("#alert-container");
+  const eventChip      = qs("#event-chip");
+  const eventLogoCircle= qs("#event-logo-circle");
+  const subtitleEl     = qs("#auth-subtitle");
+  const form           = qs("#vendor-form");
+  const submitBtn      = qs("#btn-submit");
+
+  let currentEventMeta = null; // will hold the loaded event doc data
+
+  function showAlert(msg, type="error"){
+    const cls =
+      type === "ok" ? "auth-alert-ok" :
+      type === "info" ? "auth-alert-info" :
+      "auth-alert-error";
+
+    alertContainer.innerHTML = `
+      <div class="auth-alert ${cls}">${msg}</div>
+    `;
+  }
+
+  function clearAlert(){
+    alertContainer.innerHTML = "";
+  }
+
+  function getQueryParam(key){
+    return new URLSearchParams(window.location.search).get(key);
+  }
+
+  function formatEventDate(value){
+    if(!value) return "";
+    try{
+      let d = value;
+      if(typeof d === "object" && typeof d.toDate === "function"){
+        d = d.toDate();
+      }
+      if(d instanceof Date){
+        return d.toLocaleDateString("en-EG", {
+          day:"2-digit",
+          month:"short",
+          year:"numeric"
+        });
+      }
+      if(typeof d === "string"){
+        return d;
+      }
+    }catch(e){
+      console.warn("Failed to format date", e);
+    }
+    return "";
+  }
+
+  const eventId = getQueryParam("eventId");
+
+  // Load event name/dates/location to show in header
+  async function loadEventMeta(){
+    if(!eventId){
+      eventChip.textContent = "Missing eventId in URL. Ask the organizer for the correct link.";
+      showAlert("No eventId in URL. This link is not valid.", "error");
+      form.style.display = "none";
+      return;
+    }
+
+    try{
+      const snap = await getDoc(doc(db,"events",eventId));
+      if(!snap.exists()){
+        eventChip.textContent = "Event not found.";
+        showAlert("This event does not exist. Please contact the organizer.", "error");
+        form.style.display = "none";
+        return;
+      }
+      const data = snap.data();
+      currentEventMeta = { id: eventId, ...data };
+
+      const name = data.name || data.title || "Event";
+      const startStr = formatEventDate(data.startDate);
+      const endStr   = formatEventDate(data.endDate);
+      const location = data.location || "";
+
+      let datePart = "";
+      if(startStr && endStr){
+        if(startStr === endStr){
+          datePart = startStr;
+        }else{
+          datePart = `${startStr} – ${endStr}`;
+        }
+      }else if(startStr || endStr){
+        datePart = startStr || endStr;
+      }
+
+      const pieces = [
+        name,
+        datePart ? `• ${datePart}` : "",
+        location ? `• ${location}` : ""
+      ].filter(Boolean);
+
+      eventChip.textContent = pieces.join(" ");
+      subtitleEl.textContent = `Apply to join "${name}" as a vendor.`;
+      eventLogoCircle.textContent = (name[0] || "E").toUpperCase();
+    }catch(err){
+      console.error(err);
+      eventChip.textContent = "Error loading event.";
+      showAlert("Error loading event details. Please try again or contact the organizer.", "error");
+      form.style.display = "none";
+    }
+  }
+
+  loadEventMeta();
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    clearAlert();
+
+    if(!eventId){
+      showAlert("Missing eventId. Cannot submit application.", "error");
+      return;
+    }
+    if(!currentEventMeta){
+      showAlert("Event details are still loading. Please wait a moment and try again.", "error");
+      return;
+    }
+
+    const brandName   = qs("#brand-name").value.trim();
+    const category    = qs("#category").value.trim();
+    const ownerName   = qs("#owner-name").value.trim();
+    const phone       = qs("#phone").value.trim();
+    const email       = qs("#email").value.trim();
+    const password    = qs("#password").value;
+    const notes       = qs("#notes").value.trim();
+
+    if(!brandName || !category || !ownerName || !phone || !email || !password){
+      showAlert("Please fill all required fields (brand, category, contact name, phone, email, password).","error");
+      return;
+    }
+    if(password.length < 6){
+      showAlert("Password must be at least 6 characters.","error");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Creating your dashboard…";
+
+    try{
+      const eventName = currentEventMeta.name || currentEventMeta.title || "Event";
+
+      // 1) Create auth user = brand owner (auto-logged in)
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      const user = cred.user;
+      await updateProfile(user, { displayName: ownerName });
+
+      // 2) Create brand in `brands`
+      const brandRef = await addDoc(collection(db, "brands"), {
+        name: brandName,
+        status: "active",                 // brand is active by default
+        ownerUserId: user.uid,
+        ownerEmail: email,
+        eventId: eventId,
+        eventName: eventName,
+        createdAt: serverTimestamp()
+      });
+      const brandId = brandRef.id;
+
+      // 3) Create ONE main branch for this event in `brands/{brandId}/branches`
+      const mainBranchRef = await addDoc(collection(brandRef, "branches"), {
+        name: "Event Booth",
+        code: "EVENT",
+        isActive: true,
+        eventId: eventId,
+        createdAt: serverTimestamp()
+      });
+      const branchId = mainBranchRef.id;
+
+      // 4) userBrands/{uid}
+      await setDoc(doc(db, "userBrands", user.uid), {
+        primaryBrandId: brandId,
+        brandIds: [brandId]
+      });
+
+      // 5) users/{uid}
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        name: ownerName,
+        email: email,
+        primaryBrandId: brandId,
+        role: "brand_owner",
+        createdAt: serverTimestamp()
+      });
+
+      // (Optional but useful) staff record for owner under brand's staff
+      await setDoc(doc(brandRef, "staff", user.uid), {
+        userId: user.uid,
+        name: ownerName,
+        email: email,
+        role: "brand_owner",
+        isActive: true,
+        branchId: branchId,
+        createdAt: serverTimestamp()
+      });
+
+      // 6) Vendor doc in `events/{eventId}/vendors`
+      await addDoc(collection(db, "events", eventId, "vendors"), {
+        brandName: brandName,
+        brandNameLower: brandName.toLowerCase(),
+        category: category,
+        ownerName: ownerName,
+        phone: phone,
+        email: email,
+        notes: notes,
+        eventId: eventId,
+        brandId: brandId,
+        branchId: branchId,
+        ownerUserId: user.uid,
+        status: "pending",              // vendor application starts as pending
+        createdAt: serverTimestamp()
+      });
+
+      // 7) Redirect to Brand Dashboard with brandId + eventId
+      const targetUrl =
+        `${BRAND_DASHBOARD_URL}?brandId=${encodeURIComponent(brandId)}&eventId=${encodeURIComponent(eventId)}`;
+      window.location.href = targetUrl;
+
+    }catch(err){
+      console.error(err);
+      let msg = "Failed to create your brand and dashboard.";
+      if (err.code === "auth/email-already-in-use") {
+        msg = "This email is already in use. Try signing in instead or use a different email.";
+      }
+      showAlert(msg,"error");
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit & open my dashboard";
+    }
+  });
+</script>
 </body>
 </html>
